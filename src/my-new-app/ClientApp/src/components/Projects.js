@@ -7,12 +7,12 @@ import { actionCreators } from '../store/Projects';
 class Projects extends Component {
   componentWillMount() {
     // This method runs when the component is first added to the page
-    this.props.requestProjects(0);
+    this.props.requestProjects({version: -1});
   }
 
   componentWillReceiveProps(nextProps) {
     // This method runs when incoming props (e.g., route params) change
-    this.props.requestProjects(nextProps.version);
+    // this.props.requestProjects({version: nextProps.version});
   }
 
   render() {
@@ -37,7 +37,9 @@ function renderProjects(props) {
       <tbody>
         {props.projects.map(project =>
           <tr key={project.id}>
-            <td>{project.name}</td>
+            <td>
+            <Link to={`/projects/${project.id}`}>{project.name}</Link>
+            </td>
           </tr>
         )}
       </tbody>

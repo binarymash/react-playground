@@ -1,10 +1,12 @@
 ﻿const requestProjectsType = 'REQUEST_PROJECTS';
 const receiveProjectsType = 'RECEIVE_PROJECTS';
-const initialState = { projects: [], version: -1, isLoading: false };
+const initialState = { 
+  projects: [], 
+  isLoading: false };
 
 export const actionCreators = {
-  requestProjects: nextVersion => async (dispatch, getState) => {
-    if (nextVersion === getState().projects.version) {
+  requestProjects: (p) => async (dispatch, getState) => {
+    if (p.version === getState().projects.version) {
         return;
     }
 
