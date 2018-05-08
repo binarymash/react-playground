@@ -9,6 +9,8 @@ const initialState = {
      error: false
 };
 
+const baseUrl = 'http://localhost:2316/api';
+
 export const actionCreators = {
   requestProject: p => async (dispatch, getState) => {
     let currentRequested = getState().project.requested;
@@ -19,7 +21,7 @@ export const actionCreators = {
 
     dispatch({ type: requestProjectType, p });
 
-    const url = `http://localhost:5000/api/projects/${p.id}`;
+    const url = baseUrl + `/projects/${p.id}`;
 
     await fetch(url).then(function(response){
       if (response.ok){

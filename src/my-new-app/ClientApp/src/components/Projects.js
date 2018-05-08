@@ -3,6 +3,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { actionCreators } from '../store/Projects';
+import { Glyphicon, Nav, Navbar, NavItem } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
+import './NavMenu.css';
 
 class Projects extends Component {
   componentWillMount() {
@@ -17,34 +20,25 @@ class Projects extends Component {
 
   render() {
     return (
-      <div>
-        <h1>Projects</h1>
-        {renderProjects(this.props)}
-        {renderPagination(this.props)}
-      </div>
+      <Navbar inverse fixedTop fluid collapseOnSelect>
+      <Navbar.Header>
+        <Navbar.Brand>
+          <Link to={'/'}>Evelyn</Link>
+        </Navbar.Brand>
+        <Navbar.Toggle />
+      </Navbar.Header>
+      <Navbar.Collapse>
+        <Nav>
+        {this.props.projects.map(project =>
+          <LinkContainer to={`/projects/${project.id}`} exact>
+          <NavItem>{project.name}</NavItem>
+        </LinkContainer>
+        )}          
+        </Nav>
+      </Navbar.Collapse>
+    </Navbar>
     );
   }
-}
-
-function renderProjects(props) {
-  return (
-    <table className='table'>
-      <thead>
-        <tr>
-          <th>Name</th>
-        </tr>
-      </thead>
-      <tbody>
-        {props.projects.map(project =>
-          <tr key={project.id}>
-            <td>
-            <Link to={`/projects/${project.id}`}>{project.name}</Link>
-            </td>
-          </tr>
-        )}
-      </tbody>
-    </table>
-  );
 }
 
 function renderPagination(props) {

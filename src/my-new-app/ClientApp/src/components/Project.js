@@ -3,6 +3,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { actionCreators } from '../store/Project';
+import { Badge, Button, ListGroup, ListGroupItem, PageHeader } from 'react-bootstrap';
+import Moment from 'moment'
 
 class Project extends Component {
   componentWillMount() {
@@ -38,65 +40,47 @@ function renderError() {
 function renderProject(props) {
   return (
     <div>
-      <h1><Link to={'/projects'}>Projects</Link> - {props.project.name}</h1>
-      {renderEnvironments(props.project.environments)}
-      {renderToggles(props.project.toggles)}     
+      <PageHeader>{props.project.name}</PageHeader>
       {renderAudit(props.project)} 
+      {renderEnvironments(props.project)}
+      {renderToggles(props.project.toggles)}     
     </div>
   ); 
 }
   
-function renderEnvironments(environments) {
+function renderEnvironments(project) {
   return (
     <section>
-      <h2>Environments</h2>
-      <table className='table'>
-        <thead>
-          <tr>
-            <th>Name</th>
-          </tr>
-        </thead>
-        <tbody>
-          {environments.map(environment => renderEnvironment(environment))}
-        </tbody>
-      </table>
+      <h2>Environments <Badge>{project.environments.length}</Badge></h2>
+      <ListGroup>
+          {project.environments.map(environment => renderEnvironment(project.id, environment))}
+      </ListGroup>
     </section>
   );
 }
 
-function renderEnvironment(environment){
+function renderEnvironment(projectId, environment){
   return(
-    <tr key={environment.id}>
-      <td>
-      </td>
-    </tr>
+    <ListGroupItem key={environment.key}>
+      <Link to={`/projects/${projectId}/environments/${environment.key}`} >{environment.key}</Link>
+    </ListGroupItem>
   );
 }
 
 function renderToggles(toggles) {
   return (
     <section>
-      <h2>Toggles</h2>
-      <table className='table'>
-        <thead>
-          <tr>
-            <th>Name</th>
-          </tr>
-        </thead>
-        <tbody>
-          {toggles.map(toggle => renderToggle(toggle))}
-        </tbody>
-      </table>
+      <h2>Toggles <Badge>{toggles.length}</Badge></h2>
+      <ListGroup>
+      {toggles.map(toggle => renderToggle(toggle))}
+      </ListGroup>      
     </section>
   );
 }
 
 function renderToggle(toggle){
   return(
-    <tr key={toggle.id}>
-      <td>
-      </td>
-    </tr>
+    <ListGroupItem key={toggle.id}>{toggle.name}</ListGroupItem>
   );
 }
 
@@ -104,8 +88,9 @@ function renderAudit(props)
 {
   return (
     <section>
-      <div>Created by {props.createdBy} at {props.created}</div>
-      <div>Last modified by {props.lastModifiedBy} at {props.lastModified}</div>
+      <div>Created by {props.createdBy} {Moment(props.created).fromNow()}</div>
+  <div>Last modified by {props.lastModifiedBy} {Moment(props.lastModified).fromNow()}</div>
+      <div>Version {props.version}</div>
     </section>
   );
 }
