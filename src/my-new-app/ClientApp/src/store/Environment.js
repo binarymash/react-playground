@@ -7,8 +7,6 @@ const initialState = {
      error: false
 };
 
-const baseUrl = 'http://localhost:2316/api';
-
 export const reducer = (state, action) => {
   state = state || initialState;
 
