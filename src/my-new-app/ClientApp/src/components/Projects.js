@@ -2,7 +2,7 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { actionCreators } from '../store/Projects';
+import { actionCreators } from '../actions/index';
 import { Glyphicon, Nav, Navbar, NavItem } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import './NavMenu.css';
@@ -30,7 +30,7 @@ class Projects extends Component {
       <Navbar.Collapse>
         <Nav>
         {this.props.projects.map(project =>
-          <LinkContainer to={`/projects/${project.id}`} exact>
+          <LinkContainer key={project.id} to={`/projects/${project.id}`} exact>
           <NavItem>{project.name}</NavItem>
         </LinkContainer>
         )}          

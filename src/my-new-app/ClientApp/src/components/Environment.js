@@ -2,8 +2,8 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { actionCreators } from '../store/Environment';
- import { ListGroup, ListGroupItem, PageHeader } from 'react-bootstrap';
+import { actionCreators } from '../actions/index';
+import { ListGroup, ListGroupItem, PageHeader } from 'react-bootstrap';
 import Moment from 'moment'
 
 class Environment extends Component {
@@ -48,14 +48,19 @@ function renderEnvironment(props) {
 }
 
 
-function renderAudit(props)
-{
+function renderAudit(props) {
   return (
     <section>
       <div>Created {Moment(props.created).fromNow()} by {props.createdBy} </div>
       <div>Last modified {Moment(props.lastModified).fromNow()} by {props.lastModifiedBy} </div>
       <div>Version {props.version}</div>
     </section>
+  );
+}
+
+function renderToggleStates(props){
+  return (
+    <h2>Toggle States</h2>
   );
 }
 

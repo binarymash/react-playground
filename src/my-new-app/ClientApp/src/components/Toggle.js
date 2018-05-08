@@ -2,7 +2,7 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { actionCreators } from '../store/Toggle';
+import { actionCreators } from '../actions/index';
 import { Badge, Button, ListGroup, ListGroupItem, PageHeader } from 'react-bootstrap';
 import Moment from 'moment'
 

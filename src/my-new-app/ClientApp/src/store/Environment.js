@@ -1,6 +1,4 @@
-﻿const requestEnvironmentType = 'REQUEST_ENVIRONMENT';
-const receiveEnvironmentType = 'RECEIVE_ENVIRONMENT';
-const receiveEnvironmentErrorType = 'RECEIVE_ENVIRONMENT_ERROR';
+﻿import { requestEnvironmentType, receiveEnvironmentType, receiveEnvironmentErrorType } from '../actions/index';
 
 const initialState = {
      requested: null,
@@ -10,34 +8,6 @@ const initialState = {
 };
 
 const baseUrl = 'http://localhost:2316/api';
-
-export const actionCreators = {
-  requestEnvironment: r => async (dispatch, getState) => {
-    let currentRequested = getState().environment.requested;
-
-    if (currentRequested && 
-      r.environmentKey === currentRequested.environmentKey && 
-      r.projectId === currentRequested.projectId &&
-      r.version === currentRequested.version) {
-        return;
-    }
-
-    dispatch({ type: requestEnvironmentType, r });
-
-    const url = baseUrl + `/projects/${r.projectId}/environments/${r.environmentKey}`;
-
-    await fetch(url).then(function(response){
-      if (response.ok){
-        return response.json();
-      }
-      throw new Error('Network response was not ok.');
-    }).then(function(json){
-      dispatch({ type: receiveEnvironmentType, r, json});
-    }).catch(function(error){
-      dispatch({ type: receiveEnvironmentErrorType, error});  
-    });
-  }
-};
 
 export const reducer = (state, action) => {
   state = state || initialState;

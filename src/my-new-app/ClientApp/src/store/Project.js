@@ -1,39 +1,10 @@
-﻿const requestProjectType = 'REQUEST_PROJECT';
-const receiveProjectType = 'RECEIVE_PROJECT';
-const receiveProjectErrorType = 'RECEIVE_PROJECT_ERROR';
+﻿import { requestProjectType, receiveProjectType, receiveProjectErrorType } from '../actions/index';
 
 const initialState = {
      requested: null,
      project: null,
      isLoading: false,
      error: false
-};
-
-const baseUrl = 'http://localhost:2316/api';
-
-export const actionCreators = {
-  requestProject: p => async (dispatch, getState) => {
-    let currentRequested = getState().project.requested;
-
-    if (currentRequested && p.id === currentRequested.id && p.version === currentRequested.version) {
-        return;
-    }
-
-    dispatch({ type: requestProjectType, p });
-
-    const url = baseUrl + `/projects/${p.id}`;
-
-    await fetch(url).then(function(response){
-      if (response.ok){
-        return response.json();
-      }
-      throw new Error('Network response was not ok.');
-    }).then(function(json){
-      dispatch({ type: receiveProjectType, p, json});
-    }).catch(function(error){
-      dispatch({ type: receiveProjectErrorType, error});  
-    });
-  }
 };
 
 export const reducer = (state, action) => {
