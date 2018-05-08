@@ -5,13 +5,17 @@ import * as Counter from './Counter';
 import * as WeatherForecasts from './WeatherForecasts';
 import * as Projects from './Projects';
 import * as Project from './Project';
+import * as Environment from './Environment';
+import * as Toggle from './Toggle';
 
 export default function configureStore(history, initialState) {
   const reducers = {
     counter: Counter.reducer,
     weatherForecasts: WeatherForecasts.reducer,
     projects: Projects.reducer,
-    project: Project.reducer
+    project: Project.reducer,
+    environment: Environment.reducer,
+    toggle: Toggle.reducer   
   };
 
   const middleware = [

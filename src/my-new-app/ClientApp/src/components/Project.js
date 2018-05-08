@@ -14,11 +14,11 @@ class Project extends Component {
 
   componentWillReceiveProps(nextProps) {
     // This method runs when incoming props (e.g., route params) change
-    // let version = -1;
-    // if (nextProps.project) {
-    //   version = nextProps.project.version;
-    // }    
-    // this.props.requestProject({id: nextProps.match.params.id, version: version});
+    let version = -1;
+    if (nextProps.project) {
+      version = nextProps.project.version;
+    }    
+    this.props.requestProject({id: nextProps.match.params.id, version: version});
   }
 
   render() {
@@ -43,7 +43,7 @@ function renderProject(props) {
       <PageHeader>{props.project.name}</PageHeader>
       {renderAudit(props.project)} 
       {renderEnvironments(props.project)}
-      {renderToggles(props.project.toggles)}     
+      {renderToggles(props.project)}     
     </div>
   ); 
 }
@@ -67,20 +67,22 @@ function renderEnvironment(projectId, environment){
   );
 }
 
-function renderToggles(toggles) {
+function renderToggles(project) {
   return (
     <section>
-      <h2>Toggles <Badge>{toggles.length}</Badge></h2>
+      <h2>Toggles <Badge>{project.toggles.length}</Badge></h2>
       <ListGroup>
-      {toggles.map(toggle => renderToggle(toggle))}
+      {project.toggles.map(toggle => renderToggle(project.id, toggle))}
       </ListGroup>      
     </section>
   );
 }
 
-function renderToggle(toggle){
+function renderToggle(projectId, toggle){
   return(
-    <ListGroupItem key={toggle.id}>{toggle.name}</ListGroupItem>
+    <ListGroupItem key={toggle.key}>
+      <Link to={`/projects/${projectId}/toggles/${toggle.key}`} >{toggle.name}</Link>    
+    </ListGroupItem>
   );
 }
 
@@ -88,17 +90,19 @@ function renderAudit(props)
 {
   return (
     <section>
-      <div>Created by {props.createdBy} {Moment(props.created).fromNow()}</div>
-  <div>Last modified by {props.lastModifiedBy} {Moment(props.lastModified).fromNow()}</div>
+      <div>Created {Moment(props.created).fromNow()} by {props.createdBy} </div>
+      <div>Last modified {Moment(props.lastModified).fromNow()} by {props.lastModifiedBy} </div>
       <div>Version {props.version}</div>
     </section>
   );
 }
+
 function renderNoProject() {
   return (
     <div>No selected project</div>
   );
 }
+
 export default connect(
   state => state.project,
   dispatch => bindActionCreators(actionCreators, dispatch)

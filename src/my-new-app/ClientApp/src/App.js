@@ -6,6 +6,8 @@ import Counter from './components/Counter';
 import FetchData from './components/FetchData';
 import Projects from './components/Projects';
 import Project from './components/Project';
+import Environment from './components/Environment';
+import Toggle from './components/Toggle';
 
 export default () => (
   <Layout>
@@ -13,6 +15,8 @@ export default () => (
     <Route path='/counter' component={Counter} />
     <Route path='/fetchdata/:startDateIndex?' component={FetchData} />
     <Route exact path='/projects' component={Projects} />
-    <Route path='/projects/:id' component={Project} />
+    <Route exact path='/projects/:id' component={Project} />
+    <Route exact path='/projects/:projectId/environments/:environmentKey' component={Environment} />    
+    <Route exact path='/projects/:projectId/toggles/:toggleKey' component={Toggle} />       
   </Layout>
 );

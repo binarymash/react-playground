@@ -15,7 +15,7 @@ class Projects extends Component {
 
   componentWillReceiveProps(nextProps) {
     // This method runs when incoming props (e.g., route params) change
-    // this.props.requestProjects({version: nextProps.version});
+    this.props.requestProjects({version: nextProps.version});
   }
 
   render() {
