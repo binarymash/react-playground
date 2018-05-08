@@ -20,7 +20,9 @@ class Project extends Component {
   }
 
   render() {
-    if (this.props.project) {
+    if (this.props.error) {
+      return renderError();
+    } else if (this.props.project) {
       return renderProject(this.props);
     } else {
       return renderNoProject();
@@ -28,6 +30,11 @@ class Project extends Component {
   }
 }
 
+function renderError() {
+  return (
+    <div>An error occurred! <button>Try again</button></div>
+  );
+}
 function renderProject(props) {
   return (
     <div>

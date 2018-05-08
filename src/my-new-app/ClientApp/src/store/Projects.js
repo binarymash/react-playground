@@ -1,8 +1,12 @@
 ﻿const requestProjectsType = 'REQUEST_PROJECTS';
 const receiveProjectsType = 'RECEIVE_PROJECTS';
+const receiveProjectsErrorType = 'RECEIVE_PROJECTS_ERROR';
+
 const initialState = { 
   projects: [], 
-  isLoading: false };
+  isLoading: false,
+  error: true
+};
 
 export const actionCreators = {
   requestProjects: (p) => async (dispatch, getState) => {
@@ -13,11 +17,18 @@ export const actionCreators = {
     dispatch({ type: requestProjectsType });
 
     const url = `http://localhost:5000/api/projects`;
-    const response = await fetch(url);
-    const responseJson = await response.json();
 
-    dispatch({ type: receiveProjectsType, responseJson });
-  }
+    await fetch(url).then(function(response){
+      if (response.ok){
+        return response.json();
+      }
+      throw new Error('Network response was not ok.');      
+    }).then(function(json){
+      dispatch({ type: receiveProjectsType, json});      
+    }).catch(function(error){
+      dispatch({ type: receiveProjectsErrorType, error});  
+    });
+  },
 };
 
 export const reducer = (state, action) => {
@@ -33,11 +44,20 @@ export const reducer = (state, action) => {
   if (action.type === receiveProjectsType) {
     return {
       ...state,
-      projects: action.responseJson.projects,
-      version: action.responseJson.version,
-      lastModified: action.responseJson.lastModified,
-      lastModifiedBy: action.responseJson.lastModifiedBy,
-      isLoading: false
+      projects: action.json.projects,
+      version: action.json.version,
+      lastModified: action.json.lastModified,
+      lastModifiedBy: action.json.lastModifiedBy,
+      isLoading: false,
+      error: false
+    };
+  }
+
+  if (action.type === receiveProjectsErrorType) {
+    return {
+      ...state,
+      isLoading: false,
+      error: true
     };
   }
 

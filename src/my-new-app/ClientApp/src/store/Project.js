@@ -1,9 +1,12 @@
 ﻿const requestProjectType = 'REQUEST_PROJECT';
 const receiveProjectType = 'RECEIVE_PROJECT';
+const receiveProjectErrorType = 'RECEIVE_PROJECT_ERROR';
+
 const initialState = {
      requested: null,
      project: null,
-     isLoading: false
+     isLoading: false,
+     error: false
 };
 
 export const actionCreators = {
@@ -17,10 +20,17 @@ export const actionCreators = {
     dispatch({ type: requestProjectType, p });
 
     const url = `http://localhost:5000/api/projects/${p.id}`;
-    const response = await fetch(url);
-    const responseJson = await response.json();
 
-    dispatch({ type: receiveProjectType, p, responseJson});
+    await fetch(url).then(function(response){
+      if (response.ok){
+        return response.json();
+      }
+      throw new Error('Network response was not ok.');
+    }).then(function(json){
+      dispatch({ type: receiveProjectType, p, json});
+    }).catch(function(error){
+      dispatch({ type: receiveProjectErrorType, error});  
+    });
   }
 };
 
@@ -38,11 +48,18 @@ export const reducer = (state, action) => {
   if (action.type === receiveProjectType) {
     return {
       ...state,   
-      requested: {id: action.responseJson.id, version: action.responseJson.version},
-      project: action.responseJson,
+      requested: {id: action.json.id, version: action.json.version},
+      project: action.json,
       isLoading: false
     };
   }
 
+  if (action.type === receiveProjectErrorType) {
+    return {
+      ...state,  
+      isLoading: false,       
+      error: true
+    };
+  } 
   return state;
 };
