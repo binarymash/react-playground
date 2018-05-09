@@ -12,19 +12,19 @@ export const reducer = (state, action) => {
   if (action.type === requestProjectsType) {
     return {
       ...state,
-      isLoading: true
+      isLoading: true,
+      isError: false
     };
   }
 
   if (action.type === receiveProjectsType) {
     return {
       ...state,
+      isLoading: false,
       projects: action.json.projects,
       version: action.json.version,
       lastModified: action.json.lastModified,
       lastModifiedBy: action.json.lastModifiedBy,
-      isLoading: false,
-      error: false
     };
   }
 

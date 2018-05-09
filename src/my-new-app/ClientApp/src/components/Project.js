@@ -8,17 +8,15 @@ import Moment from 'moment'
 
 class Project extends Component {
   componentWillMount() {
-    // This method runs when the component is first added to the page
-    this.props.requestProject({id: this.props.match.params.id, version: -1});
+    this.props.requestProject(this.props.match.params.id);
   }
 
   componentWillReceiveProps(nextProps) {
-    // This method runs when incoming props (e.g., route params) change
-    let version = -1;
-    if (nextProps.project) {
-      version = nextProps.project.version;
-    }    
-    this.props.requestProject({id: nextProps.match.params.id, version: version});
+    if (nextProps.match.params.id === this.props.match.params.id){
+      return;
+    }
+
+    this.props.requestProject(nextProps.match.params.id);
   }
 
   render() {

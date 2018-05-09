@@ -1,7 +1,6 @@
 ﻿import { requestToggleType, receiveToggleType, receiveToggleErrorType } from '../actions/index';
 
 const initialState = {
-     requested: null,
      toggle: null,
      isLoading: false,
      error: false
@@ -13,17 +12,16 @@ export const reducer = (state, action) => {
   if (action.type === requestToggleType) {
     return {
       ...state,
-      requested: action.r,
-      isLoading: true
+      isLoading: true,
+      error: false
     };
   }
 
   if (action.type === receiveToggleType) {
     return {
       ...state,   
-      requested: {projectId: action.json.projectId, toggleKey: action.json.key, version: action.json.version},
-      toggle: action.json,
-      isLoading: false
+      isLoading: false,
+      toggle: action.json    
     };
   }
 
@@ -34,5 +32,6 @@ export const reducer = (state, action) => {
       error: true
     };
   } 
+  
   return state;
 };

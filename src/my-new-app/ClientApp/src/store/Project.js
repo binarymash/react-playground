@@ -13,17 +13,16 @@ export const reducer = (state, action) => {
   if (action.type === requestProjectType) {
     return {
       ...state,
-      requested: action.p,
-      isLoading: true
+      isLoading: true,
+      error: false
     };
   }
 
   if (action.type === receiveProjectType) {
     return {
       ...state,   
-      requested: {id: action.json.id, version: action.json.version},
-      project: action.json,
-      isLoading: false
+      isLoading: false,
+      project: action.json,      
     };
   }
 

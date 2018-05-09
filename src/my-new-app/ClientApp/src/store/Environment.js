@@ -1,7 +1,6 @@
 ﻿import { requestEnvironmentType, receiveEnvironmentType, receiveEnvironmentErrorType } from '../actions/index';
 
 const initialState = {
-     requested: null,
      environment: null,
      isLoading: false,
      error: false
@@ -13,17 +12,16 @@ export const reducer = (state, action) => {
   if (action.type === requestEnvironmentType) {
     return {
       ...state,
-      requested: action.r,
-      isLoading: true
+      isLoading: true,
+      error: false
     };
   }
 
   if (action.type === receiveEnvironmentType) {
     return {
       ...state,   
-      requested: {projectId: action.json.projectId, environmentKey: action.json.key, version: action.json.version},
-      environment: action.json,
-      isLoading: false
+      isLoading: false,
+      environment: action.json,      
     };
   }
 

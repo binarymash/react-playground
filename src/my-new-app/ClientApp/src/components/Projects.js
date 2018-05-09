@@ -9,13 +9,7 @@ import './NavMenu.css';
 
 class Projects extends Component {
   componentWillMount() {
-    // This method runs when the component is first added to the page
-    this.props.requestProjects({version: -1});
-  }
-
-  componentWillReceiveProps(nextProps) {
-    // This method runs when incoming props (e.g., route params) change
-    this.props.requestProjects({version: nextProps.version});
+    this.props.requestProjects();
   }
 
   render() {
@@ -49,5 +43,9 @@ function renderPagination(props) {
 
 export default connect(
   state => state.projects,
-  dispatch => bindActionCreators(actionCreators, dispatch)
+  dispatch => bindActionCreators(actionCreators, dispatch),
+  null, 
+  {
+    pure:false
+  }
 )(Projects);

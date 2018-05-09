@@ -8,17 +8,18 @@ import Moment from 'moment'
 
 class Toggle extends Component {
   componentWillMount() {
-    // This method runs when the component is first added to the page
-    this.props.requestToggle({projectId: this.props.match.params.projectId, toggleKey: this.props.match.params.toggleKey, version: -1});
+    this.props.requestToggle({projectId: this.props.match.params.projectId, toggleKey: this.props.match.params.toggleKey});
   }
 
-  componentWillReceiveProps(nextProps) {
-    // This method runs when incoming props (e.g., route params) change
-    let version = -1;
-    if (nextProps.toggle) {
-      version = nextProps.toggle.version;
-    }    
-    this.props.requestToggle({projectId: nextProps.match.params.projectId, toggleKey: nextProps.match.params.toggleKey, version: version});
+  componentWillReceiveProps(nextProps) { 
+    if (
+      nextProps.match.params.projectId === this.props.match.params.projectId &&
+      nextProps.match.params.toggleKey === this.props.match.params.toggleKey
+    ){
+      return;
+    }
+
+    this.props.requestToggle({projectId: nextProps.match.params.projectId, toggleKey: nextProps.match.params.toggleKey});
   }
 
   render() {
