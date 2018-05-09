@@ -8,7 +8,7 @@ import Moment from 'moment'
 
 class Project extends Component {
   componentWillMount() {
-    this.props.requestProject(this.props.match.params.id);
+    this.props.selectProject(this.props.match.params.id);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -16,7 +16,7 @@ class Project extends Component {
       return;
     }
 
-    this.props.requestProject(nextProps.match.params.id);
+    this.props.selectProject(nextProps.match.params.id);
   }
 
   render() {

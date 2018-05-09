@@ -8,7 +8,7 @@ import Moment from 'moment'
 
 class Toggle extends Component {
   componentWillMount() {
-    this.props.requestToggle({projectId: this.props.match.params.projectId, toggleKey: this.props.match.params.toggleKey});
+    this.props.selectToggle({projectId: this.props.match.params.projectId, toggleKey: this.props.match.params.toggleKey});
   }
 
   componentWillReceiveProps(nextProps) { 
@@ -19,7 +19,7 @@ class Toggle extends Component {
       return;
     }
 
-    this.props.requestToggle({projectId: nextProps.match.params.projectId, toggleKey: nextProps.match.params.toggleKey});
+    this.props.selectToggle({projectId: nextProps.match.params.projectId, toggleKey: nextProps.match.params.toggleKey});
   }
 
   render() {

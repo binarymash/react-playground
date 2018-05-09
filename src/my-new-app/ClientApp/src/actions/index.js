@@ -35,9 +35,9 @@ export const actionCreators = {
     });
   },
 
-  requestProject: projectId => async (dispatch, getState) => {
+  selectProject: projectId => async (dispatch, getState) => {
 
-    dispatch({ type: requestProjectType, projectId });
+    dispatch({ type: requestProjectType });
 
     const url = baseUrl + `/projects/${projectId}`;
 
@@ -53,8 +53,8 @@ export const actionCreators = {
     });
   },
 
-  requestEnvironment: r => async (dispatch, getState) => {
-    dispatch({ type: requestEnvironmentType, r });
+  selectEnvironment: r => async (dispatch, getState) => {
+    dispatch({ type: requestEnvironmentType });
 
     const url = baseUrl + `/projects/${r.projectId}/environments/${r.environmentKey}`;
 
@@ -64,23 +64,14 @@ export const actionCreators = {
       }
       throw new Error('Network response was not ok.');
     }).then(function(json){
-      dispatch({ type: receiveEnvironmentType, r, json});
+      dispatch({ type: receiveEnvironmentType, json});
     }).catch(function(error){
       dispatch({ type: receiveEnvironmentErrorType, error});  
     });
   },
 
   requestToggle: r => async (dispatch, getState) => {
-    let currentRequested = getState().toggle.requested;
-
-    if (currentRequested && 
-      r.toggleKey === currentRequested.toggleKey && 
-      r.projectId === currentRequested.projectId &&
-      r.version === currentRequested.version) {
-        return;
-    }
-
-    dispatch({ type: requestToggleType, r });
+    dispatch({ type: requestToggleType });
 
     const url = baseUrl + `/projects/${r.projectId}/toggles/${r.toggleKey}`;
 
@@ -90,7 +81,7 @@ export const actionCreators = {
       }
       throw new Error('Network response was not ok.');
     }).then(function(json){
-      dispatch({ type: receiveToggleType, r, json});
+      dispatch({ type: receiveToggleType, json});
     }).catch(function(error){
       dispatch({ type: receiveToggleErrorType, error});  
     });

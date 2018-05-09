@@ -8,12 +8,10 @@ import Moment from 'moment'
 
 class Environment extends Component {
   componentWillMount() {
-    // This method runs when the component is first added to the page
-    this.props.requestEnvironment({projectId: this.props.match.params.projectId, environmentKey: this.props.match.params.environmentKey});
+    this.props.selectEnvironment({projectId: this.props.match.params.projectId, environmentKey: this.props.match.params.environmentKey});
   }
 
   componentWillReceiveProps(nextProps) {
-    // This method runs when incoming props (e.g., route params) change
     if (
       nextProps.match.params.projectId === this.props.match.params.projectId &&
       nextProps.match.params.environmentKey === this.props.match.params.environmentKey
@@ -21,7 +19,7 @@ class Environment extends Component {
         return;
     }
 
-    this.props.requestEnvironment({projectId: nextProps.match.params.projectId, environmentKey: nextProps.match.params.environmentKey});
+    this.props.selectEnvironment({projectId: nextProps.match.params.projectId, environmentKey: nextProps.match.params.environmentKey});
   }
 
   render() {
