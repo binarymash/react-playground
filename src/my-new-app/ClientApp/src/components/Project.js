@@ -39,9 +39,9 @@ function renderProject(props) {
   return (
     <div>
       <PageHeader>{props.project.name}</PageHeader>
-      {renderAudit(props.project)} 
       {renderEnvironments(props.project)}
-      {renderToggles(props.project)}     
+      {renderToggles(props.project)} 
+      {renderAudit(props.project)}      
     </div>
   ); 
 }
@@ -88,8 +88,9 @@ function renderAudit(props)
 {
   return (
     <section>
-      <div>Created {Moment(props.created).fromNow()} by {props.createdBy} </div>
-      <div>Last modified {Moment(props.lastModified).fromNow()} by {props.lastModifiedBy} </div>
+      <h3>Audit</h3>
+      <div>Project created {Moment(props.created).fromNow()} by {props.createdBy} </div>
+      <div>Project last modified {Moment(props.lastModified).fromNow()} by {props.lastModifiedBy} </div>
       <div>Version {props.version}</div>
     </section>
   );

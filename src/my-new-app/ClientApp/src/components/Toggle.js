@@ -51,8 +51,9 @@ function renderAudit(props)
 {
   return (
     <section>
-      <div>Created {Moment(props.created).fromNow()} by {props.createdBy} </div>
-      <div>Last modified {Moment(props.lastModified).fromNow()} by {props.lastModifiedBy} </div>
+      <h3>Audit</h3>
+      <div>Toggle created {Moment(props.created).fromNow()} by {props.createdBy} </div>
+      <div>Toggle last modified {Moment(props.lastModified).fromNow()} by {props.lastModifiedBy} </div>
       <div>Version {props.version}</div>
     </section>
   );

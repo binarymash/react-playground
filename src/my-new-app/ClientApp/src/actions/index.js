@@ -56,15 +56,25 @@ export const actionCreators = {
   selectEnvironment: r => async (dispatch, getState) => {
     dispatch({ type: requestEnvironmentType });
 
-    const url = baseUrl + `/projects/${r.projectId}/environments/${r.environmentKey}`;
+    const defUrl = baseUrl + `/projects/${r.projectId}/environments/${r.environmentKey}`;
+    const stateUrl = baseUrl + `/states/${r.projectId}/${r.environmentKey}`;
 
-    await fetch(url).then(function(response){
+    var defPromise = fetch(defUrl).then(function(response){
       if (response.ok){
         return response.json();
       }
       throw new Error('Network response was not ok.');
-    }).then(function(json){
-      dispatch({ type: receiveEnvironmentType, json});
+    });
+
+    var statePromise = fetch(stateUrl).then(function(response){
+      if (response.ok){
+        return response.json();
+      }
+      throw new Error('Network response was not ok.');
+    });
+
+    Promise.all([defPromise, statePromise]).then(function([defJson, stateJson]){
+      dispatch({ type: receiveEnvironmentType, defJson, stateJson});
     }).catch(function(error){
       dispatch({ type: receiveEnvironmentErrorType, error});  
     });
