@@ -1,14 +1,14 @@
 ﻿import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import { routerReducer, routerMiddleware } from 'react-router-redux';
-import * as Projects from './Projects';
+import * as Account from './Account';
 import * as Project from './Project';
 import * as Environment from './Environment';
 import * as Toggle from './Toggle';
 
 export default function configureStore(history, initialState) {
   const reducers = {
-    projects: Projects.reducer,
+    account: Account.reducer,
     project: Project.reducer,
     environment: Environment.reducer,
     toggle: Toggle.reducer   

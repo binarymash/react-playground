@@ -6,7 +6,7 @@ import { actionCreators } from '../actions/index';
 import { Glyphicon, Nav, Navbar, NavItem } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import './NavMenu.css';
-import { getProjectList } from '../store/Projects';
+import { getProjectList } from '../store/Account';
 
 class NavMenu extends Component {
   componentWillMount() {
