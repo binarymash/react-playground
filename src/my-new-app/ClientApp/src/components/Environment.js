@@ -6,6 +6,7 @@ import { Badge, ListGroup, ListGroupItem, PageHeader } from 'react-bootstrap';
 import Switch from 'react-bootstrap-switch'
 import Moment from 'moment'
 import { actionCreators } from '../actions/index';
+import { getEnvironment, getEnvironmentState, getIsLoading, getIsErrored } from '../store/Environment';
 import './react-bootstrap-switch.css';
 
 class Environment extends Component {
@@ -25,12 +26,10 @@ class Environment extends Component {
   }
 
   render() {
-    if (this.props.error) {
+    if (this.props.isError) {
       return this.renderError();
-    } else if (this.props.environment && this.props.environment.definition && this.props.environment.state) {
-      return this.renderEnvironment(this.props.environment);
     } else {
-      return this.renderNoEnvironment();
+      return this.renderEnvironment();
     }
   }
 
@@ -40,61 +39,58 @@ class Environment extends Component {
     );
   }
   
-  renderEnvironment(environment) {
+  renderEnvironment() {
+    if (!this.props.environment){
+      return (
+        <div></div>
+      )
+    }
     return (
       <div>
-        <PageHeader>{environment.definition.key}</PageHeader> 
-        {this.renderStates(environment.state)}
-        {this.renderAudit(environment)}       
+        <PageHeader>{this.props.environment.key}</PageHeader> 
+        {this.renderStates()}
+        {this.renderAudit()}       
       </div>
     ); 
   }
   
   
-  renderAudit(environment) {
+  renderAudit() {
+    if (!this.props.environment.audit){
+      return (
+        <section/>
+      )
+    }
+
     return (
       <section>
         <h3>Audit</h3>
-        <div>Environment definition created {Moment(environment.definition.created).fromNow()} by {environment.definition.createdBy} </div>
-        <div>Environment definition last modified {Moment(environment.definition.lastModified).fromNow()} by {environment.definition.lastModifiedBy} </div>
-        <div>Environment definition version {environment.definition.version}</div>
-        <div>Toggle states last modified {Moment(environment.state.lastModified).fromNow()} by {environment.state.lastModifiedBy} </div>
-        <div>Toggle states version {environment.state.version}</div>
+        <div>Created {Moment(this.props.environment.audit.created).fromNow()} by {this.props.environment.audit.createdBy} </div>
+        <div>Last modified {Moment(this.props.environment.audit.lastModified).fromNow()} by {this.props.environment.audit.lastModifiedBy} </div>
+        <div>Version {this.props.environment.audit.version}</div>
       </section>
     );
   }
   
-  renderStates(environmentStates){
-    if (environmentStates){
-      return (
-        <section>
-          <h2>Toggle States <Badge>{environmentStates.toggleStates.length}</Badge></h2>
-          <ListGroup>
-            {environmentStates.toggleStates.map(toggleState => this.renderState(toggleState))}
-          </ListGroup>  
-        </section>
-      );
-    } else {
-      return (
-        <div></div>
-      );
-    }
-  }
-  
-  renderState(toggleState){
-    return(
-      <ListGroupItem key={toggleState.key}>
-        <span>{toggleState.key}</span>
-        <span className='pull-right'>  
-          <Switch bsSize='mini' onColor='success' offColor='danger' value={toggleState.value === "True"} onChange={(el, state) => this.handleSwitch(el, state)}/>
-        </span>
-      </ListGroupItem>
+  renderStates(){
+    return (
+      <section>
+        <h2>Toggle States <Badge>{this.props.environment.toggles.length}</Badge></h2>
+        <ListGroup>
+          {this.props.environment.toggles.map(toggle => this.renderState(toggle))}
+        </ListGroup>  
+      </section>
     );
   }
   
-  renderNoEnvironment() {
-    return (
-      <div>No selected environment</div>
+  renderState(toggle){
+    return(
+      <ListGroupItem key={toggle.key}>
+        <span>{toggle.key}</span>
+        <span className='pull-right'>  
+          <Switch bsSize='mini' onColor='success' offColor='danger' value={toggle.value} onChange={(el, state) => this.handleSwitch(el, state)}/>
+        </span>
+      </ListGroupItem>
     );
   }
   
@@ -106,7 +102,11 @@ class Environment extends Component {
 }
 
 const mapStateToProps = (state) => {
-  return state.environment;
+  return {
+    environment: getEnvironment(state),
+    isLoading: getIsLoading(state),
+    isErrored: getIsErrored(state)
+  }
 }
 
 const mapDispatchToProps = (dispatch) => {

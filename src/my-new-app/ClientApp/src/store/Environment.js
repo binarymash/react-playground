@@ -1,13 +1,76 @@
-﻿import produce from 'immer'
+﻿import produce from 'immer';
 import { requestEnvironmentType, receiveEnvironmentType, receiveEnvironmentErrorType } from '../actions/index';
 
+// Read
+
+export const getIsLoading = (state) => {
+  return state.environment.isLoading;
+}
+
+export const getIsErrored = (state) => {
+  return state.environment.isErrored;
+}
+
+export const getEnvironment = (state) => {
+  if (!state.environment.environment) {
+    return null;
+  }
+
+  return {
+    key: state.environment.environment.key,
+    toggles: getToggleStates(state),
+    audit: getAudit(state)
+  }
+}
+
+const getToggleStates = (state) => {
+  if (!state.environment.environmentState) {
+    return [];
+  }
+
+  return state.environment.environmentState.toggleStates.map(toggleState => getToggleState(toggleState));
+}
+
+const getToggleState = (toggleState) => {
+  return {
+    key: toggleState.key,
+    value: getToggleStateValue(toggleState.value)
+  }
+}
+
+const getToggleStateValue = (value) => {
+  if (value === "True"){
+    return true;
+  }
+
+  if (value === "False"){
+    return false;
+  }
+
+  return null;
+}
+
+const getAudit = (state) => {
+  if (!state.environment.environmentState) {
+    return null;
+  }
+
+  return {
+    created: state.environment.environmentState.created,
+    createdBy: state.environment.environmentState.createdBy,
+    modified: state.environment.environmentState.lastModified,
+    modifiedBy: state.environment.environmentState.lastModifiedBy,
+    version: state.environment.environmentState.version
+  }
+}
+
+// Write
+
 const INITIAL_STATE = {
-     environment: {
-       definition: null,
-       state: null
-     },
-     isLoading: false,
-     error: false
+  environment: null,
+  environmentState: null,
+  isLoading: false,
+  isErrored: false
 };
 
 export const reducer = produce(
@@ -15,18 +78,18 @@ export const reducer = produce(
 
     if (action.type === requestEnvironmentType) {
       draft.isLoading = true;
-      draft.error = false;
+      draft.isErrored = false;
     }
 
     if (action.type === receiveEnvironmentType) {
       draft.isLoading = false;
-      draft.environment.definition = action.defJson;
-      draft.environment.state = action.stateJson;
+      draft.environment = action.defJson;
+      draft.environmentState = action.stateJson;
     }
 
     if (action.type === receiveEnvironmentErrorType) {
         draft.isLoading = false;
-        draft.error = true;
+        draft.isErrored = true;
     } 
 
   },
