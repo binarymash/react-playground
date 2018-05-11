@@ -6,8 +6,9 @@ import { actionCreators } from '../actions/index';
 import { Glyphicon, Nav, Navbar, NavItem } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import './NavMenu.css';
+import { getProjectList } from '../store/Projects';
 
-class Projects extends Component {
+class NavMenu extends Component {
   componentWillMount() {
     this.props.requestProjects();
   }
@@ -36,7 +37,9 @@ class Projects extends Component {
 }
 
 const mapStateToProps = (state) => {
-  return state.projects;
+  return {
+    projects: getProjectList(state)
+  };
 }
 
 const mapDispatchToProps = (dispatch) => {
@@ -50,4 +53,4 @@ export default connect(
   {
     pure: false
   }
-)(Projects);
+)(NavMenu);

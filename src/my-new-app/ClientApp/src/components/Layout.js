@@ -1,12 +1,12 @@
 import React from 'react';
 import { Col, Grid, Row } from 'react-bootstrap';
-import Projects from './Projects';
+import NavMenu from './NavMenu';
 
 export default props => (
   <Grid fluid>
     <Row>
       <Col sm={3}>
-        <Projects />
+        <NavMenu />
       </Col>
       <Col sm={9}>
         {props.children}

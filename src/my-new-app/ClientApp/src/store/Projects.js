@@ -1,10 +1,19 @@
 ﻿import { requestProjectsType, receiveProjectsType, receiveProjectsErrorType } from '../actions/index';
 
 const initialState = { 
-  projects: [], 
+  projectList: [], 
   isLoading: false,
   error: true
 };
+
+export const getProjectList = (state) => {
+  return state.projects.projectList.map(project => {
+    return {
+      id: project.id,
+      name: project.name
+    }
+  });
+}
 
 export const reducer = (state, action) => {
   state = state || initialState;
@@ -21,7 +30,7 @@ export const reducer = (state, action) => {
     return {
       ...state,
       isLoading: false,
-      projects: action.json.projects,
+      projectList: action.json.projects,
       version: action.json.version,
       lastModified: action.json.lastModified,
       lastModifiedBy: action.json.lastModifiedBy,
