@@ -1,37 +1,30 @@
-﻿import { requestProjectType, receiveProjectType, receiveProjectErrorType } from '../actions/index';
+﻿import produce from 'immer';
+import { requestProjectType, receiveProjectType, receiveProjectErrorType } from '../actions/index';
 
-const initialState = {
-     requested: null,
-     project: null,
-     isLoading: false,
-     error: false
+const INITIAL_STATE = {
+  project: null,
+  isLoading: false,
+  error: false
 };
 
-export const reducer = (state, action) => {
-  state = state || initialState;
+export const reducer = produce(
+  (draft, action) => {
 
-  if (action.type === requestProjectType) {
-    return {
-      ...state,
-      isLoading: true,
-      error: false
-    };
-  }
+    if (action.type === requestProjectType) {
+      draft.isLoading = true;
+      draft.error = false;
+    }
 
-  if (action.type === receiveProjectType) {
-    return {
-      ...state,   
-      isLoading: false,
-      project: action.json,      
-    };
-  }
+    if (action.type === receiveProjectType) { 
+      draft.isLoading = false;
+      draft.project = action.json;      
+    }
 
-  if (action.type === receiveProjectErrorType) {
-    return {
-      ...state,  
-      isLoading: false,       
-      error: true
-    };
-  } 
-  return state;
-};
+    if (action.type === receiveProjectErrorType) {
+        draft.isLoading = false;
+        draft.error = true;
+    }
+
+  },
+  INITIAL_STATE
+)

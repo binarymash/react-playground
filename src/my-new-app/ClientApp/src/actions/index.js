@@ -80,7 +80,7 @@ export const actionCreators = {
     });
   },
 
-  requestToggle: r => async (dispatch, getState) => {
+  selectToggle: r => async (dispatch, getState) => {
     dispatch({ type: requestToggleType });
 
     const url = baseUrl + `/projects/${r.projectId}/toggles/${r.toggleKey}`;

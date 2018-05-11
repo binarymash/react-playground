@@ -1,6 +1,7 @@
-﻿import { requestEnvironmentType, receiveEnvironmentType, receiveEnvironmentErrorType } from '../actions/index';
+﻿import produce from 'immer'
+import { requestEnvironmentType, receiveEnvironmentType, receiveEnvironmentErrorType } from '../actions/index';
 
-const initialState = {
+const INITIAL_STATE = {
      environment: {
        definition: null,
        state: null
@@ -9,35 +10,25 @@ const initialState = {
      error: false
 };
 
-export const reducer = (state, action) => {
-  state = state || initialState;
+export const reducer = produce(
+  (draft, action) => {
 
-  if (action.type === requestEnvironmentType) {
-    return {
-      ...state,
-      isLoading: true,
-      error: false
-    };
-  }
+    if (action.type === requestEnvironmentType) {
+      draft.isLoading = true;
+      draft.error = false;
+    }
 
-  if (action.type === receiveEnvironmentType) {
+    if (action.type === receiveEnvironmentType) {
+      draft.isLoading = false;
+      draft.environment.definition = action.defJson;
+      draft.environment.state = action.stateJson;
+    }
 
-    return {
-      ...state,   
-      isLoading: false,
-      environment: {
-        definition: action.defJson,
-        state: action.stateJson
-      }   
-    };
-  }
+    if (action.type === receiveEnvironmentErrorType) {
+        draft.isLoading = false;
+        draft.error = true;
+    } 
 
-  if (action.type === receiveEnvironmentErrorType) {
-    return {
-      ...state,  
-      isLoading: false,       
-      error: true
-    };
-  } 
-  return state;
-};
+  },
+  INITIAL_STATE
+)
