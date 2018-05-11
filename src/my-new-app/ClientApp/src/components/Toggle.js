@@ -24,48 +24,57 @@ class Toggle extends Component {
 
   render() {
     if (this.props.error) {
-      return renderError();
+      return this.renderError();
     } else if (this.props.toggle) {
-      return renderToggle(this.props);
+      return this.renderToggle(this.props);
     } else {
-      return renderNoToggle();
+      return this.renderNoToggle();
     }
+  }
+
+  renderError() {
+    return (
+      <div>An error occurred! <button>Try again</button></div>
+    );
+  }
+
+  renderToggle(props) {
+    return (
+      <div>
+        <PageHeader>{props.toggle.name}</PageHeader>
+        {this.renderAudit(props.toggle)}    
+      </div>
+    ); 
+  }
+  
+  renderAudit(props)
+  {
+    return (
+      <section>
+        <h3>Audit</h3>
+        <div>Toggle created {Moment(props.created).fromNow()} by {props.createdBy} </div>
+        <div>Toggle last modified {Moment(props.lastModified).fromNow()} by {props.lastModifiedBy} </div>
+        <div>Version {props.version}</div>
+      </section>
+    );
+  }
+
+  renderNoToggle() {
+    return (
+      <div>No selected toggle</div>
+    );
   }
 }
 
-function renderError() {
-  return (
-    <div>An error occurred! <button>Try again</button></div>
-  );
-}
-function renderToggle(props) {
-  return (
-    <div>
-      <PageHeader>{props.toggle.name}</PageHeader>
-      {renderAudit(props.toggle)}    
-    </div>
-  ); 
-}
-  
-function renderAudit(props)
-{
-  return (
-    <section>
-      <h3>Audit</h3>
-      <div>Toggle created {Moment(props.created).fromNow()} by {props.createdBy} </div>
-      <div>Toggle last modified {Moment(props.lastModified).fromNow()} by {props.lastModifiedBy} </div>
-      <div>Version {props.version}</div>
-    </section>
-  );
+const mapStateToProps = (state) => {
+  return state.toggle;
 }
 
-function renderNoToggle() {
-  return (
-    <div>No selected toggle</div>
-  );
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators(actionCreators, dispatch)
 }
 
 export default connect(
-  state => state.toggle,
-  dispatch => bindActionCreators(actionCreators, dispatch)
+  mapStateToProps,
+  mapDispatchToProps
 )(Toggle);

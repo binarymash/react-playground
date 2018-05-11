@@ -35,17 +35,19 @@ class Projects extends Component {
   }
 }
 
-function renderPagination(props) {
-  return <p className='clearfix text-center'>
-    {props.isLoading ? <span>Loading...</span> : []}
-  </p>;
+const mapStateToProps = (state) => {
+  return state.projects;
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators(actionCreators, dispatch)
 }
 
 export default connect(
-  state => state.projects,
-  dispatch => bindActionCreators(actionCreators, dispatch),
+  mapStateToProps,
+  mapDispatchToProps,
   null, 
   {
-    pure:false
+    pure: false
   }
 )(Projects);

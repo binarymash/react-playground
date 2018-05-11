@@ -21,88 +21,97 @@ class Project extends Component {
 
   render() {
     if (this.props.error) {
-      return renderError();
+      return this.renderError();
     } else if (this.props.project) {
-      return renderProject(this.props);
+      return this.renderProject(this.props);
     } else {
-      return renderNoProject();
+      return this.renderNoProject();
     }
+  }
+
+  renderError() {
+    return (
+      <div>An error occurred! <button>Try again</button></div>
+    );
+  }
+
+  renderProject(props) {
+    return (
+      <div>
+        <PageHeader>{props.project.name}</PageHeader>
+        {this.renderEnvironments(props.project)}
+        {this.renderToggles(props.project)} 
+        {this.renderAudit(props.project)}      
+      </div>
+    ); 
+  }
+    
+  renderEnvironments(project) {
+    return (
+      <section>
+        <h2>Environments <Badge>{project.environments.length}</Badge></h2>
+        <ListGroup>
+            {project.environments.map(environment => this.renderEnvironment(project.id, environment))}
+        </ListGroup>
+      </section>
+    );
+  }
+
+  renderEnvironment(projectId, environment){
+    return(
+      <ListGroupItem key={environment.key}>
+        <Link to={`/projects/${projectId}/environments/${environment.key}`} >{environment.key}</Link>
+      </ListGroupItem>
+    );
+  }
+
+  renderToggles(project) {
+    return (
+      <section>
+        <h2>Toggles <Badge>{project.toggles.length}</Badge></h2>
+        <ListGroup>
+        {project.toggles.map(toggle => this.renderToggle(project.id, toggle))}
+        </ListGroup>      
+      </section>
+    );
+  }
+
+  renderToggle(projectId, toggle){
+    return(
+      <ListGroupItem key={toggle.key}>
+        <Link to={`/projects/${projectId}/toggles/${toggle.key}`} >{toggle.name}</Link>    
+      </ListGroupItem>
+    );
+  }
+
+  renderAudit(props)
+  {
+    return (
+      <section>
+        <h3>Audit</h3>
+        <div>Project created {Moment(props.created).fromNow()} by {props.createdBy} </div>
+        <div>Project last modified {Moment(props.lastModified).fromNow()} by {props.lastModifiedBy} </div>
+        <div>Version {props.version}</div>
+      </section>
+    );
+  }
+
+  renderNoProject() {
+    return (
+      <div>No selected project</div>
+    );
   }
 }
 
-function renderError() {
-  return (
-    <div>An error occurred! <button>Try again</button></div>
-  );
-}
-function renderProject(props) {
-  return (
-    <div>
-      <PageHeader>{props.project.name}</PageHeader>
-      {renderEnvironments(props.project)}
-      {renderToggles(props.project)} 
-      {renderAudit(props.project)}      
-    </div>
-  ); 
-}
-  
-function renderEnvironments(project) {
-  return (
-    <section>
-      <h2>Environments <Badge>{project.environments.length}</Badge></h2>
-      <ListGroup>
-          {project.environments.map(environment => renderEnvironment(project.id, environment))}
-      </ListGroup>
-    </section>
-  );
+const mapStateToProps = (state) => {
+  return state.project;
 }
 
-function renderEnvironment(projectId, environment){
-  return(
-    <ListGroupItem key={environment.key}>
-      <Link to={`/projects/${projectId}/environments/${environment.key}`} >{environment.key}</Link>
-    </ListGroupItem>
-  );
-}
-
-function renderToggles(project) {
-  return (
-    <section>
-      <h2>Toggles <Badge>{project.toggles.length}</Badge></h2>
-      <ListGroup>
-      {project.toggles.map(toggle => renderToggle(project.id, toggle))}
-      </ListGroup>      
-    </section>
-  );
-}
-
-function renderToggle(projectId, toggle){
-  return(
-    <ListGroupItem key={toggle.key}>
-      <Link to={`/projects/${projectId}/toggles/${toggle.key}`} >{toggle.name}</Link>    
-    </ListGroupItem>
-  );
-}
-
-function renderAudit(props)
-{
-  return (
-    <section>
-      <h3>Audit</h3>
-      <div>Project created {Moment(props.created).fromNow()} by {props.createdBy} </div>
-      <div>Project last modified {Moment(props.lastModified).fromNow()} by {props.lastModifiedBy} </div>
-      <div>Version {props.version}</div>
-    </section>
-  );
-}
-
-function renderNoProject() {
-  return (
-    <div>No selected project</div>
-  );
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators(actionCreators, dispatch)
 }
 
 export default connect(
-  state => state.project,
-  dispatch => bindActionCreators(actionCreators, dispatch)
+  mapStateToProps,
+  mapDispatchToProps
 )(Project);

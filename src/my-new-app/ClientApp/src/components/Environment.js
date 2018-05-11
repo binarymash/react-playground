@@ -105,7 +105,15 @@ class Environment extends Component {
   }  
 }
 
+const mapStateToProps = (state) => {
+  return state.environment;
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators(actionCreators, dispatch)
+}
+
 export default connect(
-  state => state.environment,
-  dispatch => bindActionCreators(actionCreators, dispatch)
+  mapStateToProps,
+  mapDispatchToProps
 )(Environment);
