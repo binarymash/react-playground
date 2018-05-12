@@ -1,5 +1,5 @@
 ﻿import produce from 'immer';
-import { requestEnvironmentType, receiveEnvironmentType, receiveEnvironmentErrorType } from '../actions/index';
+import { requestEnvironmentType, receiveEnvironmentType, receiveEnvironmentErrorType, toggleStateUpdateSucceeded, toggleStateUpdateFailed } from '../actions/index';
 
 // Read
 
@@ -34,7 +34,8 @@ const getToggleStates = (state) => {
 const getToggleState = (toggleState) => {
   return {
     key: toggleState.key,
-    value: getToggleStateValue(toggleState.value)
+    value: getToggleStateValue(toggleState.value),
+    version: toggleState.version
   }
 }
 
@@ -92,6 +93,22 @@ export const reducer = produce(
         draft.isErrored = true;
     } 
 
+    if (action.type === toggleStateUpdateSucceeded) {
+      draft.isErrored = true;
+      let toggleState = draft.environmentState.toggleStates.find(ts => { return ts.key === action.toggleKey;});
+      toggleState.version = action.version;
+      toggleState.value = action.value;
+    }
+
+    if (action.type === toggleStateUpdateFailed) {
+      draft.isErrored = true;
+    }
+    
   },
-  INITIAL_STATE
+  {
+    environment: null,
+    environmentState: null,
+    isLoading: false,
+    isErrored: false
+  }
 )

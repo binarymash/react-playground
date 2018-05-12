@@ -14,6 +14,10 @@ export const requestToggleType = 'REQUEST_TOGGLE';
 export const receiveToggleType = 'RECEIVE_TOGGLE';
 export const receiveToggleErrorType = 'RECEIVE_TOGGLE_ERROR';
 
+export const toggleStateUpdateRequested = 'TOGGLESTATE_UPDATE_REQUESTED';
+export const toggleStateUpdateSucceeded = 'TOGGLESTATE_UPDATE_SUCCEEDED';
+export const toggleStateUpdateFailed = 'TOGGLESTATE_UPDATE_FAILED';
+
 const baseUrl = 'http://localhost:2316/api';
 
 export const actionCreators = {
@@ -95,6 +99,41 @@ export const actionCreators = {
     }).catch(function(error){
       dispatch({ type: receiveToggleErrorType, error});  
     });
-  }
+  },
 
+  setToggleValue: (projectId, environmentKey, toggleKey, version, value) => async(dispatch, getState) => {
+    dispatch({type: toggleStateUpdateRequested});
+
+    const url = baseUrl + `/projects/${projectId}/environments/${environmentKey}/toggles/${toggleKey}/change-state`;
+
+    let newValue = value ? "True" : "False";
+
+    let request = { 
+      method: 'POST',
+      headers: {
+        'Content-Type':'application/json',
+        'Accept':'application/json'
+      },
+      body: JSON.stringify({
+        "expectedToggleStateVersion": version,
+        "state": newValue
+      })};
+
+    await fetch(url, request).then(function (response){
+      if (response.ok){
+        dispatch({ 
+          type: toggleStateUpdateSucceeded,
+          projectId: projectId,
+          environmentKey: environmentKey,
+          toggleKey: toggleKey,
+          version: version+1,
+          value: newValue
+        });
+        return;
+      }
+      throw new Error('Network response was not ok.');      
+    }).catch(function(error){
+      dispatch({ type: toggleStateUpdateFailed, error});  
+    });
+  }
 };

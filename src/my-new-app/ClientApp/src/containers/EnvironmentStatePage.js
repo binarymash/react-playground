@@ -46,7 +46,7 @@ class EnvironmentStatePage extends Component {
     return (
       <div>
         <PageHeader>{this.props.environment.key}</PageHeader> 
-        <ToggleStates toggles={this.props.environment.toggles} />
+        <ToggleStates toggles={this.props.environment.toggles} projectId={this.props.match.params.projectId} environmentKey={this.props.match.params.environmentKey} />
         <Audit audit={this.props.environment.audit} />     
       </div>
     ); 

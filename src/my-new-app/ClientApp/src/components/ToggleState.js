@@ -1,9 +1,10 @@
 ﻿import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
+import { actionCreators } from '../actions/index';
 import { connect } from 'react-redux';
 import { ListGroupItem } from 'react-bootstrap';
 import Switch from 'react-bootstrap-switch';
 import '../components/react-bootstrap-switch.css';
-
 
 class ToggleState extends Component {
 
@@ -19,11 +20,15 @@ class ToggleState extends Component {
   }
   
   handleSwitch(elem, state) {
-    console.log('handleSwitch. elem:', elem);
-    console.log('name:', elem.props.name);
-    console.log('new state:', state);
+    this.props.setToggleValue(this.props.projectId, this.props.environmentKey, this.props.toggle.key, this.props.toggle.version, !state);
   }  
 }
 
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators(actionCreators, dispatch)
+}
+
 export default connect(
+  null,
+  mapDispatchToProps
 )(ToggleState);

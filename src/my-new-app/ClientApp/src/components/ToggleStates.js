@@ -16,7 +16,7 @@ class ToggleStates extends Component {
       <section>
         <h2>Toggle States <Badge>{this.props.toggles.length}</Badge></h2>
         <ListGroup>
-          {this.props.toggles.map(toggle => <ToggleState key={toggle.key} toggle={toggle} />) }
+          {this.props.toggles.map(toggle => <ToggleState key={toggle.key} toggle={toggle} projectId={this.props.projectId} environmentKey={this.props.environmentKey} />) }
         </ListGroup>  
       </section>
     );
