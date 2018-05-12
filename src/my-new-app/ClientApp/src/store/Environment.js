@@ -58,8 +58,8 @@ const getAudit = (state) => {
   return {
     created: state.environment.environmentState.created,
     createdBy: state.environment.environmentState.createdBy,
-    modified: state.environment.environmentState.lastModified,
-    modifiedBy: state.environment.environmentState.lastModifiedBy,
+    lastModified: state.environment.environmentState.lastModified,
+    lastModifiedBy: state.environment.environmentState.lastModifiedBy,
     version: state.environment.environmentState.version
   }
 }

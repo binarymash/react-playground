@@ -2,16 +2,15 @@
 import { Route } from 'react-router';
 import Layout from './components/Layout';
 import HomePage from './containers/HomePage';
-import NavMenu from './components/NavMenu';
-import Project from './components/Project';
+import ProjectPage from './containers/ProjectPage';
 import EnvironmentStatePage from './containers/EnvironmentStatePage';
-import Toggle from './components/Toggle';
+import TogglePage from './containers/TogglePage';
 
 export default () => (
   <Layout>
     <Route exact path='/' component={HomePage} />
-    <Route exact path='/projects/:id' component={Project} />
+    <Route exact path='/projects/:id' component={ProjectPage} />
     <Route exact path='/projects/:projectId/environments/:environmentKey' component={EnvironmentStatePage} />    
-    <Route exact path='/projects/:projectId/toggles/:toggleKey' component={Toggle} />       
+    <Route exact path='/projects/:projectId/toggles/:toggleKey' component={TogglePage} />       
   </Layout>
 );

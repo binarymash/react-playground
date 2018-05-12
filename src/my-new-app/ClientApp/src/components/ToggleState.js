@@ -1,7 +1,7 @@
 ﻿import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { ListGroupItem } from 'react-bootstrap';
-import Switch from 'react-bootstrap-switch'
+import Switch from 'react-bootstrap-switch';
 import '../components/react-bootstrap-switch.css';
 
 
@@ -9,7 +9,7 @@ class ToggleState extends Component {
 
   render() {
     return(
-      <ListGroupItem key={this.props.toggle.key}>
+      <ListGroupItem>
         <span>{this.props.toggle.key}</span>
         <span className='pull-right'>  
           <Switch bsSize='mini' onColor='success' offColor='danger' value={this.props.toggle.value} onChange={(el, state) => this.handleSwitch(el, state)}/>

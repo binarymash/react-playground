@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { PageHeader } from 'react-bootstrap';
 import { actionCreators } from '../actions/index';
-import { getEnvironment, getEnvironmentState, getIsLoading, getIsErrored } from '../store/Environment';
+import { getEnvironment, getIsLoading, getIsErrored } from '../store/Environment';
 import ToggleStates from '../components/ToggleStates'
 import Audit from '../components/Audit'
 

@@ -1,6 +1,39 @@
 ﻿import produce from 'immer';
 import { requestToggleType, receiveToggleType, receiveToggleErrorType } from '../actions/index';
 
+// Read
+
+export const getToggle = (state) => {
+  let toggle = state.toggle.toggle;
+
+  if (!toggle) {
+    return null;
+  }
+
+  return {
+    projectId: toggle.projectId,
+    key: toggle.key,
+    name: toggle.name,
+    audit: getAudit(toggle)
+  };
+}
+
+const getAudit = (toggle) => {
+  if (!toggle) {
+    return null;
+  }
+
+  return {
+    created: toggle.created,
+    createdBy: toggle.createdBy,
+    lastModified: toggle.lastModified,
+    lastModifiedBy: toggle.lastModifiedBy,
+    version: toggle.version
+  }
+}
+
+// Write
+
 const INITIAL_STATE = {
      toggle: null,
      isLoading: false,
