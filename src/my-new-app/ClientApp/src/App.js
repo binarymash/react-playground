@@ -1,6 +1,6 @@
 ﻿import React from 'react';
 import { Route } from 'react-router';
-import Layout from './components/Layout';
+import Layout from './containers/Layout';
 import HomePage from './containers/HomePage';
 import ProjectPage from './containers/ProjectPage';
 import EnvironmentStatePage from './containers/EnvironmentStatePage';

@@ -24,11 +24,11 @@ class NavMenu extends Component {
       </Navbar.Header>
       <Navbar.Collapse>
         <Nav>
-        {this.props.projects.map(project =>
-          <LinkContainer key={project.id} to={`/projects/${project.id}`} exact>
-          <NavItem>{project.name}</NavItem>
-        </LinkContainer>
-        )}          
+          {this.props.projects.map(project =>
+            <LinkContainer key={project.id} to={`/projects/${project.id}`} exact>
+              <NavItem>{project.name}</NavItem>
+            </LinkContainer>
+          )}          
         </Nav>
       </Navbar.Collapse>
     </Navbar>
