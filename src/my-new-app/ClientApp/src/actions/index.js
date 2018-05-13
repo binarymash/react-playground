@@ -18,6 +18,9 @@ export const toggleStateUpdateRequested = 'TOGGLESTATE_UPDATE_REQUESTED';
 export const toggleStateUpdateSucceeded = 'TOGGLESTATE_UPDATE_SUCCEEDED';
 export const toggleStateUpdateFailed = 'TOGGLESTATE_UPDATE_FAILED';
 
+export const showModal = 'SHOW_MODAL';
+export const hideModal = 'HIDE_MODAL';
+
 const baseUrl = 'http://localhost:2316/api';
 
 export const actionCreators = {
@@ -35,6 +38,7 @@ export const actionCreators = {
     }).then(function(json){
       dispatch({ type: receiveProjectsType, json});      
     }).catch(function(error){
+      dispatch({ type: showModal, modalType: 'API_ERROR', modalProps:{}});      
       dispatch({ type: receiveProjectsErrorType, error});  
     });
   },
@@ -53,6 +57,7 @@ export const actionCreators = {
     }).then(function(json){
       dispatch({ type: receiveProjectType, json});
     }).catch(function(error){
+      dispatch({ type: showModal, modalType: 'API_ERROR', modalProps:{}});      
       dispatch({ type: receiveProjectErrorType, error});  
     });
   },
@@ -80,6 +85,7 @@ export const actionCreators = {
     Promise.all([defPromise, statePromise]).then(function([defJson, stateJson]){
       dispatch({ type: receiveEnvironmentType, defJson, stateJson});
     }).catch(function(error){
+      dispatch({ type: showModal, modalType: 'API_ERROR', modalProps:{}});      
       dispatch({ type: receiveEnvironmentErrorType, error});  
     });
   },
@@ -97,6 +103,7 @@ export const actionCreators = {
     }).then(function(json){
       dispatch({ type: receiveToggleType, json});
     }).catch(function(error){
+      dispatch({ type: showModal, modalType: 'API_ERROR', modalProps:{}});
       dispatch({ type: receiveToggleErrorType, error});  
     });
   },
@@ -133,7 +140,12 @@ export const actionCreators = {
       }
       throw new Error('Network response was not ok.');      
     }).catch(function(error){
+      dispatch({ type: showModal, modalType: 'API_ERROR', modalProps:{}});      
       dispatch({ type: toggleStateUpdateFailed, error});  
     });
+  },
+
+  hideModal: () => async (dispatch, getState) => {
+    dispatch({type: hideModal});
   }
 };
