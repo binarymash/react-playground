@@ -1,3 +1,5 @@
+import {Api} from '../api.js';
+
 export const requestProjectsType = 'REQUEST_PROJECTS';
 export const receiveProjectsType = 'RECEIVE_PROJECTS';
 export const receiveProjectsErrorType = 'RECEIVE_PROJECTS_ERROR';
@@ -21,21 +23,11 @@ export const toggleStateUpdateFailed = 'TOGGLESTATE_UPDATE_FAILED';
 export const showModal = 'SHOW_MODAL';
 export const hideModal = 'HIDE_MODAL';
 
-const baseUrl = 'http://localhost:2316/api';
-
 export const actionCreators = {
 
   requestProjects: () => async (dispatch, getState) => {
     dispatch({ type: requestProjectsType });
-
-    const url = baseUrl + `/projects`;
-
-    await fetch(url).then(function(response){
-      if (response.ok){
-        return response.json();
-      }
-      throw new Error('Network response was not ok.');      
-    }).then(function(json){
+    await Api.getProjects().then(function(json){
       dispatch({ type: receiveProjectsType, json});      
     }).catch(function(error){
       dispatch({ type: showModal, modalType: 'API_ERROR', modalProps:{}});      
@@ -44,17 +36,8 @@ export const actionCreators = {
   },
 
   selectProject: projectId => async (dispatch, getState) => {
-
     dispatch({ type: requestProjectType });
-
-    const url = baseUrl + `/projects/${projectId}`;
-
-    await fetch(url).then(function(response){
-      if (response.ok){
-        return response.json();
-      }
-      throw new Error('Network response was not ok.');
-    }).then(function(json){
+    await Api.getProject(projectId).then(function(json){
       dispatch({ type: receiveProjectType, json});
     }).catch(function(error){
       dispatch({ type: showModal, modalType: 'API_ERROR', modalProps:{}});      
@@ -65,24 +48,11 @@ export const actionCreators = {
   selectEnvironment: r => async (dispatch, getState) => {
     dispatch({ type: requestEnvironmentType });
 
-    const defUrl = baseUrl + `/projects/${r.projectId}/environments/${r.environmentKey}`;
-    const stateUrl = baseUrl + `/states/${r.projectId}/${r.environmentKey}`;
-
-    var defPromise = fetch(defUrl).then(function(response){
-      if (response.ok){
-        return response.json();
-      }
-      throw new Error('Network response was not ok.');
-    });
-
-    var statePromise = fetch(stateUrl).then(function(response){
-      if (response.ok){
-        return response.json();
-      }
-      throw new Error('Network response was not ok.');
-    });
-
-    Promise.all([defPromise, statePromise]).then(function([defJson, stateJson]){
+    let promises = [
+      Api.getEnvironment(r.projectId, r.environmentKey), 
+      Api.getEnvironmentState(r.projectId, r.environmentKey)];
+    
+    Promise.all(promises).then(function([defJson, stateJson]){
       dispatch({ type: receiveEnvironmentType, defJson, stateJson});
     }).catch(function(error){
       dispatch({ type: showModal, modalType: 'API_ERROR', modalProps:{}});      
@@ -93,14 +63,7 @@ export const actionCreators = {
   selectToggle: r => async (dispatch, getState) => {
     dispatch({ type: requestToggleType });
 
-    const url = baseUrl + `/projects/${r.projectId}/toggles/${r.toggleKey}`;
-
-    await fetch(url).then(function(response){
-      if (response.ok){
-        return response.json();
-      }
-      throw new Error('Network response was not ok.');
-    }).then(function(json){
+    await Api.getToggle(r.projectId, r.toggleKey).then(function(json){
       dispatch({ type: receiveToggleType, json});
     }).catch(function(error){
       dispatch({ type: showModal, modalType: 'API_ERROR', modalProps:{}});
@@ -111,34 +74,17 @@ export const actionCreators = {
   setToggleValue: (projectId, environmentKey, toggleKey, version, value) => async(dispatch, getState) => {
     dispatch({type: toggleStateUpdateRequested});
 
-    const url = baseUrl + `/projects/${projectId}/environments/${environmentKey}/toggles/${toggleKey}/change-state`;
-
     let newValue = value ? "True" : "False";
-
-    let request = { 
-      method: 'POST',
-      headers: {
-        'Content-Type':'application/json',
-        'Accept':'application/json'
-      },
-      body: JSON.stringify({
-        "expectedToggleStateVersion": version,
-        "state": newValue
-      })};
-
-    await fetch(url, request).then(function (response){
-      if (response.ok){
-        dispatch({ 
-          type: toggleStateUpdateSucceeded,
-          projectId: projectId,
-          environmentKey: environmentKey,
-          toggleKey: toggleKey,
-          version: version+1,
-          value: newValue
-        });
-        return;
-      }
-      throw new Error('Network response was not ok.');      
+    
+    await Api.setToggleState(projectId, environmentKey, toggleKey, version, newValue).then(() => {
+      dispatch({ 
+        type: toggleStateUpdateSucceeded,
+        projectId: projectId,
+        environmentKey: environmentKey,
+        toggleKey: toggleKey,
+        version: version+1,
+        value: newValue
+      });
     }).catch(function(error){
       dispatch({ type: showModal, modalType: 'API_ERROR', modalProps:{}});      
       dispatch({ type: toggleStateUpdateFailed, error});  
