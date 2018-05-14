@@ -22,36 +22,18 @@ class ProjectPage extends Component {
   }
 
   render() {
-    if (this.props.error) {
-      return this.renderError();
-    } else if (this.props.project) {
-      return this.renderProject(this.props);
-    } else {
-      return this.renderNoProject();
+    if (!this.props.project){
+      return null;
     }
-  }
 
-  renderError() {
-    return (
-      <div>An error occurred! <button>Try again</button></div>
-    );
-  }
-
-  renderProject(props) {
     return (
       <div>
-        <PageHeader>{props.project.name}</PageHeader>
-        <Environments environments={props.project.environments} projectId={props.project.id}/>
-        <Toggles toggles={props.project.toggles} projectId={props.project.id}/>
-        <Audit audit={props.project.audit} />   
+        <PageHeader>{this.props.project.name}</PageHeader>
+        <Environments environments={this.props.project.environments} projectId={this.props.project.id}/>
+        <Toggles toggles={this.props.project.toggles} projectId={this.props.project.id}/>
+        <Audit audit={this.props.project.audit} />   
       </div>
     ); 
-  }
-
-  renderNoProject() {
-    return (
-      <div>No selected project</div>
-    );
   }
 }
 

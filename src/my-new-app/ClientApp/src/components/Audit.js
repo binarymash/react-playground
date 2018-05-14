@@ -13,9 +13,8 @@ class Audit extends Component {
     return (
       <section>
         <h3>Audit</h3>
-        <div>Created {Moment(this.props.audit.created).fromNow()} by {this.props.audit.createdBy}</div>
-        <div>Last modified {Moment(this.props.audit.lastModified).fromNow()} by {this.props.audit.lastModifiedBy}</div>
-        <div>Version {this.props.audit.version}</div>
+        <div><small>Created {Moment(this.props.audit.created).fromNow()} by {this.props.audit.createdBy}</small></div>
+        <div><small>Last modified {Moment(this.props.audit.lastModified).fromNow()} by {this.props.audit.lastModifiedBy}</small></div>
       </section>
     );
   }
