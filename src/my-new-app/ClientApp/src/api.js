@@ -116,6 +116,25 @@ export const Api = {
         }});
     },
 
+    deleteEnvironment: (projectId, environmentKey, version) => {
+        const url = baseUrl + `/projects/${projectId}/environments/${environmentKey}/delete`;
+
+        let request = { 
+        method: 'POST',
+        headers: {
+            'Content-Type':'application/json',
+            'Accept':'application/json'
+        },
+        body: JSON.stringify({
+            "expectedProjectVersion": version
+          })};
+
+        return fetch(url, request).then(function (response){
+        if (!response.ok){
+            throw new Error('Network response was not ok.');      
+        }});
+    },  
+
     setToggleState: (projectId, environmentKey, toggleKey, version, value) => {
         const url = baseUrl + `/projects/${projectId}/environments/${environmentKey}/toggles/${toggleKey}/change-state`;
 

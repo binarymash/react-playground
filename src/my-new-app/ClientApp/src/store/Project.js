@@ -2,7 +2,7 @@
 import { 
   requestProjectType, receiveProjectType, receiveProjectErrorType, 
   toggleAddSucceeded, toggleDeleteSucceeded,
-  environmentAddSucceeded } from '../actions/index';
+  environmentAddSucceeded, environmentDeleteSucceeded } from '../actions/index';
 
 // Read
 
@@ -118,6 +118,11 @@ export const reducer = produce(
       });
       draft.project.version = action.version;
     }
+
+    if (action.type === environmentDeleteSucceeded) {
+      draft.project.environments.splice(draft.project.environments.findIndex(environment => environment.key === action.environmentKey), 1);
+      draft.project.version = action.version;
+    }    
 
   },
   INITIAL_STATE
