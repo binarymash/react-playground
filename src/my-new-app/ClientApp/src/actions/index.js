@@ -127,7 +127,7 @@ export const actionCreators = {
 
     dispatch({type: toggleDeleteRequested});
 
-    let version = getState().project.version;
+    let version = getState().project.project.version;
 
     await Api.deleteToggle(projectId, toggleKey, version).then(() => {
       dispatch({ 

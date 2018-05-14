@@ -105,7 +105,8 @@ export const reducer = produce(
     }
 
     if (action.type === toggleDeleteSucceeded) {
-      draft.project = action.json
+      draft.project.toggles.splice(draft.project.toggles.findIndex(toggle => toggle.key === action.toggleKey), 1);
+      draft.project.version = action.version;
     }
   },
   INITIAL_STATE
