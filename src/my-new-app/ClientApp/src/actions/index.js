@@ -1,4 +1,5 @@
 import {Api} from '../api.js';
+import uuidv1 from 'uuid/v1';
 
 export const requestProjectsType = 'REQUEST_PROJECTS';
 export const receiveProjectsType = 'RECEIVE_PROJECTS';
@@ -19,6 +20,10 @@ export const receiveToggleErrorType = 'RECEIVE_TOGGLE_ERROR';
 export const toggleStateUpdateRequested = 'TOGGLESTATE_UPDATE_REQUESTED';
 export const toggleStateUpdateSucceeded = 'TOGGLESTATE_UPDATE_SUCCEEDED';
 export const toggleStateUpdateFailed = 'TOGGLESTATE_UPDATE_FAILED';
+
+export const projectAddRequested = 'PROJECT_ADD_REQUESTED';
+export const projectAddSucceeded = 'PROJECT_ADD_SUCCEEDED';
+export const projectAddFailed = 'PROJECT_ADD_FAILED';
 
 export const toggleAddRequested = 'TOGGLE_ADD_REQUESTED';
 export const toggleAddSucceeded = 'TOGGLE_ADD_SUCCEEDED';
@@ -110,6 +115,26 @@ export const actionCreators = {
   hideModal: () => async (dispatch, getState) => {
     dispatch({type: hideModal});
   },
+
+  addProject: (name) => async(dispatch, getState) => {
+
+    let id = uuidv1();
+    dispatch({type: projectAddRequested});
+
+    let version = getState().account.version;
+
+    await Api.addProject(id, name, version).then(() => {
+      dispatch({ 
+        type: projectAddSucceeded,
+        id: id,
+        name: name,
+        version: version+1,
+      });
+    }).catch(function(error){
+      dispatch({ type: showModal, modalType: 'API_ERROR', modalProps:{}});      
+      dispatch({ type: projectAddFailed, error});  
+    });    
+  }, 
 
   addToggle: (projectId, toggleKey, toggleName) => async(dispatch, getState) => {
 

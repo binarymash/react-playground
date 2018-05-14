@@ -1,6 +1,7 @@
 ﻿import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ApiErrorModal from './ApiErrorModal';
+import AddProjectModal from './AddProjectModal';
 import AddEnvironmentModal from './AddEnvironmentModal';
 import DeleteEnvironmentModal from './DeleteEnvironmentModal';
 import AddToggleModal from './AddToggleModal';
@@ -26,6 +27,7 @@ const mapStateToProps = (state) => {
 
 const MODAL_COMPONENTS = {
   'API_ERROR': ApiErrorModal,
+  'ADD_PROJECT': AddProjectModal,
   'ADD_ENVIRONMENT': AddEnvironmentModal,
   'DELETE_ENVIRONMENT': DeleteEnvironmentModal,  
   'ADD_TOGGLE': AddToggleModal,

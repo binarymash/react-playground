@@ -56,6 +56,26 @@ export const Api = {
 
 // Write
 
+    addProject: (id, name) => {
+        const url = baseUrl + `/projects/create`;
+
+        let request = { 
+        method: 'POST',
+        headers: {
+            'Content-Type':'application/json',
+            'Accept':'application/json'
+        },
+        body: JSON.stringify({
+            "projectId": id,
+            "name": name
+        })};
+
+        return fetch(url, request).then(function (response){
+        if (!response.ok){
+            throw new Error('Network response was not ok.');      
+        }});
+    },
+
     addToggle: (projectId, toggleKey, toggleName, version) => {
         const url = baseUrl + `/projects/${projectId}/toggles/add`;
 
