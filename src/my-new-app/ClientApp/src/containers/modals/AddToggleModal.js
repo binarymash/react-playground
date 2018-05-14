@@ -16,10 +16,12 @@ class AddToggleModal extends Component {
   }
 
   handleOkClick = (event) => {
-    this.props.hideModal().then(() => {
-      this.props.addToggle(this.props.projectId, this.state.key, this.state.name);
-    });
-  }
+    if (this.isValid()) {
+        this.props.hideModal().then(() => {
+          this.props.addToggle(this.props.projectId, this.state.key, this.state.name);
+        });
+      }
+      }
 
   handleChange = (event) => {
     const target = event.target;
@@ -31,9 +33,23 @@ class AddToggleModal extends Component {
     });
   }
 
-  getValidationState = (a,b,c) => {
-    return 'success';
+  isValid = () => {
+    return this.getNameValidationState() === 'success' && this.getKeyValidationState() === 'success';
   }
+
+  getNameValidationState = () => {
+    if (this.state.name.length === 0){
+        return 'error';
+    }
+    return 'success';    
+  }
+
+  getKeyValidationState = () => {
+    if (this.state.key.length === 0){
+        return 'error';
+    }
+    return 'success';    
+  } 
 
   render() {
     return (
@@ -45,7 +61,7 @@ class AddToggleModal extends Component {
           <form>
             <FormGroup
               controlId="toggleName"
-              validationState={this.getValidationState()}
+              validationState={this.getNameValidationState()}
             >
               <ControlLabel>Toggle name</ControlLabel>
               <FormControl
@@ -57,7 +73,7 @@ class AddToggleModal extends Component {
               />
               <FormControl.Feedback />
             </FormGroup>
-            <FormGroup controlId="toggleKey" validationState={this.getValidationState()}>
+            <FormGroup controlId="toggleKey" validationState={this.getKeyValidationState()}>
               <ControlLabel>Toggle key</ControlLabel>
               <FormControl
                 type="text"
