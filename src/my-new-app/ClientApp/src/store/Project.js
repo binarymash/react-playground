@@ -1,5 +1,5 @@
 ﻿import produce from 'immer';
-import { requestProjectType, receiveProjectType, receiveProjectErrorType } from '../actions/index';
+import { requestProjectType, receiveProjectType, receiveProjectErrorType, toggleAddSucceeded, toggleDeleteSucceeded } from '../actions/index';
 
 // Read
 
@@ -96,6 +96,17 @@ export const reducer = produce(
         draft.error = true;
     }
 
+    if (action.type === toggleAddSucceeded) {
+      draft.project.toggles.push({
+        'key': action.toggleKey,
+        'name': action.toggleName,
+      });
+      draft.project.version = action.version;
+    }
+
+    if (action.type === toggleDeleteSucceeded) {
+      draft.project = action.json
+    }
   },
   INITIAL_STATE
 )

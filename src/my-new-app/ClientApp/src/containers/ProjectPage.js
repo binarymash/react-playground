@@ -42,7 +42,7 @@ class ProjectPage extends Component {
       <div>
         <PageHeader>{props.project.name}</PageHeader>
         <Environments environments={props.project.environments} />
-        <Toggles toggles={props.project.toggles} />
+        <Toggles toggles={props.project.toggles} projectId={props.project.id}/>
         <Audit audit={props.project.audit} />   
       </div>
     ); 

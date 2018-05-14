@@ -94,7 +94,6 @@ export const reducer = produce(
     } 
 
     if (action.type === toggleStateUpdateSucceeded) {
-      draft.isErrored = true;
       let toggleState = draft.environmentState.toggleStates.find(ts => { return ts.key === action.toggleKey;});
       toggleState.version = action.version;
       toggleState.value = action.value;

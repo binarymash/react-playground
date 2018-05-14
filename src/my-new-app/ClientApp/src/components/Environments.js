@@ -1,9 +1,13 @@
 ﻿import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Badge, ListGroup } from 'react-bootstrap';
+import { Badge, Button, ButtonToolbar, Glyphicon, ListGroup, Panel } from 'react-bootstrap';
 import Environment from './Environment'
 
 class Environments extends Component {
+
+  handleAddClick = () => {
+
+  }
 
   render() {
     if (!this.props.environments){
@@ -15,9 +19,18 @@ class Environments extends Component {
     return (
       <section>
         <h2>Environments <Badge>{this.props.environments.length}</Badge></h2>
-        <ListGroup>
-            {this.props.environments.map(environment => <Environment key={environment.key} environment={environment} />)}
-        </ListGroup>
+        <Panel>
+          <Panel.Heading>
+            <ButtonToolbar>
+              <Button className='pull-right' bsSize='small' bsStyle='success' onClick={this.handleAddClick}><Glyphicon glyph='plus' /> Add new environment</Button>
+            </ButtonToolbar>
+          </Panel.Heading>
+          <Panel.Body>
+            <ListGroup>
+              {this.props.environments.map(environment => <Environment key={environment.key} environment={environment} />)}
+            </ListGroup>
+          </Panel.Body>
+        </Panel>
       </section>
     );
 

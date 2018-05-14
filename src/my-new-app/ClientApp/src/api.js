@@ -1,6 +1,9 @@
 const baseUrl = 'http://localhost:2316/api';
 
 export const Api = {
+
+// Read
+
     getProjects: () => {
         const url = baseUrl + `/projects`;
         return fetch(url).then(function(response){
@@ -49,6 +52,29 @@ export const Api = {
             }
             throw new Error('Network response was not ok.');
         })
+    },
+
+// Write
+
+    addToggle: (projectId, toggleKey, toggleName, version) => {
+        const url = baseUrl + `/projects/${projectId}/toggles/add`;
+
+        let request = { 
+        method: 'POST',
+        headers: {
+            'Content-Type':'application/json',
+            'Accept':'application/json'
+        },
+        body: JSON.stringify({
+            "key": toggleKey,
+            "name": toggleName,
+            "expectedProjectVersion": version
+          })};
+
+        return fetch(url, request).then(function (response){
+        if (!response.ok){
+            throw new Error('Network response was not ok.');      
+        }});
     },
 
     setToggleState: (projectId, environmentKey, toggleKey, version, value) => {

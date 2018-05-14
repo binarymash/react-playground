@@ -20,6 +20,14 @@ export const toggleStateUpdateRequested = 'TOGGLESTATE_UPDATE_REQUESTED';
 export const toggleStateUpdateSucceeded = 'TOGGLESTATE_UPDATE_SUCCEEDED';
 export const toggleStateUpdateFailed = 'TOGGLESTATE_UPDATE_FAILED';
 
+export const toggleAddRequested = 'TOGGLE_ADD_REQUESTED';
+export const toggleAddSucceeded = 'TOGGLE_ADD_SUCCEEDED';
+export const toggleAddFailed = 'TOGGLE_ADD_FAILED';
+
+export const toggleDeleteRequested = 'TOGGLE_DELETE_REQUESTED';
+export const toggleDeleteSucceeded = 'TOGGLE_DELETE_SUCCEEDED';
+export const toggleDeleteFailed = 'TOGGLE_DELETE_FAILED';
+
 export const showModal = 'SHOW_MODAL';
 export const hideModal = 'HIDE_MODAL';
 
@@ -93,5 +101,45 @@ export const actionCreators = {
 
   hideModal: () => async (dispatch, getState) => {
     dispatch({type: hideModal});
+  },
+
+  addToggle: (projectId, toggleKey, toggleName) => async(dispatch, getState) => {
+
+    dispatch({type: toggleAddRequested});
+
+    let version = getState().project.project.version;
+
+    await Api.addToggle(projectId, toggleKey, toggleName, version).then(() => {
+      dispatch({ 
+        type: toggleAddSucceeded,
+        projectId: projectId,
+        toggleKey: toggleKey,
+        toggleName: toggleName,
+        version: version+1,
+      });
+    }).catch(function(error){
+      dispatch({ type: showModal, modalType: 'API_ERROR', modalProps:{}});      
+      dispatch({ type: toggleAddFailed, error});  
+    });    
+  },
+
+  deleteToggle: (projectId, toggleKey) => async(dispatch, getState) => {
+
+    dispatch({type: toggleDeleteRequested});
+
+    let version = getState().project.version;
+
+    await Api.deleteToggle(projectId, toggleKey, version).then(() => {
+      dispatch({ 
+        type: toggleDeleteSucceeded,
+        projectId: projectId,
+        toggleKey: toggleKey,
+        version: version+1,
+      });
+    }).catch(function(error){
+      dispatch({ type: showModal, modalType: 'API_ERROR', modalProps:{}});      
+      dispatch({ type: toggleDeleteFailed, error});  
+    });    
   }
+
 };

@@ -1,6 +1,8 @@
 ﻿import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ApiErrorModal from './ApiErrorModal';
+import AddToggleModal from './AddToggleModal';
+import DeleteToggleModal from './DeleteToggleModal';
 import './modal.css';
 
 class ModalRoot extends Component {
@@ -22,6 +24,8 @@ const mapStateToProps = (state) => {
 
 const MODAL_COMPONENTS = {
   'API_ERROR': ApiErrorModal,
+  'ADD_TOGGLE': AddToggleModal,
+  'DELETE_TOGGLE': DeleteToggleModal,
 };
 
 export default connect(
