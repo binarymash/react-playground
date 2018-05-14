@@ -1,5 +1,8 @@
 ﻿import produce from 'immer';
-import { requestProjectType, receiveProjectType, receiveProjectErrorType, toggleAddSucceeded, toggleDeleteSucceeded } from '../actions/index';
+import { 
+  requestProjectType, receiveProjectType, receiveProjectErrorType, 
+  toggleAddSucceeded, toggleDeleteSucceeded,
+  environmentAddSucceeded } from '../actions/index';
 
 // Read
 
@@ -108,6 +111,14 @@ export const reducer = produce(
       draft.project.toggles.splice(draft.project.toggles.findIndex(toggle => toggle.key === action.toggleKey), 1);
       draft.project.version = action.version;
     }
+
+    if (action.type === environmentAddSucceeded) {
+      draft.project.environments.push({
+        'key': action.environmentKey,
+      });
+      draft.project.version = action.version;
+    }
+
   },
   INITIAL_STATE
 )

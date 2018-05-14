@@ -41,7 +41,7 @@ class ProjectPage extends Component {
     return (
       <div>
         <PageHeader>{props.project.name}</PageHeader>
-        <Environments environments={props.project.environments} />
+        <Environments environments={props.project.environments} projectId={props.project.id}/>
         <Toggles toggles={props.project.toggles} projectId={props.project.id}/>
         <Audit audit={props.project.audit} />   
       </div>

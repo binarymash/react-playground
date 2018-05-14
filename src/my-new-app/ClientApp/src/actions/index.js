@@ -28,6 +28,10 @@ export const toggleDeleteRequested = 'TOGGLE_DELETE_REQUESTED';
 export const toggleDeleteSucceeded = 'TOGGLE_DELETE_SUCCEEDED';
 export const toggleDeleteFailed = 'TOGGLE_DELETE_FAILED';
 
+export const environmentAddRequested = 'ENVIRONMENT_ADD_REQUESTED';
+export const environmentAddSucceeded = 'ENVIRONMENT_ADD_SUCCEEDED';
+export const environmentAddFailed = 'ENVIRONMENT_ADD_FAILED';
+
 export const showModal = 'SHOW_MODAL';
 export const hideModal = 'HIDE_MODAL';
 
@@ -140,6 +144,25 @@ export const actionCreators = {
       dispatch({ type: showModal, modalType: 'API_ERROR', modalProps:{}});      
       dispatch({ type: toggleDeleteFailed, error});  
     });    
-  }
+  },
+
+  addEnvironment: (projectId, environmentKey) => async(dispatch, getState) => {
+
+    dispatch({type: environmentAddRequested});
+
+    let version = getState().project.project.version;
+
+    await Api.addEnvironment(projectId, environmentKey, version).then(() => {
+      dispatch({ 
+        type: environmentAddSucceeded,
+        projectId: projectId,
+        environmentKey: environmentKey,
+        version: version+1,
+      });
+    }).catch(function(error){
+      dispatch({ type: showModal, modalType: 'API_ERROR', modalProps:{}});      
+      dispatch({ type: environmentAddFailed, error});  
+    });    
+  }, 
 
 };

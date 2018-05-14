@@ -6,7 +6,13 @@ import Environment from './Environment'
 class Environments extends Component {
 
   handleAddClick = () => {
-
+    this.props.dispatch({
+      type: 'SHOW_MODAL',
+      modalType: 'ADD_ENVIRONMENT',
+      modalProps: {
+        projectId: this.props.projectId
+      }
+    });
   }
 
   render() {
