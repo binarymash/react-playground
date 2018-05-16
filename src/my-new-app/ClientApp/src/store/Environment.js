@@ -13,12 +13,12 @@ const getStoreKey = (projectId, environmentKey) => {
 
 export const getIsEnvironmentLoading = (state, projectId, environmentKey) => {
   let storeKey = getStoreKey(projectId, environmentKey);
-  return state.environment.environmentsLoading[storeKey];
+  return state.environment.environmentsLoading[storeKey] === true;
 }
 
 export const getIsEnvironmentStateLoading = (state, projectId, environmentKey) => {
   let storeKey = getStoreKey(projectId, environmentKey);
-  return state.environment.environmentStatesLoading[storeKey];
+  return state.environment.environmentStatesLoading[storeKey] === true;
 }
 
 export const getEnvironment = (state, projectId, environmentKey) => {

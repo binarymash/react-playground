@@ -3,8 +3,10 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { actionCreators } from '../actions/index';
 import { PageHeader } from 'react-bootstrap';
+import { getToggle, getIsToggleLoading } from '../store/Toggle';
 import Audit from '../components/Audit';
-import { getToggle } from '../store/Toggle';
+import Loading from '../components/Loading';
+
 
 
 class TogglePage extends Component {
@@ -24,40 +26,30 @@ class TogglePage extends Component {
   }
 
   render() {
-    if (this.props.error) {
-      return this.renderError();
-    } else if (this.props.toggle) {
-      return this.renderToggle(this.props);
-    } else {
-      return this.renderNoToggle();
+    if (!this.props.toggle){
+      return null;
     }
-  }
 
-  renderError() {
-    return (
-      <div>An error occurred! <button>Try again</button></div>
-    );
-  }
+    if (this.props.isLoading){
+      return (
+        <Loading/>
+      )
+    }
 
-  renderToggle(props) {
+
     return (
       <div>
-        <PageHeader>{props.toggle.name}</PageHeader>
-        <Audit audit={props.toggle.audit} />
+        <PageHeader>{this.props.toggle.name}</PageHeader>
+        <Audit audit={this.props.toggle.audit} />
       </div>
     ); 
   }
-
-  renderNoToggle() {
-    return (
-      <div>No selected toggle</div>
-    );
-  }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
   return {
-    toggle: getToggle(state)
+    toggle: getToggle(state, ownProps.match.params.projectId, ownProps.match.params.toggleKey),
+    isLoading: getIsToggleLoading(state, ownProps.match.params.projectId, ownProps.match.params.toggleKey)
   }
 }
 

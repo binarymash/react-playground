@@ -1,10 +1,15 @@
 ﻿import produce from 'immer';
 import { requestToggleType, receiveToggleType, receiveToggleErrorType } from '../actions/index';
 
+const getStoreKey = (projectId, toggleKey) => {
+  let storeKey = `${projectId}/${toggleKey}`;
+  return storeKey;
+}
+
 // Read
 
-export const getToggle = (state) => {
-  let toggle = state.toggle.toggle;
+export const getToggle = (state, projectId, toggleKey) => {
+  let toggle = state.toggle.toggles[getStoreKey(projectId, toggleKey)];
 
   if (!toggle) {
     return null;
@@ -16,6 +21,10 @@ export const getToggle = (state) => {
     name: toggle.name,
     audit: getAudit(toggle)
   };
+}
+
+export const getIsToggleLoading = (state, projectId, toggleKey) => {
+  return state.toggle.togglesLoading[getStoreKey(projectId, toggleKey)] === true;
 }
 
 const getAudit = (toggle) => {
@@ -35,27 +44,27 @@ const getAudit = (toggle) => {
 // Write
 
 const INITIAL_STATE = {
-     toggle: null,
-     isLoading: false,
-     error: false
+     toggles: {},
+     togglesLoading:{}
 };
 
 export const reducer = produce(
   (draft, action) => {
 
     if (action.type === requestToggleType) {
-      draft.isLoading = true;
-      draft.error = false;
+      let storeKey = getStoreKey(action.projectId, action.toggleKey);      
+      draft.togglesLoading[storeKey] = true;
     }
 
     if (action.type === receiveToggleType) {
-      draft.isLoading = false;
-      draft.toggle = action.json;    
+      let storeKey = getStoreKey(action.projectId, action.toggleKey);  
+      draft.toggles[storeKey] = action.json;    
+      draft.togglesLoading[storeKey] = undefined;  
     }
 
     if (action.type === receiveToggleErrorType) {
-      draft.isLoading = false;
-      draft.error = true;
+      let storeKey = getStoreKey(action.projectId, action.toggleKey);      
+      draft.togglesLoading[storeKey] = undefined;
     }
 
   },
