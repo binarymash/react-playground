@@ -4,7 +4,6 @@ import { requestProjectsType, receiveProjectsType, receiveProjectsErrorType, pro
 const INITIAL_STATE = { 
   projectList: [],
   isLoading: false,
-  error: true
 };
 
 export const getProjectList = (state) => {
@@ -16,12 +15,15 @@ export const getProjectList = (state) => {
   });
 }
 
+export const getIsLoading = (state) => {
+  return state.account.isLoading;
+}
+
 export const reducer = produce(
   (draft, action) => {   
 
     if (action.type === requestProjectsType) {
       draft.isLoading = true;
-      draft.isError = false;
     }
 
     if (action.type === receiveProjectsType) {
@@ -31,7 +33,6 @@ export const reducer = produce(
   
     if (action.type === receiveProjectsErrorType) {
       draft.isLoading = false;
-      draft.isError = false;
     }
 
     if (action.type === projectAddSucceeded) {
@@ -40,10 +41,6 @@ export const reducer = produce(
         'name': action.name
       });     
     }    
-
-    // if (action.type === projectAddSucceeded) {
-    //   draft.projectList.splice(draft.projectList.findIndex(project => project.id === action.id), 1);      
-    // }    
 
   }, 
   INITIAL_STATE

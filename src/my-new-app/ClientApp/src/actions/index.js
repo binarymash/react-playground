@@ -13,6 +13,10 @@ export const requestEnvironmentType = 'REQUEST_ENVIRONMENT';
 export const receiveEnvironmentType = 'RECEIVE_ENVIRONMENT';
 export const receiveEnvironmentErrorType = 'RECEIVE_ENVIRONMENT_ERROR';
 
+export const requestEnvironmentStateType = 'REQUEST_ENVIRONMENTSTATE';
+export const receiveEnvironmentStateType = 'RECEIVE_ENVIRONMENTSTATE';
+export const receiveEnvironmentStateErrorType = 'RECEIVE_ENVIRONMENTSTATE_ERROR';
+
 export const requestToggleType = 'REQUEST_TOGGLE';
 export const receiveToggleType = 'RECEIVE_TOGGLE';
 export const receiveToggleErrorType = 'RECEIVE_TOGGLE_ERROR';
@@ -67,17 +71,33 @@ export const actionCreators = {
   },
 
   selectEnvironment: r => async (dispatch, getState) => {
+
+    if(!getState().project.projects[r.projectId]){
+      dispatch({ type: requestProjectType });
+      await Api.getProject(r.projectId).then(function(json){
+        dispatch({ type: receiveProjectType, json});
+      }).catch(function(error){
+        dispatch({ type: showModal, modalType: 'API_ERROR', modalProps:{}});      
+        dispatch({ type: receiveProjectErrorType, error});  
+      });
+    }
+
     dispatch({ type: requestEnvironmentType });
 
-    let promises = [
-      Api.getEnvironment(r.projectId, r.environmentKey), 
-      Api.getEnvironmentState(r.projectId, r.environmentKey)];
-    
-    Promise.all(promises).then(function([defJson, stateJson]){
-      dispatch({ type: receiveEnvironmentType, defJson, stateJson});
+    await Api.getEnvironment(r.projectId, r.environmentKey).then((json) => {
+      dispatch({ type: receiveEnvironmentType, projectId: r.projectId, environmentKey: r.environmentKey, json});
     }).catch(function(error){
       dispatch({ type: showModal, modalType: 'API_ERROR', modalProps:{}});      
       dispatch({ type: receiveEnvironmentErrorType, error});  
+    });    
+    
+    dispatch({ type: requestEnvironmentStateType });
+
+    await Api.getEnvironmentState(r.projectId, r.environmentKey).then((json) => {
+      dispatch({ type: receiveEnvironmentStateType, projectId: r.projectId, environmentKey: r.environmentKey, json});
+    }).catch(function(error){
+      dispatch({ type: showModal, modalType: 'API_ERROR', modalProps:{}});      
+      dispatch({ type: receiveEnvironmentStateErrorType, error});  
     });
   },
 
@@ -140,7 +160,7 @@ export const actionCreators = {
 
     dispatch({type: toggleAddRequested});
 
-    let version = getState().project.project.version;
+    let version = getState().project.projects[projectId].version;
 
     await Api.addToggle(projectId, toggleKey, toggleName, version).then(() => {
       dispatch({ 
@@ -160,7 +180,7 @@ export const actionCreators = {
 
     dispatch({type: toggleDeleteRequested});
 
-    let version = getState().project.project.version;
+    let version = getState().project.projects[projectId].version;
 
     await Api.deleteToggle(projectId, toggleKey, version).then(() => {
       dispatch({ 
@@ -179,7 +199,7 @@ export const actionCreators = {
 
     dispatch({type: environmentAddRequested});
 
-    let version = getState().project.project.version;
+    let version = getState().project.projects[projectId].version;
 
     await Api.addEnvironment(projectId, environmentKey, version).then(() => {
       dispatch({ 
@@ -198,7 +218,7 @@ export const actionCreators = {
 
     dispatch({type: environmentDeleteRequested});
 
-    let version = getState().project.project.version;
+    let version = getState().project.projects[projectId].version;
 
     await Api.deleteEnvironment(projectId, environmentKey, version).then(() => {
       dispatch({ 

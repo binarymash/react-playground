@@ -5,15 +5,16 @@ import { connect } from 'react-redux';
 import { ListGroupItem } from 'react-bootstrap';
 import Switch from 'react-bootstrap-switch';
 import '../components/react-bootstrap-switch.css';
+import { Link } from 'react-router-dom';
 
 class ToggleState extends Component {
 
   render() {
     return(
       <ListGroupItem>
-        <span>{this.props.toggle.key}</span>
+        <Link to={`/projects/${this.props.projectId}/toggles/${this.props.toggle.key}`}>{this.props.toggle.name}</Link>
         <span className='pull-right'>  
-          <Switch bsSize='mini' onColor='success' offColor='danger' value={this.props.toggle.value} onChange={(el, state) => this.handleSwitch(el, state)}/>
+          <Switch bsSize='mini' onColor='success' offColor='danger' animate={false} value={this.props.toggle.value} onChange={(el, state) => this.handleSwitch(el, state)}/>
         </span>
       </ListGroupItem>
     );

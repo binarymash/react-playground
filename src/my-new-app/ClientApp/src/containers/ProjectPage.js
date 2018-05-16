@@ -3,10 +3,11 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { PageHeader } from 'react-bootstrap';
 import { actionCreators } from '../actions/index';
-import { getProject, getIsLoading, getIsErrored } from '../store/Project';
+import { getProject, getIsLoading } from '../store/Project';
 import Environments from '../components/Environments';
 import Toggles from '../components/Toggles';
 import Audit from '../components/Audit';
+import Loading from '../components/Loading';
 
 class ProjectPage extends Component {
   componentWillMount() {
@@ -26,6 +27,12 @@ class ProjectPage extends Component {
       return null;
     }
 
+    if (this.props.isLoading){
+      return(
+        <Loading/>
+      );
+    }
+
     return (
       <div>
         <PageHeader>{this.props.project.name}</PageHeader>
@@ -37,11 +44,10 @@ class ProjectPage extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
   return {
-    project : getProject(state),
-    isLoading: getIsLoading(state),
-    isErrored: getIsErrored(state)
+    project : getProject(state, ownProps.match.params.id),
+    isLoading: getIsLoading(state, ownProps.match.params.id),
   };
 }
 

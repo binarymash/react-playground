@@ -3,9 +3,10 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { PageHeader } from 'react-bootstrap';
 import { actionCreators } from '../actions/index';
-import { getEnvironment, getIsLoading, getIsErrored } from '../store/Environment';
-import ToggleStates from '../components/ToggleStates'
-import Audit from '../components/Audit'
+import { getEnvironment, getIsEnvironmentLoading, getIsEnvironmentStateLoading } from '../store/Environment';
+import ToggleStates from '../components/ToggleStates';
+import Audit from '../components/Audit';
+import Loading from '../components/Loading';
 
 class EnvironmentStatePage extends Component {
   componentWillMount() {
@@ -24,25 +25,16 @@ class EnvironmentStatePage extends Component {
   }
 
   render() {
-    if (this.props.isError) {
-      return this.renderError();
-    } else {
-      return this.renderEnvironment();
-    }
-  }
-
-  renderError() {
-    return (
-      <div>An error occurred! <button>Try again</button></div>
-    );
-  }
-  
-  renderEnvironment() {
     if (!this.props.environment){
+      return null;
+    }
+
+    if (this.props.isLoading){
       return (
-        <div></div>
+        <Loading/>
       )
     }
+
     return (
       <div>
         <PageHeader>{this.props.environment.key}</PageHeader> 
@@ -53,11 +45,11 @@ class EnvironmentStatePage extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
   return {
-    environment: getEnvironment(state),
-    isLoading: getIsLoading(state),
-    isErrored: getIsErrored(state)
+    environment: getEnvironment(state, ownProps.match.params.projectId, ownProps.match.params.environmentKey),
+    isEnvironmentLoading: getIsEnvironmentLoading(state, ownProps.match.params.projectId, ownProps.match.params.environmentKey),
+    isEnvironmentStateLoading: getIsEnvironmentStateLoading(state, ownProps.match.params.projectId, ownProps.match.params.environmentKey),    
   }
 }
 

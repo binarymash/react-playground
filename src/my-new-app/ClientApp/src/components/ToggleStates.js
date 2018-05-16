@@ -7,9 +7,7 @@ class ToggleStates extends Component {
 
   render() {
     if (!this.props.toggles){
-      return (
-        <section />
-      );
+      return null;
     }
 
     return (

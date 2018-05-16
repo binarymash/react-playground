@@ -3,9 +3,10 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { PageHeader } from 'react-bootstrap';
 import { actionCreators } from '../actions/index';
-import { getProjectList } from '../store/Account';
+import { getProjectList, getIsLoading } from '../store/Account';
 import Projects from '../components/Projects';
 import Audit from '../components/Audit';
+import Loading from '../components/Loading';
 
 class DashboardPage extends Component {
   componentWillMount() {
@@ -15,6 +16,12 @@ class DashboardPage extends Component {
   render() {
     if (!this.props.projects){
       return null;
+    }
+
+    if (this.props.isLoading){
+      return(
+        <Loading/>
+      );
     }
 
     return (
@@ -29,7 +36,8 @@ class DashboardPage extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    projects: getProjectList(state)
+    projects: getProjectList(state),
+    isLoading: getIsLoading(state)
   };
 }
 
