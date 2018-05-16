@@ -10,7 +10,7 @@ import Loading from '../components/Loading';
 
 class EnvironmentStatePage extends Component {
   componentWillMount() {
-    this.props.selectEnvironment({projectId: this.props.match.params.projectId, environmentKey: this.props.match.params.environmentKey});
+    this.props.selectEnvironment(this.props.match.params.projectId, this.props.match.params.environmentKey);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -21,7 +21,7 @@ class EnvironmentStatePage extends Component {
         return;
     }
 
-    this.props.selectEnvironment({projectId: nextProps.match.params.projectId, environmentKey: nextProps.match.params.environmentKey});
+    this.props.selectEnvironment(nextProps.match.params.projectId, nextProps.match.params.environmentKey);
   }
 
   render() {

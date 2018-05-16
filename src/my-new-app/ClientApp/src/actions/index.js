@@ -60,7 +60,7 @@ export const actionCreators = {
     });
   },
 
-  selectProject: projectId => async (dispatch, getState) => {
+  selectProject: (projectId) => async (dispatch, getState) => {
     dispatch({ type: requestProjectType });
     await Api.getProject(projectId).then(function(json){
       dispatch({ type: receiveProjectType, projectId, json});
@@ -70,45 +70,45 @@ export const actionCreators = {
     });
   },
 
-  selectEnvironment: r => async (dispatch, getState) => {
+  selectEnvironment: (projectId, environmentKey) => async (dispatch, getState) => {
 
-    if(!getState().project.projects[r.projectId]){
+    if(!getState().project.projects[projectId]){
       dispatch({ type: requestProjectType });
-      await Api.getProject(r.projectId).then(function(json){
-        dispatch({ type: receiveProjectType, json});
+      await Api.getProject(projectId).then(function(json){
+        dispatch({ type: receiveProjectType, projectId, json});
       }).catch((error) => {
         dispatch({ type: showModal, modalType: 'API_ERROR', modalProps:{}});      
-        dispatch({ type: receiveProjectErrorType, projectId: r.ProjectId, error});  
+        dispatch({ type: receiveProjectErrorType, projectId, error});  
       });
     }
 
     dispatch({ type: requestEnvironmentType });
 
-    await Api.getEnvironment(r.projectId, r.environmentKey).then((json) => {
-      dispatch({ type: receiveEnvironmentType, projectId: r.projectId, environmentKey: r.environmentKey, json});
+    await Api.getEnvironment(projectId, environmentKey).then((json) => {
+      dispatch({ type: receiveEnvironmentType, projectId, environmentKey, json});
     }).catch((error) => {
       dispatch({ type: showModal, modalType: 'API_ERROR', modalProps:{}});      
-      dispatch({ type: receiveEnvironmentErrorType, projectId: r.projectId, environmentKey: r.environmentKey, error});  
+      dispatch({ type: receiveEnvironmentErrorType, projectId, environmentKey, error});  
     });    
     
     dispatch({ type: requestEnvironmentStateType });
 
-    await Api.getEnvironmentState(r.projectId, r.environmentKey).then((json) => {
-      dispatch({ type: receiveEnvironmentStateType, projectId: r.projectId, environmentKey: r.environmentKey, json});
+    await Api.getEnvironmentState(projectId, environmentKey).then((json) => {
+      dispatch({ type: receiveEnvironmentStateType, projectId, environmentKey, json});
     }).catch((error) => {
       dispatch({ type: showModal, modalType: 'API_ERROR', modalProps:{}});      
-      dispatch({ type: receiveEnvironmentStateErrorType, projectId: r.projectId, environmentKey: r.environmentKey, error});  
+      dispatch({ type: receiveEnvironmentStateErrorType, projectId, environmentKey, error});  
     });
   },
 
-  selectToggle: r => async (dispatch, getState) => {
+  selectToggle: (projectId, toggleKey) => async (dispatch, getState) => {
     dispatch({ type: requestToggleType });
 
-    await Api.getToggle(r.projectId, r.toggleKey).then((json) =>{
-      dispatch({ type: receiveToggleType, projectId: r.projectId, toggleKey: r.toggleKey, json});
-    }).catch((error) =>{
+    await Api.getToggle(projectId, toggleKey).then((json) =>{
+      dispatch({ type: receiveToggleType, projectId, toggleKey, json});
+    }).catch((error) => {
       dispatch({ type: showModal, modalType: 'API_ERROR', modalProps:{}});
-      dispatch({ type: receiveToggleErrorType, projectId: r.projectId, toggleKey: r.toggleKey, error});  
+      dispatch({ type: receiveToggleErrorType, projectId, toggleKey, error});  
     });
   },
 
@@ -120,15 +120,15 @@ export const actionCreators = {
     await Api.setToggleState(projectId, environmentKey, toggleKey, version, newValue).then(() => {
       dispatch({ 
         type: toggleStateUpdateSucceeded,
-        projectId: projectId,
-        environmentKey: environmentKey,
-        toggleKey: toggleKey,
+        projectId,
+        environmentKey,
+        toggleKey,
         version: version+1,
         value: newValue
       });
-    }).catch(function(error){
+    }).catch((error) => {
       dispatch({ type: showModal, modalType: 'API_ERROR', modalProps:{}});      
-      dispatch({ type: toggleStateUpdateFailed, error});  
+      dispatch({ type: toggleStateUpdateFailed, projectId, environmentKey, toggleKey, error});  
     });
   },
 
@@ -150,7 +150,7 @@ export const actionCreators = {
         name: name,
         version: version+1,
       });
-    }).catch(function(error){
+    }).catch((error) => {
       dispatch({ type: showModal, modalType: 'API_ERROR', modalProps:{}});      
       dispatch({ type: projectAddFailed, error});  
     });    
@@ -165,14 +165,14 @@ export const actionCreators = {
     await Api.addToggle(projectId, toggleKey, toggleName, version).then(() => {
       dispatch({ 
         type: toggleAddSucceeded,
-        projectId: projectId,
-        toggleKey: toggleKey,
-        toggleName: toggleName,
+        projectId,
+        toggleKey,
+        toggleName,
         version: version+1,
       });
-    }).catch(function(error){
+    }).catch((error) => {
       dispatch({ type: showModal, modalType: 'API_ERROR', modalProps:{}});      
-      dispatch({ type: toggleAddFailed, error});  
+      dispatch({ type: toggleAddFailed, projectId, toggleKey, error});  
     });    
   },
 
@@ -185,13 +185,13 @@ export const actionCreators = {
     await Api.deleteToggle(projectId, toggleKey, version).then(() => {
       dispatch({ 
         type: toggleDeleteSucceeded,
-        projectId: projectId,
-        toggleKey: toggleKey,
+        projectId,
+        toggleKey,
         version: version+1,
       });
-    }).catch(function(error){
+    }).catch((error) => {
       dispatch({ type: showModal, modalType: 'API_ERROR', modalProps:{}});      
-      dispatch({ type: toggleDeleteFailed, error});  
+      dispatch({ type: toggleDeleteFailed, projectId, toggleKey, error});  
     });    
   },
 
@@ -204,13 +204,13 @@ export const actionCreators = {
     await Api.addEnvironment(projectId, environmentKey, version).then(() => {
       dispatch({ 
         type: environmentAddSucceeded,
-        projectId: projectId,
-        environmentKey: environmentKey,
+        projectId,
+        environmentKey,
         version: version+1,
       });
-    }).catch(function(error){
+    }).catch((error) => {
       dispatch({ type: showModal, modalType: 'API_ERROR', modalProps:{}});      
-      dispatch({ type: environmentAddFailed, error});  
+      dispatch({ type: environmentAddFailed, projectId, environmentKey, error});  
     });    
   }, 
 
@@ -229,7 +229,7 @@ export const actionCreators = {
       });
     }).catch(function(error){
       dispatch({ type: showModal, modalType: 'API_ERROR', modalProps:{}});      
-      dispatch({ type: environmentDeleteFailed, error});  
+      dispatch({ type: environmentDeleteFailed, projectId, environmentKey, error});  
     });    
   },  
 };
