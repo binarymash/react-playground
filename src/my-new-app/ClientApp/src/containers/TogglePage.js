@@ -11,7 +11,7 @@ import Loading from '../components/Loading';
 
 class TogglePage extends Component {
   componentWillMount() {
-    this.props.selectToggle({projectId: this.props.match.params.projectId, toggleKey: this.props.match.params.toggleKey});
+    this.props.selectToggle(this.props.match.params.projectId, this.props.match.params.toggleKey);
   }
 
   componentWillReceiveProps(nextProps) { 
@@ -22,7 +22,7 @@ class TogglePage extends Component {
       return;
     }
 
-    this.props.selectToggle({projectId: nextProps.match.params.projectId, toggleKey: nextProps.match.params.toggleKey});
+    this.props.selectToggle(nextProps.match.params.projectId, nextProps.match.params.toggleKey);
   }
 
   render() {
