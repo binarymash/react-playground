@@ -1,6 +1,8 @@
 import {Api} from '../api.js';
 import uuidv1 from 'uuid/v1';
 
+export const initialised = 'INITIALISED';
+
 export const requestProjectsType = 'REQUEST_PROJECTS';
 export const receiveProjectsType = 'RECEIVE_PROJECTS';
 export const receiveProjectsErrorType = 'RECEIVE_PROJECTS_ERROR';
@@ -104,6 +106,17 @@ const getLatestToggle = (projectId, toggleKey, dispatch, getState) => {
 }
 
 export const actionCreators = {
+  initialise: () => async (dispatch, getState) => {
+    await getLatestProjects(dispatch, getState);
+    await getLatestProjects(dispatch, getState).then(() => {
+      let projects = getState().account.projectList;
+      if (projects.length > 0){
+        return getLatestProject(projects[0].id, dispatch, getState);
+      }
+    }).then(() => {
+      dispatch({type: initialised});
+    })
+  },
 
   requestProjects: () => async (dispatch, getState) => {
     await getLatestProjects(dispatch, getState);

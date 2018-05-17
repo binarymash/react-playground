@@ -11,19 +11,20 @@ const INITIAL_STATE = {
   modalProps: {}
 };
 
-export const reducer = produce(
-  (draft, action) => {
+export const reducer = produce((draft, action) => {
+    switch(action.type) {
 
-    if (action.type === showModal) {
-      draft.modalType = action.modalType;
-      draft.modalProps = action.modalProps;
+      case showModal:
+        draft.modalType = action.modalType;
+        draft.modalProps = action.modalProps;
+        break;
+
+      case hideModal:
+        draft.modalType = INITIAL_STATE.modalType;
+        draft.modalProps = INITIAL_STATE.modalProps;  
+        break;
+
     }
-
-    if (action.type === hideModal) { 
-      draft.modalType = INITIAL_STATE.modalType;
-      draft.modalProps = INITIAL_STATE.modalProps;  
-    }
-
   },
   INITIAL_STATE
 )

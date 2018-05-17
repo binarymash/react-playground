@@ -48,25 +48,29 @@ const INITIAL_STATE = {
      togglesLoading:{}
 };
 
-export const reducer = produce(
-  (draft, action) => {
+export const reducer = produce((draft, action) => {
+    switch(action.type){
 
-    if (action.type === requestToggleType) {
-      let storeKey = getStoreKey(action.projectId, action.toggleKey);      
-      draft.togglesLoading[storeKey] = true;
-    }
+      case requestToggleType: {
+          let storeKey = getStoreKey(action.projectId, action.toggleKey);      
+          draft.togglesLoading[storeKey] = true;
+        }
+        break;
 
-    if (action.type === receiveToggleType) {
-      let storeKey = getStoreKey(action.projectId, action.toggleKey);  
-      draft.toggles[storeKey] = action.json;    
-      draft.togglesLoading[storeKey] = undefined;  
-    }
+      case receiveToggleType: {
+          let storeKey = getStoreKey(action.projectId, action.toggleKey);  
+          draft.toggles[storeKey] = action.json;    
+          draft.togglesLoading[storeKey] = undefined;  
+        }
+        break;
 
-    if (action.type === receiveToggleErrorType) {
-      let storeKey = getStoreKey(action.projectId, action.toggleKey);      
-      draft.togglesLoading[storeKey] = undefined;
-    }
+      case receiveToggleErrorType: {
+          let storeKey = getStoreKey(action.projectId, action.toggleKey);      
+          draft.togglesLoading[storeKey] = undefined;
+        }
+        break;
 
+      }
   },
   INITIAL_STATE
 )

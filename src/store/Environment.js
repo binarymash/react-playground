@@ -101,48 +101,56 @@ const INITIAL_STATE = {
   environmentStatesLoading: {},
 };
 
-export const reducer = produce(
-  (draft, action) => {
+export const reducer = produce((draft, action) => {
+  switch (action.type){
 
-    if (action.type === requestEnvironmentType) {
-      let storeKey = getStoreKey(action.projectId, action.environmentKey);      
-      draft.environmentsLoading[storeKey] = true;
+    case requestEnvironmentType: {
+        let storeKey = getStoreKey(action.projectId, action.environmentKey);      
+        draft.environmentsLoading[storeKey] = true;
+      }
+      break;
+
+    case receiveEnvironmentType: {
+        let storeKey = getStoreKey(action.projectId, action.environmentKey);
+        draft.environmentsLoading[storeKey] = undefined;
+        draft.environments[storeKey] = action.json;
+      }
+      break;
+
+    case receiveEnvironmentErrorType: {
+        let storeKey = getStoreKey(action.projectId, action.environmentKey);
+        draft.environmentsLoading[storeKey] = undefined;
+      }
+      break;
+
+    case requestEnvironmentStateType: {
+        let storeKey = getStoreKey(action.projectId, action.environmentKey);      
+        draft.environmentStatesLoading[storeKey] = true;
+      }
+      break;
+
+    case receiveEnvironmentStateType: {
+        let storeKey = getStoreKey(action.projectId, action.environmentKey);
+        draft.environmentStatesLoading[storeKey] = undefined;
+        draft.environmentStates[storeKey] = action.json;
+      }
+      break;
+
+    case receiveEnvironmentStateErrorType: {
+        let storeKey = getStoreKey(action.projectId, action.environmentKey);
+        draft.environmentStatesLoading[storeKey] = undefined;
+      }
+      break;
+
+    case toggleStateUpdateSucceeded: {
+        let storeKey = getStoreKey(action.projectId, action.environmentKey);
+        let toggleState = draft.environmentStates[storeKey].toggleStates.find(ts => { return ts.key === action.toggleKey;});
+        toggleState.version = action.version;
+        toggleState.value = action.value;
+      }
+      break;
+      
     }
-
-    if (action.type === receiveEnvironmentType) {
-      let storeKey = getStoreKey(action.projectId, action.environmentKey);
-      draft.environmentsLoading[storeKey] = undefined;
-      draft.environments[storeKey] = action.json;
-    }
-
-    if (action.type === receiveEnvironmentErrorType) {
-      let storeKey = getStoreKey(action.projectId, action.environmentKey);
-      draft.environmentsLoading[storeKey] = undefined;
-    } 
-
-    if (action.type === requestEnvironmentStateType) {
-      let storeKey = getStoreKey(action.projectId, action.environmentKey);      
-      draft.environmentStatesLoading[storeKey] = true;
-    }
-
-    if (action.type === receiveEnvironmentStateType) {
-      let storeKey = getStoreKey(action.projectId, action.environmentKey);
-      draft.environmentStatesLoading[storeKey] = undefined;
-      draft.environmentStates[storeKey] = action.json;
-    }
-
-    if (action.type === receiveEnvironmentStateErrorType) {
-      let storeKey = getStoreKey(action.projectId, action.environmentKey);
-      draft.environmentStatesLoading[storeKey] = undefined;
-    } 
-
-    if (action.type === toggleStateUpdateSucceeded) {
-      let storeKey = getStoreKey(action.projectId, action.environmentKey);
-      let toggleState = draft.environmentStates[storeKey].toggleStates.find(ts => { return ts.key === action.toggleKey;});
-      toggleState.version = action.version;
-      toggleState.value = action.value;
-    }
-    
   },
   INITIAL_STATE
 )

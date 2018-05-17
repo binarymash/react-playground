@@ -73,47 +73,47 @@ const INITIAL_STATE = {
   projectsLoading:{},
 };
 
-export const reducer = produce(
-  (draft, action) => {
+export const reducer = produce((draft, action) => {
+    switch(action.type){
 
-    if (action.type === requestProjectType) {
-      draft.projectsLoading[action.projectId] = true;
+      case requestProjectType:
+        draft.projectsLoading[action.projectId] = true;
+        break;
+
+      case receiveProjectType:
+        draft.projectsLoading[action.projectId] = undefined;
+        draft.projects[action.json.id] = action.json;     
+        break;
+
+      case receiveProjectErrorType:
+        draft.projectsLoading[action.projectId] = undefined;
+        break;
+
+      case toggleAddSucceeded:
+        draft.projects[action.projectId].toggles.push({
+          'key': action.toggleKey,
+          'name': action.toggleName,
+        });
+        draft.projects[action.projectId].version = action.version;
+        break;
+
+      case toggleDeleteSucceeded:
+        draft.projects[action.projectId].toggles.splice(draft.projects[action.projectId].toggles.findIndex(toggle => toggle.key === action.toggleKey), 1);
+        draft.projects[action.projectId].version = action.version;
+        break;
+
+      case environmentAddSucceeded:
+        draft.projects[action.projectId].environments.push({
+          'key': action.environmentKey,
+        });
+        draft.projects[action.projectId].version = action.version;
+        break;
+
+      case environmentDeleteSucceeded:
+        draft.projects[action.projectId].environments.splice(draft.projects[action.projectId].environments.findIndex(environment => environment.key === action.environmentKey), 1);
+        draft.projects[action.projectId].version = action.version;
+        break;
     }
-
-    if (action.type === receiveProjectType) { 
-      draft.projectsLoading[action.projectId] = undefined;
-      draft.projects[action.json.id] = action.json;     
-    }
-
-    if (action.type === receiveProjectErrorType) {
-      draft.projectsLoading[action.projectId] = undefined;
-    }
-
-    if (action.type === toggleAddSucceeded) {
-      draft.projects[action.projectId].toggles.push({
-        'key': action.toggleKey,
-        'name': action.toggleName,
-      });
-      draft.projects[action.projectId].version = action.version;
-    }
-
-    if (action.type === toggleDeleteSucceeded) {
-      draft.projects[action.projectId].toggles.splice(draft.projects[action.projectId].toggles.findIndex(toggle => toggle.key === action.toggleKey), 1);
-      draft.projects[action.projectId].version = action.version;
-    }
-
-    if (action.type === environmentAddSucceeded) {
-      draft.projects[action.projectId].environments.push({
-        'key': action.environmentKey,
-      });
-      draft.projects[action.projectId].version = action.version;
-    }
-
-    if (action.type === environmentDeleteSucceeded) {
-      draft.projects[action.projectId].environments.splice(draft.projects[action.projectId].environments.findIndex(environment => environment.key === action.environmentKey), 1);
-      draft.projects[action.projectId].version = action.version;
-    }    
-
   },
   INITIAL_STATE
 )

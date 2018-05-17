@@ -1,5 +1,5 @@
 ﻿import produce from 'immer';
-import { requestProjectsType, receiveProjectsType, receiveProjectsErrorType, projectAddSucceeded } from '../actions/index';
+import { initialised, requestProjectsType, receiveProjectsType, receiveProjectsErrorType, projectAddSucceeded } from '../actions/index';
 
 const INITIAL_STATE = { 
   projectList: [],
@@ -15,33 +15,41 @@ export const getProjectList = (state) => {
   });
 }
 
-export const getIsLoading = (state) => {
-  return state.account.isLoading;
+export const getIsInitialised = (state) => {
+  return state.account.isInitialised === true;
 }
 
-export const reducer = produce(
-  (draft, action) => {   
+export const getIsLoading = (state) => {
+  return state.account.isLoading === true;
+}
 
-    if (action.type === requestProjectsType) {
-      draft.isLoading = true;
-    }
+export const reducer = produce((draft, action) => {   
+    switch(action.type){
 
-    if (action.type === receiveProjectsType) {
-      draft.isLoading = false;
-      draft.projectList = action.json.projects;
-    }
+      case initialised:
+        draft.isInitialised = true;
+        break;
+
+      case requestProjectsType:
+        draft.isLoading = true;
+        break;
+
+      case receiveProjectsType:
+        draft.isLoading = false;
+        draft.projectList = action.json.projects;
+        break;
   
-    if (action.type === receiveProjectsErrorType) {
-      draft.isLoading = false;
+      case receiveProjectsErrorType:
+        draft.isLoading = false;
+        break;
+
+      case projectAddSucceeded:
+        draft.projectList.push({
+          'id': action.id,
+          'name': action.name
+        });
+        break;
     }
-
-    if (action.type === projectAddSucceeded) {
-      draft.projectList.push({
-        'id': action.id,
-        'name': action.name
-      });     
-    }    
-
   }, 
   INITIAL_STATE
 )
