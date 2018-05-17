@@ -48,68 +48,83 @@ export const environmentDeleteFailed = 'ENVIRONMENT_DELETE_FAILED';
 export const showModal = 'SHOW_MODAL';
 export const hideModal = 'HIDE_MODAL';
 
+const getLatestProjects = (dispatch, getState) => {
+  dispatch({ type: requestProjectsType });
+
+  return  Api.getProjects().then(function(json){
+    dispatch({ type: receiveProjectsType, json});      
+  }).catch(function(error){
+    dispatch({ type: showModal, modalType: 'API_ERROR', modalProps:{}});      
+    dispatch({ type: receiveProjectsErrorType, error});  
+  });
+}
+
+const getLatestProject = (projectId, dispatch, getState) => {
+  dispatch({ type: requestProjectType });
+
+  return Api.getProject(projectId).then(function(json){
+    dispatch({ type: receiveProjectType, projectId, json});
+  }).catch((error) => {
+    dispatch({ type: showModal, modalType: 'API_ERROR', modalProps:{}});      
+    dispatch({ type: receiveProjectErrorType, projectId, error});  
+  });
+}
+
+const getLatestEnvironment = (projectId, environmentKey, dispatch, getState) => {
+  dispatch({ type: requestEnvironmentType });
+
+  return Api.getEnvironment(projectId, environmentKey).then((json) => {
+    dispatch({ type: receiveEnvironmentType, projectId, environmentKey, json});
+  }).catch((error) => {
+    dispatch({ type: showModal, modalType: 'API_ERROR', modalProps:{}});      
+    dispatch({ type: receiveEnvironmentErrorType, projectId, environmentKey, error});  
+  });  
+}
+
+const getLatestEnvironmentState = (projectId, environmentKey, dispatch, getState) => {     
+  dispatch({ type: requestEnvironmentStateType });
+
+  return Api.getEnvironmentState(projectId, environmentKey).then((json) => {
+    dispatch({ type: receiveEnvironmentStateType, projectId, environmentKey, json});
+  }).catch((error) => {
+    dispatch({ type: showModal, modalType: 'API_ERROR', modalProps:{}});      
+    dispatch({ type: receiveEnvironmentStateErrorType, projectId, environmentKey, error});  
+  }); 
+}
+
+const getLatestToggle = (projectId, toggleKey, dispatch, getState) => {
+  dispatch({ type: requestToggleType });
+
+  return Api.getToggle(projectId, toggleKey).then((json) => {
+    dispatch({ type: receiveToggleType, projectId, toggleKey, json});
+  }).catch((error) => {
+    dispatch({ type: showModal, modalType: 'API_ERROR', modalProps:{}});
+    dispatch({ type: receiveToggleErrorType, projectId, toggleKey, error});  
+  });
+}
+
 export const actionCreators = {
 
   requestProjects: () => async (dispatch, getState) => {
-    dispatch({ type: requestProjectsType });
-    await Api.getProjects().then(function(json){
-      dispatch({ type: receiveProjectsType, json});      
-    }).catch(function(error){
-      dispatch({ type: showModal, modalType: 'API_ERROR', modalProps:{}});      
-      dispatch({ type: receiveProjectsErrorType, error});  
-    });
+    await getLatestProjects(dispatch, getState);
   },
 
   selectProject: (projectId) => async (dispatch, getState) => {
-    dispatch({ type: requestProjectType });
-    await Api.getProject(projectId).then(function(json){
-      dispatch({ type: receiveProjectType, projectId, json});
-    }).catch((error) => {
-      dispatch({ type: showModal, modalType: 'API_ERROR', modalProps:{}});      
-      dispatch({ type: receiveProjectErrorType, projectId, error});  
-    });
+    await getLatestProject(projectId, dispatch, getState);
   },
 
   selectEnvironment: (projectId, environmentKey) => async (dispatch, getState) => {
 
     if(!getState().project.projects[projectId]){
-      dispatch({ type: requestProjectType });
-      await Api.getProject(projectId).then(function(json){
-        dispatch({ type: receiveProjectType, projectId, json});
-      }).catch((error) => {
-        dispatch({ type: showModal, modalType: 'API_ERROR', modalProps:{}});      
-        dispatch({ type: receiveProjectErrorType, projectId, error});  
-      });
+      await getLatestProject(projectId, dispatch, getState);
     }
 
-    dispatch({ type: requestEnvironmentType });
-
-    await Api.getEnvironment(projectId, environmentKey).then((json) => {
-      dispatch({ type: receiveEnvironmentType, projectId, environmentKey, json});
-    }).catch((error) => {
-      dispatch({ type: showModal, modalType: 'API_ERROR', modalProps:{}});      
-      dispatch({ type: receiveEnvironmentErrorType, projectId, environmentKey, error});  
-    });    
-    
-    dispatch({ type: requestEnvironmentStateType });
-
-    await Api.getEnvironmentState(projectId, environmentKey).then((json) => {
-      dispatch({ type: receiveEnvironmentStateType, projectId, environmentKey, json});
-    }).catch((error) => {
-      dispatch({ type: showModal, modalType: 'API_ERROR', modalProps:{}});      
-      dispatch({ type: receiveEnvironmentStateErrorType, projectId, environmentKey, error});  
-    });
+    await getLatestEnvironment(projectId, environmentKey, dispatch, getState);
+    await getLatestEnvironmentState(projectId, environmentKey, dispatch, getState);
   },
 
   selectToggle: (projectId, toggleKey) => async (dispatch, getState) => {
-    dispatch({ type: requestToggleType });
-
-    await Api.getToggle(projectId, toggleKey).then((json) =>{
-      dispatch({ type: receiveToggleType, projectId, toggleKey, json});
-    }).catch((error) => {
-      dispatch({ type: showModal, modalType: 'API_ERROR', modalProps:{}});
-      dispatch({ type: receiveToggleErrorType, projectId, toggleKey, error});  
-    });
+    await getLatestToggle(projectId, toggleKey, dispatch, getState);
   },
 
   setToggleValue: (projectId, environmentKey, toggleKey, version, value) => async(dispatch, getState) => {
