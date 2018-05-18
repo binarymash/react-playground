@@ -2,20 +2,29 @@
 import { connect } from 'react-redux';
 import { Badge, ListGroup } from 'react-bootstrap';
 import ToggleState from './ToggleState'
+import Loading from './Loading';
 
 class ToggleStates extends Component {
 
   render() {
-    if (!this.props.toggles){
-      return null;
+    let content = null;
+
+    if (this.props.isLoading){
+      content = (
+        <Loading/>
+      );
+    } else if (this.props.toggles){
+      content = (
+        <ListGroup>
+        {this.props.toggles.map(toggle => <ToggleState key={toggle.key} toggle={toggle} projectId={this.props.projectId} environmentKey={this.props.environmentKey} />) }
+        </ListGroup>
+      ); 
     }
 
     return (
       <section>
         <h2>Toggle States <Badge>{this.props.toggles.length}</Badge></h2>
-        <ListGroup>
-          {this.props.toggles.map(toggle => <ToggleState key={toggle.key} toggle={toggle} projectId={this.props.projectId} environmentKey={this.props.environmentKey} />) }
-        </ListGroup>  
+        {content}
       </section>
     );
    }

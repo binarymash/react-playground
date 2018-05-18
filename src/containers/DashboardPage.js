@@ -6,7 +6,7 @@ import { actionCreators } from '../actions/index';
 import { getProjectList, getIsLoading } from '../store/Account';
 import Projects from '../components/Projects';
 import Audit from '../components/Audit';
-import Loading from '../components/Loading';
+import PageLoading from '../components/PageLoading';
 
 class DashboardPage extends Component {
   componentWillMount() {
@@ -14,14 +14,14 @@ class DashboardPage extends Component {
   }
 
   render() {
-    if (!this.props.projects){
-      return null;
-    }
-
     if (this.props.isLoading){
       return(
-        <Loading/>
+        <PageLoading/>
       );
+    }
+
+    if (!this.props.projects){
+      return null;
     }
 
     return (

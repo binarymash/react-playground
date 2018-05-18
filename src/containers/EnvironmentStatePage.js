@@ -6,7 +6,7 @@ import { actionCreators } from '../actions/index';
 import { getEnvironment, getIsEnvironmentLoading, getIsEnvironmentStateLoading } from '../store/Environment';
 import ToggleStates from '../components/ToggleStates';
 import Audit from '../components/Audit';
-import Loading from '../components/Loading';
+import PageLoading from '../components/PageLoading';
 
 class EnvironmentStatePage extends Component {
   componentWillMount() {
@@ -25,20 +25,20 @@ class EnvironmentStatePage extends Component {
   }
 
   render() {
-    if (!this.props.environment){
-      return null;
+    if (this.props.isEnvironmentLoading){
+      return (
+        <PageLoading/>
+      )
     }
 
-    if (this.props.isLoading){
-      return (
-        <Loading/>
-      )
+    if (!this.props.environment){
+      return null;
     }
 
     return (
       <div>
         <PageHeader>{this.props.environment.key}</PageHeader> 
-        <ToggleStates toggles={this.props.environment.toggles} projectId={this.props.match.params.projectId} environmentKey={this.props.match.params.environmentKey} />
+        <ToggleStates toggles={this.props.environment.toggles} projectId={this.props.match.params.projectId} environmentKey={this.props.match.params.environmentKey} isLoading={this.props.isEnvironmentStateLoading}/>
         <Audit audit={this.props.environment.audit} />     
       </div>
     ); 

@@ -62,7 +62,7 @@ const getLatestProjects = (dispatch, getState) => {
 }
 
 const getLatestProject = (projectId, dispatch, getState) => {
-  dispatch({ type: requestProjectType });
+  dispatch({ type: requestProjectType, projectId });
 
   return Api.getProject(projectId).then(function(json){
     dispatch({ type: receiveProjectType, projectId, json});
@@ -73,7 +73,7 @@ const getLatestProject = (projectId, dispatch, getState) => {
 }
 
 const getLatestEnvironment = (projectId, environmentKey, dispatch, getState) => {
-  dispatch({ type: requestEnvironmentType });
+  dispatch({ type: requestEnvironmentType, projectId, environmentKey });
 
   return Api.getEnvironment(projectId, environmentKey).then((json) => {
     dispatch({ type: receiveEnvironmentType, projectId, environmentKey, json});
@@ -84,7 +84,7 @@ const getLatestEnvironment = (projectId, environmentKey, dispatch, getState) => 
 }
 
 const getLatestEnvironmentState = (projectId, environmentKey, dispatch, getState) => {     
-  dispatch({ type: requestEnvironmentStateType });
+  dispatch({ type: requestEnvironmentStateType, projectId, environmentKey });
 
   return Api.getEnvironmentState(projectId, environmentKey).then((json) => {
     dispatch({ type: receiveEnvironmentStateType, projectId, environmentKey, json});
@@ -95,7 +95,7 @@ const getLatestEnvironmentState = (projectId, environmentKey, dispatch, getState
 }
 
 const getLatestToggle = (projectId, toggleKey, dispatch, getState) => {
-  dispatch({ type: requestToggleType });
+  dispatch({ type: requestToggleType, projectId, toggleKey });
 
   return Api.getToggle(projectId, toggleKey).then((json) => {
     dispatch({ type: receiveToggleType, projectId, toggleKey, json});

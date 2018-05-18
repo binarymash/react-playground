@@ -22,8 +22,19 @@ class App extends Component {
   render() {
     if (!this.props.isInitialised)
     {
+      // https://www.w3.org/Style/Examples/007/center.en.html
+      let fill = {
+            'position': 'absolute',
+            'top': '50%',
+            'left': '50%',
+            'marginRight': '-50%',
+            'transform': 'translate(-50%, -50%)'
+      };
+      
       return (
-        <Loading/>
+        <div style={fill}>
+          <Loading/>
+        </div>
       );
     }
 

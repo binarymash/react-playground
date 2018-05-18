@@ -2,6 +2,7 @@
 import { connect } from 'react-redux';
 import { Badge, Button, ButtonGroup, ButtonToolbar, Glyphicon, ListGroup, Panel } from 'react-bootstrap';
 import Toggle from './Toggle';
+import Loading from './Loading';
 
 class Toggles extends Component {
 
@@ -16,9 +17,19 @@ class Toggles extends Component {
   }
 
   render() {
-    if (!this.props.toggles){
-      return (
-        <section />
+    let content = null;
+
+    if (this.props.isLoading){
+      content = (
+        <Loading/>
+      );
+    }
+
+    if (this.props.toggles){
+      content = (
+        <ListGroup>
+          {this.props.toggles.map(toggle => <Toggle key={toggle.key} toggle={toggle} />)}
+        </ListGroup>
       );
     }
 
@@ -32,9 +43,7 @@ class Toggles extends Component {
             </ButtonToolbar>
           </Panel.Heading>
           <Panel.Body>
-            <ListGroup>
-              {this.props.toggles.map(toggle => <Toggle key={toggle.key} toggle={toggle} />)}
-            </ListGroup>
+            {content}      
           </Panel.Body>
         </Panel>      
       </section>

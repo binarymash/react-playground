@@ -7,7 +7,7 @@ import { getProject, getIsLoading } from '../store/Project';
 import Environments from '../components/Environments';
 import Toggles from '../components/Toggles';
 import Audit from '../components/Audit';
-import Loading from '../components/Loading';
+import PageLoading from '../components/PageLoading';
 
 class ProjectPage extends Component {
   componentWillMount() {
@@ -23,14 +23,14 @@ class ProjectPage extends Component {
   }
 
   render() {
-    if (!this.props.project){
-      return null;
+    if (this.props.isLoading){
+      return (
+        <PageLoading/>
+      );
     }
 
-    if (this.props.isLoading){
-      return(
-        <Loading/>
-      );
+    if (!this.props.project){
+      return null;
     }
 
     return (

@@ -5,7 +5,7 @@ import { actionCreators } from '../actions/index';
 import { PageHeader } from 'react-bootstrap';
 import { getToggle, getIsToggleLoading } from '../store/Toggle';
 import Audit from '../components/Audit';
-import Loading from '../components/Loading';
+import PageLoading from '../components/PageLoading';
 
 
 
@@ -26,16 +26,15 @@ class TogglePage extends Component {
   }
 
   render() {
+    if (this.props.isLoading){
+      return (
+        <PageLoading/>
+      )
+    }
+    
     if (!this.props.toggle){
       return null;
     }
-
-    if (this.props.isLoading){
-      return (
-        <Loading/>
-      )
-    }
-
 
     return (
       <div>
