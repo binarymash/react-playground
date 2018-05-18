@@ -20,8 +20,9 @@ class ToggleState extends Component {
     );
   }
   
-  handleSwitch = (elem, state) => {
-    this.props.setToggleValue(this.props.projectId, this.props.environmentKey, this.props.toggle.key, this.props.toggle.version, state);
+  handleSwitch = (elem, newState) => {
+    //seems to be a bug in package, with newState is sometimes not set right. So we'll use !elem.state.value instead
+    this.props.setToggleValue(this.props.projectId, this.props.environmentKey, this.props.toggle.key, this.props.toggle.version, !elem.state.value);
   }  
 }
 
