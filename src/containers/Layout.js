@@ -1,6 +1,7 @@
 import React from 'react';
 import { Col, Grid, Row } from 'react-bootstrap';
 import NavMenu from './NavMenu';
+import Breadcrumbs from './breadcrumbs/Breadcrumbs';
 
 export default props => (
   <Grid fluid>
@@ -9,6 +10,7 @@ export default props => (
         <NavMenu />
       </Col>
       <Col sm={9}>
+        <Breadcrumbs/>
         {props.children}
       </Col>
     </Row>
