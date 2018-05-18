@@ -23,9 +23,7 @@ class Toggles extends Component {
       content = (
         <Loading/>
       );
-    }
-
-    if (this.props.toggles){
+    } else if (this.props.toggles){
       content = (
         <ListGroup>
           {this.props.toggles.map(toggle => <Toggle key={toggle.key} toggle={toggle} />)}
