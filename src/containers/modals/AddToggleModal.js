@@ -65,6 +65,7 @@ class AddToggleModal extends Component {
             >
               <ControlLabel>Toggle name</ControlLabel>
               <FormControl
+                autoFocus
                 type="text"
                 name="name"
                 value={this.state.name}

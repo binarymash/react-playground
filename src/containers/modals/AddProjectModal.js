@@ -16,11 +16,11 @@ class AddProjectModal extends Component {
 
   handleOkClick = (event) => {
     if (this.isValid()) {
-        this.props.hideModal().then(() => {
-          this.props.addProject(this.state.name);
-        });
-      }
-      }
+      this.props.hideModal().then(() => {
+        this.props.addProject(this.state.name);
+      });
+    }
+  }
 
   handleChange = (event) => {
     const target = event.target;
@@ -57,6 +57,7 @@ class AddProjectModal extends Component {
             >
               <ControlLabel>Project name</ControlLabel>
               <FormControl
+                autoFocus
                 type="text"
                 name="name"
                 value={this.state.name}
