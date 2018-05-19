@@ -1,5 +1,5 @@
 {
-  "name": "my_new_app",
+  "name": "evelyn-management-ui",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -20,7 +20,8 @@
     "redux-thunk": "^2.2.0",
     "reselect": "^3.0.1",
     "rimraf": "^2.6.2",
-    "uuid": "^3.2.1"
+    "uuid": "^3.2.1",
+    "validator": "^10.2.0"
   },
   "scripts": {
     "start": "rimraf ./build && react-scripts start",
