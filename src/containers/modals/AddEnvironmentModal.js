@@ -4,6 +4,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { ControlLabel, FormControl, FormGroup, Glyphicon, Modal, Button } from 'react-bootstrap'
 import { hideModal } from '../../actions/index';
+import validator from 'validator';
+
+const KEY_WHITELIST = 'a-z0-9_.-';
 
 class AddEnvironment extends Component {
   constructor(props){
@@ -17,20 +20,28 @@ class AddEnvironment extends Component {
 
   handleOkClick = (event) => {
     if (this.isValid()) {
-        this.props.hideModal().then(() => {
-          this.props.addEnvironment(this.props.projectId, this.state.key);
-        });
-      }
-      }
+      this.props.hideModal().then(() => {
+        this.props.addEnvironment(this.props.projectId, this.state.key);
+      });
+    }
+  }
 
   handleChange = (event) => {
     const target = event.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;
+    let value = target.type === 'checkbox' ? target.checked : target.value;
+
+    if (name === 'key') {
+      value = this.sanitizeKey(value);
+    }
 
     this.setState({
       [name]: value
     });
+  }
+
+  sanitizeKey = (value) => {
+    return validator.whitelist(value.normalize('NFKD').replace(/\s+/g, '-').toLowerCase(), KEY_WHITELIST);
   }
 
   isValid = () => {
@@ -38,9 +49,15 @@ class AddEnvironment extends Component {
   }
 
   getKeyValidationState = () => {
-    if (this.state.key.length === 0){
+    if (this.state.key.length === 0 || this.state.key.length > 128){
         return 'error';
     }
+
+    if (!validator.matches(this.state.key, `^[${KEY_WHITELIST}]*$`))
+    {
+      return 'error';
+    }
+
     return 'success';    
   } 
 

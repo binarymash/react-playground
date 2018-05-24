@@ -8,9 +8,9 @@ export const Api = {
         const url = baseUrl + `/projects`;
         return fetch(url).then(function(response){
             if (response.ok){
-            return response.json();
+                return response.json();
             }
-            throw new Error('Network response was not ok.');
+            throw new Error(response.status);
         })
     },
 
@@ -18,9 +18,9 @@ export const Api = {
         const url = baseUrl + `/projects/${projectId}`;
         return fetch(url).then(function(response){
             if (response.ok){
-            return response.json();
+                return response.json();
             }
-            throw new Error('Network response was not ok.')
+            throw new Error(response.status)
         });
     },
 
@@ -28,9 +28,9 @@ export const Api = {
         const url = baseUrl + `/projects/${projectId}/environments/${environmentKey}`;
         return fetch(url).then(function(response){
             if (response.ok){
-            return response.json();
+                return response.json();
             }
-            throw new Error('Network response was not ok.');
+            throw new Error(response.status);
         });  
     },
 
@@ -38,9 +38,9 @@ export const Api = {
         const url = baseUrl + `/states/${projectId}/${environmentKey}`;
         return fetch(url).then(function(response){
             if (response.ok){
-            return response.json();
+                return response.json();
             }
-            throw new Error('Network response was not ok.');
+            throw new Error(response.status);
         });
     },
 
@@ -48,9 +48,9 @@ export const Api = {
         const url = baseUrl + `/projects/${projectId}/toggles/${toggleKey}`;
         return fetch(url).then(function(response){
             if (response.ok){
-            return response.json();
+                return response.json();
             }
-            throw new Error('Network response was not ok.');
+            throw new Error(response.status);
         })
     },
 
@@ -72,7 +72,7 @@ export const Api = {
 
         return fetch(url, request).then(function (response){
         if (!response.ok){
-            throw new Error('Network response was not ok.');      
+            throw new Error(response.status);      
         }});
     },
 
@@ -93,7 +93,7 @@ export const Api = {
 
         return fetch(url, request).then(function (response){
         if (!response.ok){
-            throw new Error('Network response was not ok.');      
+            throw new Error(response.status);      
         }});
     },
 
@@ -112,7 +112,7 @@ export const Api = {
 
         return fetch(url, request).then(function (response){
         if (!response.ok){
-            throw new Error('Network response was not ok.');      
+            throw new Error(response.status);      
         }});
     },   
 
@@ -132,7 +132,7 @@ export const Api = {
 
         return fetch(url, request).then(function (response){
         if (!response.ok){
-            throw new Error('Network response was not ok.');      
+            throw new Error(response.status);      
         }});
     },
 
@@ -151,7 +151,7 @@ export const Api = {
 
         return fetch(url, request).then(function (response){
         if (!response.ok){
-            throw new Error('Network response was not ok.');      
+            throw new Error(response.status);      
         }});
     },  
 
@@ -171,7 +171,7 @@ export const Api = {
     
         return fetch(url, request).then(function (response){
           if (!response.ok){
-            throw new Error('Network response was not ok.');      
+            throw new Error(response.status);      
         }});
     }
 }

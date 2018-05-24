@@ -69,14 +69,14 @@ class AddToggleModal extends Component {
   }
 
   getNameValidationState = () => {
-    if (this.state.name.length === 0){
+    if (this.state.name.length === 0 || this.state.name.length > 128){
         return 'error';
     }
     return 'success';    
   }
 
   getKeyValidationState = () => {
-    if (this.state.key.length === 0){
+    if (this.state.key.length === 0 || this.state.name.length > 128){
         return 'error';
     }
 

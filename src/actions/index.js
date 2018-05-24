@@ -56,7 +56,7 @@ const getLatestProjects = (dispatch, getState) => {
   return  Api.getProjects().then(function(json){
     dispatch({ type: receiveProjectsType, json});      
   }).catch(function(error){
-    dispatch({ type: showModal, modalType: 'API_ERROR', modalProps:{}});      
+    dispatch({ type: showModal, modalType: 'API_ERROR', modalProps:{error: error.message}});      
     dispatch({ type: receiveProjectsErrorType, error});  
   });
 }
@@ -67,7 +67,7 @@ const getLatestProject = (projectId, dispatch, getState) => {
   return Api.getProject(projectId).then(function(json){
     dispatch({ type: receiveProjectType, projectId, json});
   }).catch((error) => {
-    dispatch({ type: showModal, modalType: 'API_ERROR', modalProps:{}});      
+    dispatch({ type: showModal, modalType: 'API_ERROR', modalProps:{error: error.message}});      
     dispatch({ type: receiveProjectErrorType, projectId, error});  
   });
 }
@@ -78,7 +78,7 @@ const getLatestEnvironment = (projectId, environmentKey, dispatch, getState) => 
   return Api.getEnvironment(projectId, environmentKey).then((json) => {
     dispatch({ type: receiveEnvironmentType, projectId, environmentKey, json});
   }).catch((error) => {
-    dispatch({ type: showModal, modalType: 'API_ERROR', modalProps:{}});      
+    dispatch({ type: showModal, modalType: 'API_ERROR', modalProps:{error: error.message}});      
     dispatch({ type: receiveEnvironmentErrorType, projectId, environmentKey, error});  
   });  
 }
@@ -89,7 +89,7 @@ const getLatestEnvironmentState = (projectId, environmentKey, dispatch, getState
   return Api.getEnvironmentState(projectId, environmentKey).then((json) => {
     dispatch({ type: receiveEnvironmentStateType, projectId, environmentKey, json});
   }).catch((error) => {
-    dispatch({ type: showModal, modalType: 'API_ERROR', modalProps:{}});      
+    dispatch({ type: showModal, modalType: 'API_ERROR', modalProps:{error: error.message}});      
     dispatch({ type: receiveEnvironmentStateErrorType, projectId, environmentKey, error});  
   }); 
 }
@@ -100,7 +100,7 @@ const getLatestToggle = (projectId, toggleKey, dispatch, getState) => {
   return Api.getToggle(projectId, toggleKey).then((json) => {
     dispatch({ type: receiveToggleType, projectId, toggleKey, json});
   }).catch((error) => {
-    dispatch({ type: showModal, modalType: 'API_ERROR', modalProps:{}});
+    dispatch({ type: showModal, modalType: 'API_ERROR', modalProps:{error: error.message}});
     dispatch({ type: receiveToggleErrorType, projectId, toggleKey, error});  
   });
 }
@@ -155,7 +155,7 @@ export const actionCreators = {
         value: newValue
       });
     }).catch((error) => {
-      dispatch({ type: showModal, modalType: 'API_ERROR', modalProps:{}});      
+      dispatch({ type: showModal, modalType: 'API_ERROR', modalProps:{error: error.message}});      
       dispatch({ type: toggleStateUpdateFailed, projectId, environmentKey, toggleKey, error});  
     });
   },
@@ -179,7 +179,7 @@ export const actionCreators = {
         version: version+1,
       });
     }).catch((error) => {
-      dispatch({ type: showModal, modalType: 'API_ERROR', modalProps:{}});      
+      dispatch({ type: showModal, modalType: 'API_ERROR', modalProps:{error: error.message}});      
       dispatch({ type: projectAddFailed, error});  
     });    
   }, 
@@ -199,7 +199,7 @@ export const actionCreators = {
         version: version+1,
       });
     }).catch((error) => {
-      dispatch({ type: showModal, modalType: 'API_ERROR', modalProps:{}});      
+      dispatch({ type: showModal, modalType: 'API_ERROR', modalProps:{error: error.message}});      
       dispatch({ type: toggleAddFailed, projectId, toggleKey, error});  
     });    
   },
@@ -218,7 +218,7 @@ export const actionCreators = {
         version: version+1,
       });
     }).catch((error) => {
-      dispatch({ type: showModal, modalType: 'API_ERROR', modalProps:{}});      
+      dispatch({ type: showModal, modalType: 'API_ERROR', modalProps:{error: error.message}});      
       dispatch({ type: toggleDeleteFailed, projectId, toggleKey, error});  
     });    
   },
@@ -237,7 +237,7 @@ export const actionCreators = {
         version: version+1,
       });
     }).catch((error) => {
-      dispatch({ type: showModal, modalType: 'API_ERROR', modalProps:{}});      
+      dispatch({ type: showModal, modalType: 'API_ERROR', modalProps:{error: error.message}});      
       dispatch({ type: environmentAddFailed, projectId, environmentKey, error});  
     });    
   }, 
@@ -256,7 +256,7 @@ export const actionCreators = {
         version: version+1,
       });
     }).catch(function(error){
-      dispatch({ type: showModal, modalType: 'API_ERROR', modalProps:{}});      
+      dispatch({ type: showModal, modalType: 'API_ERROR', modalProps:{error: error.message}});      
       dispatch({ type: environmentDeleteFailed, projectId, environmentKey, error});  
     });    
   },  
