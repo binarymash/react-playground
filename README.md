@@ -1,5 +1,7 @@
 # Evelyn Management UI
 
+For documentation [Read the Docs](https://evelyn-management-ui.readthedocs.io/en/latest/). 
+
 ## Overview
 
 Evelyn is a [feature toggling](https://martinfowler.com/articles/feature-toggles.html) framework. It allows users to decouple software releases from the functional changes within, reducing the risk of deployment and providing rollback functionality. 
