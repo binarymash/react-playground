@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
+import {getEnvironmentName} from '../../store/Project';
 
 class EnvironmentBreadcrumb extends Component {
     render(){
@@ -11,7 +12,7 @@ class EnvironmentBreadcrumb extends Component {
 
 // find the user in the store with the `id` from the route
 const mapStateToProps = (state, props) => ({
-  name: props.match.params.environmentKey,
+  name: getEnvironmentName(state, props.match.params.id, props.match.params.environmentKey),
 });
  
 export default connect(mapStateToProps)(EnvironmentBreadcrumb);

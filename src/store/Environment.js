@@ -34,6 +34,7 @@ export const getEnvironment = (state, projectId, environmentKey) => {
 
   return {
     key: environment.key,
+    name: environment.name,
     toggles: getToggleStates(project, environmentState),
     audit: getAudit(environment, environmentState)
   }

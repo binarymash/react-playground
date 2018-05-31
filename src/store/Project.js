@@ -33,6 +33,17 @@ export const getProjectName = (state, projectId) => {
   return null;
 }
 
+export const getEnvironmentName = (state, projectId, environmentKey) => {
+  let project = state.project.projects[projectId];
+  if (project){
+    let environment = project.environments.find(e => e.key === environmentKey);
+    if (environment) {
+      return environment.name;
+    }
+  }
+  return null;
+}
+
 export const getToggleName = (state, projectId, toggleKey) => {
   let project = state.project.projects[projectId];
   if (project){
@@ -42,7 +53,6 @@ export const getToggleName = (state, projectId, toggleKey) => {
     }
   }
   return null;
-
 }
 
 const getEnvironments = (project) => {
@@ -56,7 +66,8 @@ const getEnvironments = (project) => {
 const getEnvironment = (projectId, environment) => {
   return {
     projectId: projectId,
-    key: environment.key
+    key: environment.key,
+    name: environment.name
   }
 }
 

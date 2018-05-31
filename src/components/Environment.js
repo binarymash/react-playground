@@ -20,7 +20,7 @@ class Environment extends Component {
   render() {
     return(
       <ListGroupItem>
-        <Link to={`/projects/${this.props.environment.projectId}/environments/${this.props.environment.key}`} >{this.props.environment.key}</Link>
+        <Link to={`/projects/${this.props.environment.projectId}/environments/${this.props.environment.key}`} >{this.props.environment.name}</Link>
         <Button className='pull-right' bsStyle='danger' bsSize='xsmall' onClick={this.handleDeleteClick}><Glyphicon glyph='remove' /> Delete</Button>  
       </ListGroupItem>
     ); 

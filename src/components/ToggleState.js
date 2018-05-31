@@ -14,15 +14,14 @@ class ToggleState extends Component {
       <ListGroupItem>
         <Link to={`/projects/${this.props.projectId}/toggles/${this.props.toggle.key}`}>{this.props.toggle.name}</Link>
         <span className='pull-right'>  
-          <Switch bsSize='mini' onColor='success' offColor='danger' animate={false} value={this.props.toggle.value} onChange={(el, state) => this.handleSwitch(el, state)}/>
+          <Switch bsSize='mini' onColor='success' offColor='danger' animate={false} value={this.props.toggle.value} onChange={(el, newState) => this.handleSwitch(el, newState)}/>
         </span>
       </ListGroupItem>
     );
   }
   
   handleSwitch = (elem, newState) => {
-    //seems to be a bug in package, with newState is sometimes not set right. So we'll use !elem.state.value instead
-    this.props.setToggleValue(this.props.projectId, this.props.environmentKey, this.props.toggle.key, this.props.toggle.version, !elem.state.value);
+    this.props.setToggleValue(this.props.projectId, this.props.environmentKey, this.props.toggle.key, this.props.toggle.version, newState);
   }  
 }
 
