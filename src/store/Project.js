@@ -136,6 +136,7 @@ export const reducer = produce((draft, action) => {
       case environmentAddSucceeded:
         draft.projects[action.projectId].environments.push({
           'key': action.environmentKey,
+          'name': action.environmentName,
         });
         draft.projects[action.projectId].version = action.version;
         break;

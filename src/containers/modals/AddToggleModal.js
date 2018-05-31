@@ -18,8 +18,6 @@ class AddToggleModal extends Component {
     };
   }
 
-
-
   handleOkClick = (event) => {
     if (this.isValid()) {
       this.props.hideModal().then(() => {

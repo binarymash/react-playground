@@ -21,7 +21,7 @@ class AddEnvironment extends Component {
   handleOkClick = (event) => {
     if (this.isValid()) {
       this.props.hideModal().then(() => {
-        this.props.addEnvironment(this.props.projectId, this.state.key);
+        this.props.addEnvironment(this.props.projectId, this.state.key, this.state.name);
       });
     }
   }
@@ -38,6 +38,24 @@ class AddEnvironment extends Component {
     this.setState({
       [name]: value
     });
+
+    if (name === 'name') {
+      this.syncKey(value);
+    }
+  }
+
+  handleKeyFocus = (event) => {
+    this.setState({['keyFocussed']:true})
+  }
+
+  syncKey = (value) => {
+    if (this.state.key.length === 0 && this.state.keyFocussed){
+      this.setState({['keyFocussed']:false})
+    }
+
+    if (!this.state.keyFocussed){
+      this.setState({['key']: this.sanitizeKey(value)});
+    }
   }
 
   sanitizeKey = (value) => {
@@ -45,7 +63,14 @@ class AddEnvironment extends Component {
   }
 
   isValid = () => {
-    return this.getKeyValidationState() === 'success';
+    return this.getNameValidationState() === 'success' && this.getKeyValidationState() === 'success';
+  }
+
+  getNameValidationState = () => {
+    if (this.state.name.length === 0 || this.state.name.length > 128){
+        return 'error';
+    }
+    return 'success';    
   }
 
   getKeyValidationState = () => {
@@ -69,6 +94,21 @@ class AddEnvironment extends Component {
         </Modal.Header>
         <Modal.Body>
           <form>
+          <FormGroup
+              controlId="environmentName"
+              validationState={this.getNameValidationState()}
+            >
+              <ControlLabel>Environment name</ControlLabel>
+              <FormControl
+                autoFocus
+                type="text"
+                name="name"
+                value={this.state.name}
+                placeholder="Enter text"
+                onChange={this.handleChange}
+              />
+              <FormControl.Feedback />
+            </FormGroup>  
             <FormGroup controlId="environmentKey" validationState={this.getKeyValidationState()}>
               <ControlLabel>Environment key</ControlLabel>
               <FormControl

@@ -223,17 +223,18 @@ export const actionCreators = {
     });    
   },
 
-  addEnvironment: (projectId, environmentKey) => async(dispatch, getState) => {
+  addEnvironment: (projectId, environmentKey, environmentName) => async(dispatch, getState) => {
 
     dispatch({type: environmentAddRequested});
 
     let version = getState().project.projects[projectId].version;
 
-    await Api.addEnvironment(projectId, environmentKey, version).then(() => {
+    await Api.addEnvironment(projectId, environmentKey, environmentName, version).then(() => {
       dispatch({ 
         type: environmentAddSucceeded,
         projectId,
         environmentKey,
+        environmentName,
         version: version+1,
       });
     }).catch((error) => {

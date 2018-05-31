@@ -116,7 +116,7 @@ export const Api = {
         }});
     },   
 
-    addEnvironment: (projectId, environmentKey, version) => {
+    addEnvironment: (projectId, environmentKey, environmentName, version) => {
         const url = baseUrl + `/projects/${projectId}/environments/add`;
 
         let request = { 
@@ -127,6 +127,7 @@ export const Api = {
         },
         body: JSON.stringify({
             "key": environmentKey,
+            "name": environmentName,
             "expectedProjectVersion": version
           })};
 
