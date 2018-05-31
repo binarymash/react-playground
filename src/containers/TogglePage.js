@@ -41,7 +41,7 @@ class TogglePage extends Component {
       <div>
         <PageHeader>
           {this.props.toggle.name}
-          <small><Key value={this.props.toggle.key}/></small>
+          <div><small><Key value={this.props.toggle.key}/></small></div>
         </PageHeader>
         <Audit audit={this.props.toggle.audit} />
       </div>

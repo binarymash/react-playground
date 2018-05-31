@@ -1,18 +1,15 @@
 ﻿import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Glyphicon } from 'react-bootstrap';
 
 class Key extends Component {
 
   render() {
     if (!this.props.value){
-      return (
-        <section />
-      );
+      return null;
     }
     return (
-      <section>
-        <code>{this.props.value}</code>
-      </section>
+        <code>{this.props.value} <Glyphicon glyph='copy'/></code>
     );
   }
 }

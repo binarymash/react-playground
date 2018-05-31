@@ -38,7 +38,7 @@ class ProjectPage extends Component {
       <div>
         <PageHeader>
           {this.props.project.name}
-          <small><Key value={this.props.project.id}/></small>
+          <div><small><Key value={this.props.project.id}/></small></div>
         </PageHeader>
         <Environments environments={this.props.project.environments} projectId={this.props.project.id}/>
         <Toggles toggles={this.props.project.toggles} projectId={this.props.project.id}/>
