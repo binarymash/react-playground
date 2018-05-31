@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { PageHeader } from 'react-bootstrap';
 import { actionCreators } from '../actions/index';
 import { getEnvironment, getIsEnvironmentLoading, getIsEnvironmentStateLoading } from '../store/Environment';
+import Key from '../components/Key';
 import ToggleStates from '../components/ToggleStates';
 import Audit from '../components/Audit';
 import PageLoading from '../components/PageLoading';
@@ -37,7 +38,10 @@ class EnvironmentStatePage extends Component {
 
     return (
       <div>
-        <PageHeader>{this.props.environment.name}</PageHeader> 
+        <PageHeader>{this.props.environment.name}
+          <small><Key value={this.props.environment.key}/></small>
+        </PageHeader>
+        
         <ToggleStates toggles={this.props.environment.toggles} projectId={this.props.match.params.projectId} environmentKey={this.props.match.params.environmentKey} isLoading={this.props.isEnvironmentStateLoading}/>
         <Audit audit={this.props.environment.audit} />     
       </div>

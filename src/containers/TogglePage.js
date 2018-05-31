@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { actionCreators } from '../actions/index';
 import { PageHeader } from 'react-bootstrap';
 import { getToggle, getIsToggleLoading } from '../store/Toggle';
+import Key from '../components/Key';
 import Audit from '../components/Audit';
 import PageLoading from '../components/PageLoading';
 
@@ -38,7 +39,10 @@ class TogglePage extends Component {
 
     return (
       <div>
-        <PageHeader>{this.props.toggle.name}</PageHeader>
+        <PageHeader>
+          {this.props.toggle.name}
+          <small><Key value={this.props.toggle.key}/></small>
+        </PageHeader>
         <Audit audit={this.props.toggle.audit} />
       </div>
     ); 

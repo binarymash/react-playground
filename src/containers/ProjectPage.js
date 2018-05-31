@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { PageHeader } from 'react-bootstrap';
 import { actionCreators } from '../actions/index';
 import { getProject, getIsLoading } from '../store/Project';
+import Key from '../components/Key';
 import Environments from '../components/Environments';
 import Toggles from '../components/Toggles';
 import Audit from '../components/Audit';
@@ -35,7 +36,10 @@ class ProjectPage extends Component {
 
     return (
       <div>
-        <PageHeader>{this.props.project.name}</PageHeader>
+        <PageHeader>
+          {this.props.project.name}
+          <small><Key value={this.props.project.id}/></small>
+        </PageHeader>
         <Environments environments={this.props.project.environments} projectId={this.props.project.id}/>
         <Toggles toggles={this.props.project.toggles} projectId={this.props.project.id}/>
         <Audit audit={this.props.project.audit} />   
