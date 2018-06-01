@@ -112,7 +112,6 @@ class AddEnvironment extends Component {
             <FormGroup controlId="environmentKey" validationState={this.getKeyValidationState()}>
               <ControlLabel>Environment key</ControlLabel>
               <FormControl
-                autoFocus
                 type="text"
                 name="key"
                 value={this.state.key}
