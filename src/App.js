@@ -1,4 +1,4 @@
-﻿import React, {Component} from 'react';
+﻿import React, { Component } from 'react';
 import { Route } from 'react-router';
 import { actionCreators } from './actions/index';
 import { bindActionCreators } from 'redux';
@@ -20,48 +20,56 @@ class App extends Component {
   }
 
   render() {
-    if (!this.props.isInitialised)
-    {
+    if (!this.props.isInitialised) {
       // https://www.w3.org/Style/Examples/007/center.en.html
       let fill = {
-            'position': 'absolute',
-            'top': '50%',
-            'left': '50%',
-            'marginRight': '-50%',
-            'transform': 'translate(-50%, -50%)'
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)'
       };
-      
+
       return (
         <div style={fill}>
-          <Loading/>
+          <Loading />
         </div>
       );
     }
 
     return (
       <Layout>
-        <Route exact path='/' component={DashboardPage} />
-        <Route exact path='/projects/:id' component={ProjectPage} />
-        <Route exact path='/projects/:projectId/environments/:environmentKey' component={EnvironmentStatePage} />    
-        <Route exact path='/projects/:projectId/toggles/:toggleKey' component={TogglePage} /> 
-        <ModalRoot />      
+        <Route exact path="/" component={DashboardPage} />
+        <Route exact path="/projects/:id" component={ProjectPage} />
+        <Route
+          exact
+          path="/projects/:projectId/environments/:environmentKey"
+          component={EnvironmentStatePage}
+        />
+        <Route
+          exact
+          path="/projects/:projectId/toggles/:toggleKey"
+          component={TogglePage}
+        />
+        <ModalRoot />
       </Layout>
-    );    
+    );
   }
-
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    isInitialised : getIsInitialised(state)
+    isInitialised: getIsInitialised(state)
   };
-}
+};
 
-const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators(actionCreators, dispatch)
-}
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators(actionCreators, dispatch);
+};
 
-export default withRouter(connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(App));
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(App)
+);

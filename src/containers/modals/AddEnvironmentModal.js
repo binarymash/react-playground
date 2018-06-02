@@ -2,31 +2,42 @@
 import { actionCreators } from '../../actions/index';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { ControlLabel, FormControl, FormGroup, Glyphicon, Modal, Button } from 'react-bootstrap'
+import {
+  ControlLabel,
+  FormControl,
+  FormGroup,
+  Glyphicon,
+  Modal,
+  Button
+} from 'react-bootstrap';
 import { hideModal } from '../../actions/index';
 import validator from 'validator';
 
 const KEY_WHITELIST = 'a-z0-9_.-';
 
 class AddEnvironment extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
-    
+
     this.state = {
       name: '',
       key: ''
     };
   }
 
-  handleOkClick = (event) => {
+  handleOkClick = event => {
     if (this.isValid()) {
       this.props.hideModal().then(() => {
-        this.props.addEnvironment(this.props.projectId, this.state.key, this.state.name);
+        this.props.addEnvironment(
+          this.props.projectId,
+          this.state.key,
+          this.state.name
+        );
       });
     }
-  }
+  };
 
-  handleChange = (event) => {
+  handleChange = event => {
     const target = event.target;
     const name = target.name;
     let value = target.type === 'checkbox' ? target.checked : target.value;
@@ -42,59 +53,73 @@ class AddEnvironment extends Component {
     if (name === 'name') {
       this.syncKey(value);
     }
-  }
+  };
 
-  handleKeyFocus = (event) => {
-    this.setState({['keyFocussed']:true})
-  }
+  handleKeyFocus = event => {
+    this.setState({ ['keyFocussed']: true });
+  };
 
-  syncKey = (value) => {
-    if (this.state.key.length === 0 && this.state.keyFocussed){
-      this.setState({['keyFocussed']:false})
+  syncKey = value => {
+    if (this.state.key.length === 0 && this.state.keyFocussed) {
+      this.setState({ ['keyFocussed']: false });
     }
 
-    if (!this.state.keyFocussed){
-      this.setState({['key']: this.sanitizeKey(value)});
+    if (!this.state.keyFocussed) {
+      this.setState({ ['key']: this.sanitizeKey(value) });
     }
-  }
+  };
 
-  sanitizeKey = (value) => {
-    return validator.whitelist(value.normalize('NFKD').replace(/\s+/g, '-').toLowerCase(), KEY_WHITELIST);
-  }
+  sanitizeKey = value => {
+    return validator.whitelist(
+      value
+        .normalize('NFKD')
+        .replace(/\s+/g, '-')
+        .toLowerCase(),
+      KEY_WHITELIST
+    );
+  };
 
   isValid = () => {
-    return this.getNameValidationState() === 'success' && this.getKeyValidationState() === 'success';
-  }
+    return (
+      this.getNameValidationState() === 'success' &&
+      this.getKeyValidationState() === 'success'
+    );
+  };
 
   getNameValidationState = () => {
-    if (this.state.name.length === 0 || this.state.name.length > 128){
-        return 'error';
+    if (this.state.name.length === 0 || this.state.name.length > 128) {
+      return 'error';
     }
-    return 'success';    
-  }
+    return 'success';
+  };
 
   getKeyValidationState = () => {
-    if (this.state.key.length === 0 || this.state.key.length > 128){
-        return 'error';
-    }
-
-    if (!validator.matches(this.state.key, `^[${KEY_WHITELIST}]*$`))
-    {
+    if (this.state.key.length === 0 || this.state.key.length > 128) {
       return 'error';
     }
 
-    return 'success';    
-  } 
+    if (!validator.matches(this.state.key, `^[${KEY_WHITELIST}]*$`)) {
+      return 'error';
+    }
+
+    return 'success';
+  };
 
   render() {
     return (
-      <Modal show={true} animation={false} onHide={() => this.props.hideModal()}>
+      <Modal
+        show={true}
+        animation={false}
+        onHide={() => this.props.hideModal()}
+      >
         <Modal.Header closeButton>
-          <Modal.Title><Glyphicon glyph='exclamation-plus'/> Add new environment</Modal.Title>
+          <Modal.Title>
+            <Glyphicon glyph="exclamation-plus" /> Add new environment
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form>
-          <FormGroup
+            <FormGroup
               controlId="environmentName"
               validationState={this.getNameValidationState()}
             >
@@ -108,8 +133,11 @@ class AddEnvironment extends Component {
                 onChange={this.handleChange}
               />
               <FormControl.Feedback />
-            </FormGroup>  
-            <FormGroup controlId="environmentKey" validationState={this.getKeyValidationState()}>
+            </FormGroup>
+            <FormGroup
+              controlId="environmentKey"
+              validationState={this.getKeyValidationState()}
+            >
               <ControlLabel>Environment key</ControlLabel>
               <FormControl
                 type="text"
@@ -119,20 +147,29 @@ class AddEnvironment extends Component {
                 onChange={this.handleChange}
               />
               <FormControl.Feedback />
-            </FormGroup>            
+            </FormGroup>
           </form>
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={() => this.props.hideModal()}><Glyphicon glyph='remove'/> Cancel</Button>
-          <Button active={true} bsStyle='success' onClick={() => this.handleOkClick()}><Glyphicon glyph='ok'/> Save</Button>
+          <Button onClick={() => this.props.hideModal()}>
+            <Glyphicon glyph="remove" /> Cancel
+          </Button>
+          <Button
+            active={true}
+            bsStyle="success"
+            onClick={() => this.handleOkClick()}
+          >
+            <Glyphicon glyph="ok" /> Save
+          </Button>
         </Modal.Footer>
-      </Modal> 
-  )}
+      </Modal>
+    );
+  }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators(actionCreators, dispatch)
-}
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators(actionCreators, dispatch);
+};
 
 export default connect(
   null,

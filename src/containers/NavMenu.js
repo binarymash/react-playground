@@ -8,34 +8,33 @@ import { LinkContainer } from 'react-router-bootstrap';
 import './NavMenu.css';
 
 class NavMenu extends Component {
-
   render() {
     return (
       <Navbar inverse fixedTop fluid collapseOnSelect>
-      <Navbar.Collapse>
-        <Nav>
+        <Navbar.Collapse>
+          <Nav>
             <LinkContainer to={`/`} exact>
               <NavItem>Dashboard</NavItem>
             </LinkContainer>
-        </Nav>
-      </Navbar.Collapse>
-    </Navbar>
+          </Nav>
+        </Navbar.Collapse>
+      </Navbar>
     );
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return state;
-}
+};
 
-const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators(actionCreators, dispatch)
-}
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators(actionCreators, dispatch);
+};
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-  null, 
+  null,
   {
     pure: false
   }

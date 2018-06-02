@@ -14,36 +14,34 @@ class DashboardPage extends Component {
   }
 
   render() {
-    if (this.props.isLoading){
-      return(
-        <PageLoading/>
-      );
+    if (this.props.isLoading) {
+      return <PageLoading />;
     }
 
-    if (!this.props.projects){
+    if (!this.props.projects) {
       return null;
     }
 
     return (
       <div>
         <PageHeader>Dashboard</PageHeader>
-        <Projects projects={this.props.projects}/>
-        <Audit audit={this.props.audit} />   
+        <Projects projects={this.props.projects} />
+        <Audit audit={this.props.audit} />
       </div>
-    ); 
+    );
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     projects: getProjectList(state),
     isLoading: getIsLoading(state)
   };
-}
+};
 
-const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators(actionCreators, dispatch)
-}
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators(actionCreators, dispatch);
+};
 
 export default connect(
   mapStateToProps,

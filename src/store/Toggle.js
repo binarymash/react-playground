@@ -1,10 +1,14 @@
 ﻿import produce from 'immer';
-import { requestToggleType, receiveToggleType, receiveToggleErrorType } from '../actions/index';
+import {
+  requestToggleType,
+  receiveToggleType,
+  receiveToggleErrorType
+} from '../actions/index';
 
 const getStoreKey = (projectId, toggleKey) => {
   let storeKey = `${projectId}/${toggleKey}`;
   return storeKey;
-}
+};
 
 // Read
 
@@ -21,13 +25,15 @@ export const getToggle = (state, projectId, toggleKey) => {
     name: toggle.name,
     audit: getAudit(toggle)
   };
-}
+};
 
 export const getIsToggleLoading = (state, projectId, toggleKey) => {
-  return state.toggle.togglesLoading[getStoreKey(projectId, toggleKey)] === true;
-}
+  return (
+    state.toggle.togglesLoading[getStoreKey(projectId, toggleKey)] === true
+  );
+};
 
-const getAudit = (toggle) => {
+const getAudit = toggle => {
   if (!toggle) {
     return null;
   }
@@ -38,39 +44,38 @@ const getAudit = (toggle) => {
     lastModified: toggle.lastModified,
     lastModifiedBy: toggle.lastModifiedBy,
     version: toggle.version
-  }
-}
+  };
+};
 
 // Write
 
 const INITIAL_STATE = {
-     toggles: {},
-     togglesLoading:{}
+  toggles: {},
+  togglesLoading: {}
 };
 
 export const reducer = produce((draft, action) => {
-    switch(action.type){
-
-      case requestToggleType: {
-          let storeKey = getStoreKey(action.projectId, action.toggleKey);      
-          draft.togglesLoading[storeKey] = true;
-        }
-        break;
-
-      case receiveToggleType: {
-          let storeKey = getStoreKey(action.projectId, action.toggleKey);  
-          draft.toggles[storeKey] = action.json;    
-          draft.togglesLoading[storeKey] = undefined;  
-        }
-        break;
-
-      case receiveToggleErrorType: {
-          let storeKey = getStoreKey(action.projectId, action.toggleKey);      
-          draft.togglesLoading[storeKey] = undefined;
-        }
-        break;
-
+  switch (action.type) {
+    case requestToggleType:
+      {
+        let storeKey = getStoreKey(action.projectId, action.toggleKey);
+        draft.togglesLoading[storeKey] = true;
       }
-  },
-  INITIAL_STATE
-)
+      break;
+
+    case receiveToggleType:
+      {
+        let storeKey = getStoreKey(action.projectId, action.toggleKey);
+        draft.toggles[storeKey] = action.json;
+        draft.togglesLoading[storeKey] = undefined;
+      }
+      break;
+
+    case receiveToggleErrorType:
+      {
+        let storeKey = getStoreKey(action.projectId, action.toggleKey);
+        draft.togglesLoading[storeKey] = undefined;
+      }
+      break;
+  }
+}, INITIAL_STATE);

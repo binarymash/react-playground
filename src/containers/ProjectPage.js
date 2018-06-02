@@ -16,7 +16,7 @@ class ProjectPage extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.match.params.id === this.props.match.params.id){
+    if (nextProps.match.params.id === this.props.match.params.id) {
       return;
     }
 
@@ -24,13 +24,11 @@ class ProjectPage extends Component {
   }
 
   render() {
-    if (this.props.isLoading){
-      return (
-        <PageLoading/>
-      );
+    if (this.props.isLoading) {
+      return <PageLoading />;
     }
 
-    if (!this.props.project){
+    if (!this.props.project) {
       return null;
     }
 
@@ -38,26 +36,36 @@ class ProjectPage extends Component {
       <div>
         <PageHeader>
           {this.props.project.name}
-          <div><small><Key value={this.props.project.id}/></small></div>
+          <div>
+            <small>
+              <Key value={this.props.project.id} />
+            </small>
+          </div>
         </PageHeader>
-        <Environments environments={this.props.project.environments} projectId={this.props.project.id}/>
-        <Toggles toggles={this.props.project.toggles} projectId={this.props.project.id}/>
-        <Audit audit={this.props.project.audit} />   
+        <Environments
+          environments={this.props.project.environments}
+          projectId={this.props.project.id}
+        />
+        <Toggles
+          toggles={this.props.project.toggles}
+          projectId={this.props.project.id}
+        />
+        <Audit audit={this.props.project.audit} />
       </div>
-    ); 
+    );
   }
 }
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    project : getProject(state, ownProps.match.params.id),
-    isLoading: getIsLoading(state, ownProps.match.params.id),
+    project: getProject(state, ownProps.match.params.id),
+    isLoading: getIsLoading(state, ownProps.match.params.id)
   };
-}
+};
 
-const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators(actionCreators, dispatch)
-}
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators(actionCreators, dispatch);
+};
 
 export default connect(
   mapStateToProps,

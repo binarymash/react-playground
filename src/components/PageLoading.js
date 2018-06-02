@@ -2,24 +2,21 @@
 import { connect } from 'react-redux';
 import Loading from './Loading';
 
-
 class PageLoading extends Component {
-
   render() {
-    let style={
-      display:'flex',
-      height:'100vh',
-      alignItems:'center',
-      justifyContent:'center'
+    let style = {
+      display: 'flex',
+      height: '100vh',
+      alignItems: 'center',
+      justifyContent: 'center'
     };
 
-    return(
+    return (
       <div style={style}>
-        <Loading/>
+        <Loading />
       </div>
-    ); 
-  } 
+    );
+  }
 }
 
-export default connect(
-)(PageLoading);
+export default connect()(PageLoading);

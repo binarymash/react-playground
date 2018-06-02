@@ -10,7 +10,7 @@ export default props => (
         <NavMenu />
       </Col>
       <Col sm={9}>
-        <Breadcrumbs/>
+        <Breadcrumbs />
         {props.children}
       </Col>
     </Row>
