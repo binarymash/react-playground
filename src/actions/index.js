@@ -32,6 +32,10 @@ export const projectAddRequested = 'PROJECT_ADD_REQUESTED';
 export const projectAddSucceeded = 'PROJECT_ADD_SUCCEEDED';
 export const projectAddFailed = 'PROJECT_ADD_FAILED';
 
+export const projectDeleteRequested = 'PROJECT_DELETE_REQUESTED';
+export const projectDeleteSucceeded = 'PROJECT_DELETE_SUCCEEDED';
+export const projectDeleteFailed = 'PROJECT_DELETE_FAILED';
+
 export const toggleAddRequested = 'TOGGLE_ADD_REQUESTED';
 export const toggleAddSucceeded = 'TOGGLE_ADD_SUCCEEDED';
 export const toggleAddFailed = 'TOGGLE_ADD_FAILED';
@@ -280,6 +284,39 @@ export const actionCreators = {
           modalProps: { error: error.message }
         });
         dispatch({ type: projectAddFailed, error });
+      });
+  },
+
+  deleteProject: projectId => async (dispatch, getState) => {
+    dispatch({ type: projectDeleteRequested });
+
+    let projectVersion = null;
+    let project = getState().project.projects[projectId];
+    if (project) {
+      projectVersion = project.version;
+    }
+
+    let accountVersion = getState().account.version;
+
+    await Api.deleteProject(projectId, projectVersion)
+      .then(() => {
+        dispatch({
+          type: projectDeleteSucceeded,
+          projectId: projectId,
+          accountVersion: accountVersion + 1
+        });
+      })
+      .catch(function(error) {
+        dispatch({
+          type: showModal,
+          modalType: 'API_ERROR',
+          modalProps: { error: error.message }
+        });
+        dispatch({
+          type: projectDeleteFailed,
+          projectId,
+          error
+        });
       });
   },
 

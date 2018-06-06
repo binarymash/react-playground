@@ -4,7 +4,8 @@ import {
   requestProjectsType,
   receiveProjectsType,
   receiveProjectsErrorType,
-  projectAddSucceeded
+  projectAddSucceeded,
+  projectDeleteSucceeded
 } from '../actions/index';
 
 const INITIAL_STATE = {
@@ -53,6 +54,13 @@ export const reducer = produce((draft, action) => {
         id: action.id,
         name: action.name
       });
+      break;
+
+    case projectDeleteSucceeded:
+      draft.projectList.splice(
+        draft.projectList.findIndex(project => project.id === action.projectId),
+        1
+      );
       break;
   }
 }, INITIAL_STATE);

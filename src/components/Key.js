@@ -22,7 +22,6 @@ class Key extends Component {
           trigger="click"
           overlay={tooltip}
           placement="right"
-          delayHide="500"
         >
           <code style={{ cursor: 'pointer' }}>
             {this.props.value} <Glyphicon glyph="copy" />

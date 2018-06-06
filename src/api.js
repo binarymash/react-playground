@@ -78,6 +78,27 @@ export const Api = {
     });
   },
 
+  deleteProject: (projectId, version) => {
+    const url = baseUrl + `/projects/${projectId}/delete`;
+
+    let request = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      },
+      body: JSON.stringify({
+        expectedProjectVersion: version
+      })
+    };
+
+    return fetch(url, request).then(function(response) {
+      if (!response.ok) {
+        throw new Error(response.status);
+      }
+    });
+  },
+
   addToggle: (projectId, toggleKey, toggleName, version) => {
     const url = baseUrl + `/projects/${projectId}/toggles/add`;
 

@@ -6,7 +6,8 @@ import {
   toggleAddSucceeded,
   toggleDeleteSucceeded,
   environmentAddSucceeded,
-  environmentDeleteSucceeded
+  environmentDeleteSucceeded,
+  projectDeleteSucceeded
 } from '../actions/index';
 
 // Read
@@ -160,6 +161,10 @@ export const reducer = produce((draft, action) => {
         1
       );
       draft.projects[action.projectId].version = action.version;
+      break;
+
+    case projectDeleteSucceeded:
+      draft.projects[action.projectId] = undefined;
       break;
   }
 }, INITIAL_STATE);
