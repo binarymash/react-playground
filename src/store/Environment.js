@@ -96,17 +96,17 @@ const getAudit = (environment, environmentState) => {
   }
 
   let lastModifiedFromState =
-    environmentState.lastModified > environment.lastModifiedBy;
+    environmentState.audit.lastModified > environment.audit.lastModifiedBy;
 
   return {
-    created: environmentState.created,
-    createdBy: environmentState.createdBy,
+    created: environmentState.audit.created,
+    createdBy: environmentState.audit.createdBy,
     lastModified: lastModifiedFromState
-      ? environmentState.lastModified
-      : environment.lastModified,
+      ? environmentState.audit.lastModified
+      : environment.audit.lastModified,
     lastModifiedBy: lastModifiedFromState
-      ? environmentState.lastModifiedBy
-      : environment.lastModifiedBy
+      ? environmentState.audit.lastModifiedBy
+      : environment.audit.lastModifiedBy
   };
 };
 

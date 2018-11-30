@@ -39,11 +39,11 @@ const getAudit = toggle => {
   }
 
   return {
-    created: toggle.created,
-    createdBy: toggle.createdBy,
-    lastModified: toggle.lastModified,
-    lastModifiedBy: toggle.lastModifiedBy,
-    version: toggle.version
+    created: toggle.audit.created,
+    createdBy: toggle.audit.createdBy,
+    lastModified: toggle.audit.lastModified,
+    lastModifiedBy: toggle.audit.lastModifiedBy,
+    version: toggle.audit.version
   };
 };
 

@@ -97,11 +97,11 @@ const getToggle = (projectId, toggle) => {
 
 const getAudit = project => {
   return {
-    created: project.created,
-    createdBy: project.createdBy,
-    lastModified: project.lastModified,
-    lastModifiedBy: project.lastModifiedBy,
-    version: project.version
+    created: project.audit.created,
+    createdBy: project.audit.createdBy,
+    lastModified: project.audit.lastModified,
+    lastModifiedBy: project.audit.lastModifiedBy,
+    version: project.audit.version
   };
 };
 

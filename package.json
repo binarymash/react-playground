@@ -28,13 +28,13 @@
     "validator": "^10.2.0"
   },
   "lint-staged": {
-   "src/**/*.{js,jsx,json,css}": [
-     "prettier --single-quote --write",
-     "git add"
-   ]
+    "src/**/*.{js,jsx,json,css}": [
+      "prettier --single-quote --write",
+      "git add"
+    ]
   },
   "scripts": {
-    "precommit": "lint-staged", 
+    "precommit": "lint-staged",
     "start": "rimraf ./build && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",

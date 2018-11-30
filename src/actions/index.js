@@ -266,7 +266,7 @@ export const actionCreators = {
     let id = uuidv1();
     dispatch({ type: projectAddRequested });
 
-    let version = getState().account.version;
+    let version = getState().account.audit.version;
 
     await Api.addProject(id, name, version)
       .then(() => {
@@ -293,10 +293,10 @@ export const actionCreators = {
     let projectVersion = null;
     let project = getState().project.projects[projectId];
     if (project) {
-      projectVersion = project.version;
+      projectVersion = project.audit.version;
     }
 
-    let accountVersion = getState().account.version;
+    let accountVersion = getState().account.audit.version;
 
     await Api.deleteProject(projectId, projectVersion)
       .then(() => {
@@ -326,7 +326,7 @@ export const actionCreators = {
   ) => {
     dispatch({ type: toggleAddRequested });
 
-    let version = getState().project.projects[projectId].version;
+    let version = getState().project.projects[projectId].audit.version;
 
     await Api.addToggle(projectId, toggleKey, toggleName, version)
       .then(() => {
@@ -351,7 +351,7 @@ export const actionCreators = {
   deleteToggle: (projectId, toggleKey) => async (dispatch, getState) => {
     dispatch({ type: toggleDeleteRequested });
 
-    let version = getState().project.projects[projectId].version;
+    let version = getState().project.projects[projectId].audit.version;
 
     await Api.deleteToggle(projectId, toggleKey, version)
       .then(() => {
@@ -378,7 +378,7 @@ export const actionCreators = {
   ) => {
     dispatch({ type: environmentAddRequested });
 
-    let version = getState().project.projects[projectId].version;
+    let version = getState().project.projects[projectId].audit.version;
 
     await Api.addEnvironment(
       projectId,
@@ -416,7 +416,7 @@ export const actionCreators = {
   ) => {
     dispatch({ type: environmentDeleteRequested });
 
-    let version = getState().project.projects[projectId].version;
+    let version = getState().project.projects[projectId].audit.version;
 
     await Api.deleteEnvironment(projectId, environmentKey, version)
       .then(() => {
