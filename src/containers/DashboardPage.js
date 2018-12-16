@@ -3,14 +3,14 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { PageHeader } from 'react-bootstrap';
 import { actionCreators } from '../actions/index';
-import { getProjectList, getIsLoading } from '../store/Account';
+import { getProjects, getIsLoading, getAudit } from '../store/Account';
 import Projects from '../components/Projects';
 import Audit from '../components/Audit';
 import PageLoading from '../components/PageLoading';
 
 class DashboardPage extends Component {
   componentWillMount() {
-    this.props.requestProjects();
+    this.props.requestAccount();
   }
 
   render() {
@@ -34,8 +34,9 @@ class DashboardPage extends Component {
 
 const mapStateToProps = state => {
   return {
-    projects: getProjectList(state),
-    isLoading: getIsLoading(state)
+    projects: getProjects(state),
+    isLoading: getIsLoading(state),
+    audit: getAudit(state)
   };
 };
 

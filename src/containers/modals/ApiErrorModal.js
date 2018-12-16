@@ -25,7 +25,7 @@ class ApiErrorModal extends Component {
         </Modal.Body>
         <Modal.Footer>
           <Button bsStyle="primary" onClick={() => this.props.hideModal()}>
-            Acknowledge
+            OK
           </Button>
         </Modal.Footer>
       </Modal>

@@ -3,8 +3,8 @@ import uuidv1 from 'uuid/v1';
 
 export const initialised = 'INITIALISED';
 
-export const requestProjectsType = 'REQUEST_PROJECTS';
-export const receiveProjectsType = 'RECEIVE_PROJECTS';
+export const requestAccountType = 'REQUEST_ACCOUNT';
+export const receiveAccountType = 'RECEIVE_ACCOUNT';
 export const receiveProjectsErrorType = 'RECEIVE_PROJECTS_ERROR';
 
 export const requestProjectType = 'REQUEST_PROJECT';
@@ -55,12 +55,12 @@ export const environmentDeleteFailed = 'ENVIRONMENT_DELETE_FAILED';
 export const showModal = 'SHOW_MODAL';
 export const hideModal = 'HIDE_MODAL';
 
-const getLatestProjects = (dispatch, getState) => {
-  dispatch({ type: requestProjectsType });
+const getAccount = (dispatch, getState) => {
+  dispatch({ type: requestAccountType });
 
   return Api.getProjects()
     .then(function(json) {
-      dispatch({ type: receiveProjectsType, json });
+      dispatch({ type: receiveAccountType, json });
     })
     .catch(function(error) {
       dispatch({
@@ -172,10 +172,10 @@ const getLatestToggle = (projectId, toggleKey, dispatch, getState) => {
 
 export const actionCreators = {
   initialise: () => async (dispatch, getState) => {
-    await getLatestProjects(dispatch, getState);
-    await getLatestProjects(dispatch, getState)
+    await getAccount(dispatch, getState);
+    await getAccount(dispatch, getState)
       .then(() => {
-        let projects = getState().account.projectList;
+        let projects = getState().account.projection.account.projects;
         if (projects.length > 0) {
           return getLatestProject(projects[0].id, dispatch, getState);
         }
@@ -185,8 +185,8 @@ export const actionCreators = {
       });
   },
 
-  requestProjects: () => async (dispatch, getState) => {
-    await getLatestProjects(dispatch, getState);
+  requestAccount: () => async (dispatch, getState) => {
+    await getAccount(dispatch, getState);
   },
 
   selectProject: projectId => async (dispatch, getState) => {
@@ -266,7 +266,7 @@ export const actionCreators = {
     let id = uuidv1();
     dispatch({ type: projectAddRequested });
 
-    let version = getState().account.audit.version;
+    let version = getState().account.projection.account.audit.version;
 
     await Api.addProject(id, name, version)
       .then(() => {
@@ -296,7 +296,7 @@ export const actionCreators = {
       projectVersion = project.audit.version;
     }
 
-    let accountVersion = getState().account.audit.version;
+    let accountVersion = getState().account.projection.account.audit.version;
 
     await Api.deleteProject(projectId, projectVersion)
       .then(() => {

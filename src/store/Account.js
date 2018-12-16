@@ -1,25 +1,33 @@
 ﻿import produce from 'immer';
 import {
   initialised,
-  requestProjectsType,
-  receiveProjectsType,
+  requestAccountType,
+  receiveAccountType,
   receiveProjectsErrorType,
   projectAddSucceeded,
   projectDeleteSucceeded
 } from '../actions/index';
 
 const INITIAL_STATE = {
-  projectList: [],
+  projection: {
+    account: {
+      projects: []
+    }
+  },
   isLoading: false
 };
 
-export const getProjectList = state => {
-  return state.account.projectList.map(project => {
+export const getProjects = state => {
+  return state.account.projection.account.projects.map(project => {
     return {
       id: project.id,
       name: project.name
     };
   });
+};
+
+export const getAudit = state => {
+  return state.account.projection.account.audit;
 };
 
 export const getIsInitialised = state => {
@@ -36,13 +44,13 @@ export const reducer = produce((draft, action) => {
       draft.isInitialised = true;
       break;
 
-    case requestProjectsType:
+    case requestAccountType:
       draft.isLoading = true;
       break;
 
-    case receiveProjectsType:
+    case receiveAccountType:
       draft.isLoading = false;
-      draft.projectList = action.json.projects;
+      draft.projection = action.json;
       break;
 
     case receiveProjectsErrorType:
@@ -50,15 +58,17 @@ export const reducer = produce((draft, action) => {
       break;
 
     case projectAddSucceeded:
-      draft.projectList.push({
+      draft.projection.account.projects.push({
         id: action.id,
         name: action.name
       });
       break;
 
     case projectDeleteSucceeded:
-      draft.projectList.splice(
-        draft.projectList.findIndex(project => project.id === action.projectId),
+      draft.projection.account.projects.splice(
+        draft.projection.account.projects.findIndex(
+          project => project.id === action.projectId
+        ),
         1
       );
       break;
