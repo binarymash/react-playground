@@ -172,7 +172,6 @@ const getLatestToggle = (projectId, toggleKey, dispatch, getState) => {
 
 export const actionCreators = {
   initialise: () => async (dispatch, getState) => {
-    await getAccount(dispatch, getState);
     await getAccount(dispatch, getState)
       .then(() => {
         let projects = getState().account.projection.account.projects;
@@ -214,31 +213,21 @@ export const actionCreators = {
     await getLatestToggle(projectId, toggleKey, dispatch, getState);
   },
 
-  setToggleValue: (
-    projectId,
-    environmentKey,
-    toggleKey,
-    version,
-    value
-  ) => async (dispatch, getState) => {
+  setToggleValue: (projectId, environmentKey, toggleKey, value) => async (
+    dispatch,
+    getState
+  ) => {
     dispatch({ type: toggleStateUpdateRequested });
 
     let newValue = value ? 'True' : 'False';
 
-    await Api.setToggleState(
-      projectId,
-      environmentKey,
-      toggleKey,
-      version,
-      newValue
-    )
+    await Api.setToggleState(projectId, environmentKey, toggleKey, newValue)
       .then(() => {
         dispatch({
           type: toggleStateUpdateSucceeded,
           projectId,
           environmentKey,
           toggleKey,
-          version: version + 1,
           value: newValue
         });
       })
@@ -266,15 +255,12 @@ export const actionCreators = {
     let id = uuidv1();
     dispatch({ type: projectAddRequested });
 
-    let version = getState().account.projection.account.audit.version;
-
-    await Api.addProject(id, name, version)
+    await Api.addProject(id, name)
       .then(() => {
         dispatch({
           type: projectAddSucceeded,
           id: id,
-          name: name,
-          version: version + 1
+          name: name
         });
       })
       .catch(error => {
@@ -290,20 +276,11 @@ export const actionCreators = {
   deleteProject: projectId => async (dispatch, getState) => {
     dispatch({ type: projectDeleteRequested });
 
-    let projectVersion = null;
-    let project = getState().project.projects[projectId];
-    if (project) {
-      projectVersion = project.audit.version;
-    }
-
-    let accountVersion = getState().account.projection.account.audit.version;
-
-    await Api.deleteProject(projectId, projectVersion)
+    await Api.deleteProject(projectId)
       .then(() => {
         dispatch({
           type: projectDeleteSucceeded,
-          projectId: projectId,
-          accountVersion: accountVersion + 1
+          projectId: projectId
         });
       })
       .catch(function(error) {
@@ -326,16 +303,13 @@ export const actionCreators = {
   ) => {
     dispatch({ type: toggleAddRequested });
 
-    let version = getState().project.projects[projectId].audit.version;
-
-    await Api.addToggle(projectId, toggleKey, toggleName, version)
+    await Api.addToggle(projectId, toggleKey, toggleName)
       .then(() => {
         dispatch({
           type: toggleAddSucceeded,
           projectId,
           toggleKey,
-          toggleName,
-          version: version + 1
+          toggleName
         });
       })
       .catch(error => {
@@ -351,15 +325,12 @@ export const actionCreators = {
   deleteToggle: (projectId, toggleKey) => async (dispatch, getState) => {
     dispatch({ type: toggleDeleteRequested });
 
-    let version = getState().project.projects[projectId].audit.version;
-
-    await Api.deleteToggle(projectId, toggleKey, version)
+    await Api.deleteToggle(projectId, toggleKey)
       .then(() => {
         dispatch({
           type: toggleDeleteSucceeded,
           projectId,
-          toggleKey,
-          version: version + 1
+          toggleKey
         });
       })
       .catch(error => {
@@ -378,21 +349,13 @@ export const actionCreators = {
   ) => {
     dispatch({ type: environmentAddRequested });
 
-    let version = getState().project.projects[projectId].audit.version;
-
-    await Api.addEnvironment(
-      projectId,
-      environmentKey,
-      environmentName,
-      version
-    )
+    await Api.addEnvironment(projectId, environmentKey, environmentName)
       .then(() => {
         dispatch({
           type: environmentAddSucceeded,
           projectId,
           environmentKey,
-          environmentName,
-          version: version + 1
+          environmentName
         });
       })
       .catch(error => {
@@ -416,15 +379,12 @@ export const actionCreators = {
   ) => {
     dispatch({ type: environmentDeleteRequested });
 
-    let version = getState().project.projects[projectId].audit.version;
-
-    await Api.deleteEnvironment(projectId, environmentKey, version)
+    await Api.deleteEnvironment(projectId, environmentKey)
       .then(() => {
         dispatch({
           type: environmentDeleteSucceeded,
           projectId: projectId,
-          environmentKey: environmentKey,
-          version: version + 1
+          environmentKey: environmentKey
         });
       })
       .catch(function(error) {

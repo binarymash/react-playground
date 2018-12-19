@@ -37,7 +37,7 @@ export const getEnvironment = (state, projectId, environmentKey) => {
   let environment = state.environment.environments[storeKey];
   let environmentState =
     state.environment.environmentStates[getStoreKey(projectId, environmentKey)];
-  let project = state.project.projects[projectId];
+  let project = state.project.projects[projectId].project;
 
   if (!environment) {
     return null;

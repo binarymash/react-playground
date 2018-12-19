@@ -78,7 +78,7 @@ export const Api = {
     });
   },
 
-  deleteProject: (projectId, version) => {
+  deleteProject: projectId => {
     const url = baseUrl + `/projects/${projectId}/delete`;
 
     let request = {
@@ -87,9 +87,7 @@ export const Api = {
         'Content-Type': 'application/json',
         Accept: 'application/json'
       },
-      body: JSON.stringify({
-        expectedProjectVersion: version
-      })
+      body: JSON.stringify({})
     };
 
     return fetch(url, request).then(function(response) {
@@ -99,7 +97,7 @@ export const Api = {
     });
   },
 
-  addToggle: (projectId, toggleKey, toggleName, version) => {
+  addToggle: (projectId, toggleKey, toggleName) => {
     const url = baseUrl + `/projects/${projectId}/toggles/add`;
 
     let request = {
@@ -110,8 +108,7 @@ export const Api = {
       },
       body: JSON.stringify({
         key: toggleKey,
-        name: toggleName,
-        expectedProjectVersion: version
+        name: toggleName
       })
     };
 
@@ -122,7 +119,7 @@ export const Api = {
     });
   },
 
-  deleteToggle: (projectId, toggleKey, version) => {
+  deleteToggle: (projectId, toggleKey) => {
     const url = baseUrl + `/projects/${projectId}/toggles/${toggleKey}/delete`;
 
     let request = {
@@ -131,9 +128,7 @@ export const Api = {
         'Content-Type': 'application/json',
         Accept: 'application/json'
       },
-      body: JSON.stringify({
-        expectedProjectVersion: version
-      })
+      body: JSON.stringify({})
     };
 
     return fetch(url, request).then(function(response) {
@@ -143,7 +138,7 @@ export const Api = {
     });
   },
 
-  addEnvironment: (projectId, environmentKey, environmentName, version) => {
+  addEnvironment: (projectId, environmentKey, environmentName) => {
     const url = baseUrl + `/projects/${projectId}/environments/add`;
 
     let request = {
@@ -154,8 +149,7 @@ export const Api = {
       },
       body: JSON.stringify({
         key: environmentKey,
-        name: environmentName,
-        expectedProjectVersion: version
+        name: environmentName
       })
     };
 
@@ -166,7 +160,7 @@ export const Api = {
     });
   },
 
-  deleteEnvironment: (projectId, environmentKey, version) => {
+  deleteEnvironment: (projectId, environmentKey) => {
     const url =
       baseUrl + `/projects/${projectId}/environments/${environmentKey}/delete`;
 
@@ -176,9 +170,7 @@ export const Api = {
         'Content-Type': 'application/json',
         Accept: 'application/json'
       },
-      body: JSON.stringify({
-        expectedProjectVersion: version
-      })
+      body: JSON.stringify({})
     };
 
     return fetch(url, request).then(function(response) {
@@ -188,7 +180,7 @@ export const Api = {
     });
   },
 
-  setToggleState: (projectId, environmentKey, toggleKey, version, value) => {
+  setToggleState: (projectId, environmentKey, toggleKey, value) => {
     const url =
       baseUrl +
       `/projects/${projectId}/environments/${environmentKey}/toggles/${toggleKey}/change-state`;
@@ -200,7 +192,6 @@ export const Api = {
         Accept: 'application/json'
       },
       body: JSON.stringify({
-        expectedToggleStateVersion: version,
         state: value
       })
     };

@@ -17,7 +17,7 @@ export const getIsLoading = (state, projectId) => {
 };
 
 export const getProject = (state, projectId) => {
-  const project = state.project.projects[projectId];
+  const project = state.project.projects[projectId].project;
   if (!project) {
     return null;
   }
@@ -27,12 +27,12 @@ export const getProject = (state, projectId) => {
     name: project.name,
     environments: getEnvironments(project),
     toggles: getToggles(project),
-    audit: getAudit(project)
+    audit: project.audit
   };
 };
 
 export const getProjectName = (state, projectId) => {
-  let project = state.project.projects[projectId];
+  let project = state.project.projects[projectId].project;
   if (project) {
     return project.name;
   }
@@ -40,7 +40,7 @@ export const getProjectName = (state, projectId) => {
 };
 
 export const getEnvironmentName = (state, projectId, environmentKey) => {
-  let project = state.project.projects[projectId];
+  let project = state.project.projects[projectId].project;
   if (project) {
     let environment = project.environments.find(e => e.key === environmentKey);
     if (environment) {
@@ -51,7 +51,7 @@ export const getEnvironmentName = (state, projectId, environmentKey) => {
 };
 
 export const getToggleName = (state, projectId, toggleKey) => {
-  let project = state.project.projects[projectId];
+  let project = state.project.projects[projectId].project;
   if (project) {
     let toggle = project.toggles.find(t => t.key === toggleKey);
     if (toggle) {
@@ -120,7 +120,7 @@ export const reducer = produce((draft, action) => {
 
     case receiveProjectType:
       draft.projectsLoading[action.projectId] = undefined;
-      draft.projects[action.json.id] = action.json;
+      draft.projects[action.projectId] = action.json;
       break;
 
     case receiveProjectErrorType:
@@ -128,39 +128,39 @@ export const reducer = produce((draft, action) => {
       break;
 
     case toggleAddSucceeded:
-      draft.projects[action.projectId].toggles.push({
+      draft.projects[action.projectId].project.toggles.push({
         key: action.toggleKey,
         name: action.toggleName
       });
-      draft.projects[action.projectId].version = action.version;
+      draft.projects[action.projectId].project.audit.version = action.version;
       break;
 
     case toggleDeleteSucceeded:
-      draft.projects[action.projectId].toggles.splice(
+      draft.projects[action.projectId].project.toggles.splice(
         draft.projects[action.projectId].toggles.findIndex(
           toggle => toggle.key === action.toggleKey
         ),
         1
       );
-      draft.projects[action.projectId].version = action.version;
+      draft.projects[action.projectId].project.audit.version = action.version;
       break;
 
     case environmentAddSucceeded:
-      draft.projects[action.projectId].environments.push({
+      draft.projects[action.projectId].project.environments.push({
         key: action.environmentKey,
         name: action.environmentName
       });
-      draft.projects[action.projectId].version = action.version;
+      draft.projects[action.projectId].project.audit.version = action.version;
       break;
 
     case environmentDeleteSucceeded:
-      draft.projects[action.projectId].environments.splice(
-        draft.projects[action.projectId].environments.findIndex(
+      draft.projects[action.projectId].project.environments.splice(
+        draft.projects[action.projectId].project.environments.findIndex(
           environment => environment.key === action.environmentKey
         ),
         1
       );
-      draft.projects[action.projectId].version = action.version;
+      draft.projects[action.projectId].project.audit.version = action.version;
       break;
 
     case projectDeleteSucceeded:
