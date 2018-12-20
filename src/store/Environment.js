@@ -34,13 +34,28 @@ export const getIsEnvironmentStateLoading = (
 export const getEnvironment = (state, projectId, environmentKey) => {
   let storeKey = getStoreKey(projectId, environmentKey);
 
-  let environment = state.environment.environments[storeKey];
-  let environmentState =
-    state.environment.environmentStates[getStoreKey(projectId, environmentKey)];
-  let project = state.project.projects[projectId].project;
+  let environment = null;
+  let environmentState = null;
+  let project = null;
+
+  let environmentProjection = state.environment.environments[storeKey];
+  if (environmentProjection) {
+    environment = environmentProjection.environment;
+  }
 
   if (!environment) {
     return null;
+  }
+
+  let environmentStateProjection =
+    state.environment.environmentStates[storeKey];
+  if (environmentStateProjection) {
+    environmentState = environmentStateProjection.environmentState;
+  }
+
+  let projectProjection = state.project.projects[projectId];
+  if (projectProjection) {
+    project = projectProjection.project;
   }
 
   return {
@@ -91,22 +106,15 @@ const getToggleStateValue = value => {
 };
 
 const getAudit = (environment, environmentState) => {
-  if (!environment || !environmentState) {
+  if (!environment) {
     return null;
   }
 
-  let lastModifiedFromState =
-    environmentState.audit.lastModified > environment.audit.lastModifiedBy;
-
   return {
-    created: environmentState.audit.created,
-    createdBy: environmentState.audit.createdBy,
-    lastModified: lastModifiedFromState
-      ? environmentState.audit.lastModified
-      : environment.audit.lastModified,
-    lastModifiedBy: lastModifiedFromState
-      ? environmentState.audit.lastModifiedBy
-      : environment.audit.lastModifiedBy
+    created: environment.audit.created,
+    createdBy: environment.audit.createdBy,
+    lastModified: environment.audit.lastModified,
+    lastModifiedBy: environment.audit.lastModifiedBy
   };
 };
 
