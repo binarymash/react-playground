@@ -13,7 +13,12 @@ const getStoreKey = (projectId, toggleKey) => {
 // Read
 
 export const getToggle = (state, projectId, toggleKey) => {
-  let toggle = state.toggle.toggles[getStoreKey(projectId, toggleKey)];
+  let toggle = null;
+  let toggleProjection =
+    state.toggle.toggles[getStoreKey(projectId, toggleKey)];
+  if (toggleProjection) {
+    toggle = toggleProjection.toggle;
+  }
 
   if (!toggle) {
     return null;

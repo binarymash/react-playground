@@ -128,17 +128,19 @@ const INITIAL_STATE = {
 };
 
 export const reducer = produce((draft, action) => {
+  let storeKey = undefined;
+
   switch (action.type) {
     case requestEnvironmentType:
       {
-        let storeKey = getStoreKey(action.projectId, action.environmentKey);
+        storeKey = getStoreKey(action.projectId, action.environmentKey);
         draft.environmentsLoading[storeKey] = true;
       }
       break;
 
     case receiveEnvironmentType:
       {
-        let storeKey = getStoreKey(action.projectId, action.environmentKey);
+        storeKey = getStoreKey(action.projectId, action.environmentKey);
         draft.environmentsLoading[storeKey] = undefined;
         draft.environments[storeKey] = action.json;
       }
@@ -146,21 +148,21 @@ export const reducer = produce((draft, action) => {
 
     case receiveEnvironmentErrorType:
       {
-        let storeKey = getStoreKey(action.projectId, action.environmentKey);
+        storeKey = getStoreKey(action.projectId, action.environmentKey);
         draft.environmentsLoading[storeKey] = undefined;
       }
       break;
 
     case requestEnvironmentStateType:
       {
-        let storeKey = getStoreKey(action.projectId, action.environmentKey);
+        storeKey = getStoreKey(action.projectId, action.environmentKey);
         draft.environmentStatesLoading[storeKey] = true;
       }
       break;
 
     case receiveEnvironmentStateType:
       {
-        let storeKey = getStoreKey(action.projectId, action.environmentKey);
+        storeKey = getStoreKey(action.projectId, action.environmentKey);
         draft.environmentStatesLoading[storeKey] = undefined;
         draft.environmentStates[storeKey] = action.json;
       }
@@ -168,19 +170,19 @@ export const reducer = produce((draft, action) => {
 
     case receiveEnvironmentStateErrorType:
       {
-        let storeKey = getStoreKey(action.projectId, action.environmentKey);
+        storeKey = getStoreKey(action.projectId, action.environmentKey);
         draft.environmentStatesLoading[storeKey] = undefined;
       }
       break;
 
     case toggleStateUpdateSucceeded:
       {
-        let storeKey = getStoreKey(action.projectId, action.environmentKey);
-        let toggleState = draft.environmentStates[storeKey].toggleStates.find(
-          ts => {
-            return ts.key === action.toggleKey;
-          }
-        );
+        storeKey = getStoreKey(action.projectId, action.environmentKey);
+        let toggleState = draft.environmentStates[
+          storeKey
+        ].environmentState.toggleStates.find(ts => {
+          return ts.key === action.toggleKey;
+        });
         toggleState.version = action.version;
         toggleState.value = action.value;
       }
