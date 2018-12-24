@@ -13,11 +13,21 @@ import {
 // Read
 
 export const getIsLoading = (state, projectId) => {
-  return state.project.projectsLoading[projectId] === true;
+  const projection = state.project.projects[projectId];
+  if (projection) {
+    return projection.isLoading;
+  }
+  return false;
 };
 
 export const getProject = (state, projectId) => {
-  const project = state.project.projects[projectId].project;
+  const projection = state.project.projects[projectId];
+  let project = undefined;
+
+  if (projection) {
+    project = projection.project;
+  }
+
   if (!project) {
     return null;
   }
@@ -32,32 +42,53 @@ export const getProject = (state, projectId) => {
 };
 
 export const getProjectName = (state, projectId) => {
-  let project = state.project.projects[projectId].project;
+  const projection = state.project.projects[projectId];
+  let project = undefined;
+
+  if (projection) {
+    project = projection.project;
+  }
+
   if (project) {
     return project.name;
   }
-  return null;
+
+  return undefined;
 };
 
 export const getEnvironmentName = (state, projectId, environmentKey) => {
-  let project = state.project.projects[projectId].project;
+  const projection = state.project.projects[projectId];
+  let project = undefined;
+
+  if (projection) {
+    project = projection.project;
+  }
+
   if (project) {
     let environment = project.environments.find(e => e.key === environmentKey);
     if (environment) {
       return environment.name;
     }
   }
-  return null;
+
+  return undefined;
 };
 
 export const getToggleName = (state, projectId, toggleKey) => {
-  let project = state.project.projects[projectId].project;
+  const projection = state.project.projects[projectId];
+  let project = undefined;
+
+  if (projection) {
+    project = projection.project;
+  }
+
   if (project) {
     let toggle = project.toggles.find(t => t.key === toggleKey);
     if (toggle) {
       return toggle.name;
     }
   }
+
   return null;
 };
 
@@ -108,23 +139,28 @@ const getAudit = project => {
 // Write
 
 const INITIAL_STATE = {
-  projects: {},
-  projectsLoading: {}
+  projects: {}
 };
 
 export const reducer = produce((draft, action) => {
+  let projection = undefined;
   switch (action.type) {
     case requestProjectType:
-      draft.projectsLoading[action.projectId] = true;
+      projection = draft.projects[action.projectId];
+      if (!projection) {
+        projection = {};
+        draft.projects[action.projectId] = projection;
+      }
+      projection = true;
       break;
 
     case receiveProjectType:
-      draft.projectsLoading[action.projectId] = undefined;
       draft.projects[action.projectId] = action.json;
+      draft.projects[action.projectId].isLoading = false;
       break;
 
     case receiveProjectErrorType:
-      draft.projectsLoading[action.projectId] = undefined;
+      draft.projects[action.projectId].isLoading = undefined;
       break;
 
     case toggleAddSucceeded:

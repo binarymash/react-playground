@@ -19,7 +19,11 @@ const getStoreKey = (projectId, environmentKey) => {
 
 export const getIsEnvironmentLoading = (state, projectId, environmentKey) => {
   let storeKey = getStoreKey(projectId, environmentKey);
-  return state.environment.environmentsLoading[storeKey] === true;
+  let projection = state.environment.environments[storeKey];
+  if (projection) {
+    return projection.isLoading === true;
+  }
+  return false;
 };
 
 export const getIsEnvironmentStateLoading = (
@@ -28,7 +32,11 @@ export const getIsEnvironmentStateLoading = (
   environmentKey
 ) => {
   let storeKey = getStoreKey(projectId, environmentKey);
-  return state.environment.environmentStatesLoading[storeKey] === true;
+  let projection = state.environment.environmentStates[storeKey];
+  if (projection) {
+    return projection.isLoading === true;
+  }
+  return false;
 };
 
 export const getEnvironment = (state, projectId, environmentKey) => {
@@ -122,56 +130,65 @@ const getAudit = (environment, environmentState) => {
 
 const INITIAL_STATE = {
   environments: {},
-  environmentsLoading: {},
-  environmentStates: {},
-  environmentStatesLoading: {}
+  environmentStates: {}
 };
 
 export const reducer = produce((draft, action) => {
   let storeKey = undefined;
+  let projection = undefined;
 
   switch (action.type) {
     case requestEnvironmentType:
       {
         storeKey = getStoreKey(action.projectId, action.environmentKey);
-        draft.environmentsLoading[storeKey] = true;
+        projection = draft.environments[storeKey];
+        if (!projection) {
+          projection = {};
+          draft.environments[storeKey] = projection;
+        }
+        projection.isLoading = true;
       }
       break;
 
     case receiveEnvironmentType:
       {
         storeKey = getStoreKey(action.projectId, action.environmentKey);
-        draft.environmentsLoading[storeKey] = undefined;
         draft.environments[storeKey] = action.json;
+        draft.environments[storeKey].isLoading = false;
       }
       break;
 
     case receiveEnvironmentErrorType:
       {
         storeKey = getStoreKey(action.projectId, action.environmentKey);
-        draft.environmentsLoading[storeKey] = undefined;
+        draft.environments[storeKey].isLoading = undefined;
       }
       break;
 
     case requestEnvironmentStateType:
       {
         storeKey = getStoreKey(action.projectId, action.environmentKey);
-        draft.environmentStatesLoading[storeKey] = true;
+        projection = draft.environmentStates[storeKey];
+        if (!projection) {
+          projection = {};
+          draft.environmentStates[storeKey] = projection;
+        }
+        projection.isLoading = true;
       }
       break;
 
     case receiveEnvironmentStateType:
       {
         storeKey = getStoreKey(action.projectId, action.environmentKey);
-        draft.environmentStatesLoading[storeKey] = undefined;
         draft.environmentStates[storeKey] = action.json;
+        draft.environmentStates[storeKey].isLoading = false;
       }
       break;
 
     case receiveEnvironmentStateErrorType:
       {
         storeKey = getStoreKey(action.projectId, action.environmentKey);
-        draft.environmentStatesLoading[storeKey] = undefined;
+        draft.environmentStates[storeKey].isLoading = undefined;
       }
       break;
 

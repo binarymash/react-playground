@@ -33,9 +33,11 @@ export const getToggle = (state, projectId, toggleKey) => {
 };
 
 export const getIsToggleLoading = (state, projectId, toggleKey) => {
-  return (
-    state.toggle.togglesLoading[getStoreKey(projectId, toggleKey)] === true
-  );
+  let projection = state.toggle.toggles[getStoreKey(projectId, toggleKey)];
+  if (projection) {
+    return projection.isLoading === true;
+  }
+  return false;
 };
 
 const getAudit = toggle => {
@@ -55,31 +57,37 @@ const getAudit = toggle => {
 // Write
 
 const INITIAL_STATE = {
-  toggles: {},
-  togglesLoading: {}
+  toggles: {}
 };
 
 export const reducer = produce((draft, action) => {
+  let storeKey = undefined;
+
   switch (action.type) {
     case requestToggleType:
       {
-        let storeKey = getStoreKey(action.projectId, action.toggleKey);
-        draft.togglesLoading[storeKey] = true;
+        storeKey = getStoreKey(action.projectId, action.toggleKey);
+        let projection = draft.toggles[storeKey];
+        if (!projection) {
+          projection = {};
+          draft.toggles[storeKey] = projection;
+        }
+        projection.isLoading = true;
       }
       break;
 
     case receiveToggleType:
       {
-        let storeKey = getStoreKey(action.projectId, action.toggleKey);
+        storeKey = getStoreKey(action.projectId, action.toggleKey);
         draft.toggles[storeKey] = action.json;
-        draft.togglesLoading[storeKey] = undefined;
+        draft.toggles[storeKey].isLoading = false;
       }
       break;
 
     case receiveToggleErrorType:
       {
-        let storeKey = getStoreKey(action.projectId, action.toggleKey);
-        draft.togglesLoading[storeKey] = undefined;
+        storeKey = getStoreKey(action.projectId, action.toggleKey);
+        draft.toggles[storeKey].isLoading = undefined;
       }
       break;
   }
