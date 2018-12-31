@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Button, Glyphicon, ListGroupItem } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-class Environment extends Component {
+export class Environment extends Component {
   handleDeleteClick = () => {
     this.props.dispatch({
       type: 'SHOW_MODAL',
@@ -16,6 +16,10 @@ class Environment extends Component {
   };
 
   render() {
+    if (!this.props.environment) {
+      return <div />;
+    }
+
     return (
       <ListGroupItem>
         <Link

@@ -12,7 +12,7 @@ import {
 import Toggle from './Toggle';
 import Loading from './Loading';
 
-class Toggles extends Component {
+export class Toggles extends Component {
   handleAddClick = () => {
     this.props.dispatch({
       type: 'SHOW_MODAL',
@@ -25,6 +25,7 @@ class Toggles extends Component {
 
   render() {
     let content = null;
+    let length = 0;
 
     if (this.props.isLoading) {
       content = <Loading />;
@@ -36,12 +37,13 @@ class Toggles extends Component {
           ))}
         </ListGroup>
       );
+      length = this.props.toggles.length;
     }
 
     return (
       <section>
         <h2>
-          Toggles <Badge>{this.props.toggles.length}</Badge>
+          Toggles <Badge>{length}</Badge>
         </h2>
         <Panel>
           <Panel.Heading>

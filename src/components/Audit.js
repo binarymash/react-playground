@@ -2,7 +2,7 @@
 import { connect } from 'react-redux';
 import Moment from 'moment';
 
-class Audit extends Component {
+export class Audit extends Component {
   render() {
     if (!this.props.audit) {
       return <section />;

@@ -7,7 +7,7 @@ import Switch from 'react-bootstrap-switch';
 import '../components/react-bootstrap-switch.css';
 import { Link } from 'react-router-dom';
 
-class ToggleState extends Component {
+export class ToggleState extends Component {
   render() {
     return (
       <ListGroupItem>

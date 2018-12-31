@@ -2,7 +2,7 @@
 import { connect } from 'react-redux';
 import Loading from './Loading';
 
-class PageLoading extends Component {
+export class PageLoading extends Component {
   render() {
     let style = {
       display: 'flex',

@@ -10,7 +10,7 @@ import {
 } from 'react-bootstrap';
 import Environment from './Environment';
 
-class Environments extends Component {
+export class Environments extends Component {
   handleAddClick = () => {
     this.props.dispatch({
       type: 'SHOW_MODAL',

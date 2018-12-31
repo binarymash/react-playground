@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Button, Glyphicon, ListGroupItem } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-class Project extends Component {
+export class Project extends Component {
   handleDeleteClick = () => {
     this.props.dispatch({
       type: 'SHOW_MODAL',
@@ -15,6 +15,10 @@ class Project extends Component {
   };
 
   render() {
+    if (!this.props.project) {
+      return <div />;
+    }
+
     return (
       <ListGroupItem>
         <Link to={`/projects/${this.props.project.id}`}>

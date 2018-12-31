@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Glyphicon, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
-class Key extends Component {
+export class Key extends Component {
   render() {
     if (!this.props.value) {
       return null;

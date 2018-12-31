@@ -11,7 +11,7 @@ import {
 } from 'react-bootstrap';
 import Project from './Project';
 
-class Projects extends Component {
+export class Projects extends Component {
   handleAddClick = () => {
     this.props.dispatch({
       type: 'SHOW_MODAL',

@@ -2,7 +2,7 @@
 import { Glyphicon } from 'react-bootstrap';
 import { connect } from 'react-redux';
 
-class Loading extends Component {
+export class Loading extends Component {
   render() {
     let style = {
       background: '#eee',
