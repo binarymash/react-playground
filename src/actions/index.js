@@ -5,7 +5,7 @@ export const initialised = 'INITIALISED';
 
 export const requestAccountType = 'REQUEST_ACCOUNT';
 export const receiveAccountType = 'RECEIVE_ACCOUNT';
-export const receiveProjectsErrorType = 'RECEIVE_PROJECTS_ERROR';
+export const receiveAccountErrorType = 'RECEIVE_ACCOUNT_ERROR';
 
 export const requestProjectType = 'REQUEST_PROJECT';
 export const receiveProjectType = 'RECEIVE_PROJECT';
@@ -68,7 +68,7 @@ const getAccount = (dispatch, getState) => {
         modalType: 'API_ERROR',
         modalProps: { error: error.message }
       });
-      dispatch({ type: receiveProjectsErrorType, error });
+      dispatch({ type: receiveAccountErrorType, error });
     });
 };
 

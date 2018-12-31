@@ -3,7 +3,7 @@ import {
   initialised,
   requestAccountType,
   receiveAccountType,
-  receiveProjectsErrorType,
+  receiveAccountErrorType,
   projectAddSucceeded,
   projectDeleteSucceeded
 } from '../actions/index';
@@ -53,7 +53,7 @@ export const reducer = produce((draft, action) => {
       draft.projection = action.json;
       break;
 
-    case receiveProjectsErrorType:
+    case receiveAccountErrorType:
       draft.isLoading = false;
       break;
 
