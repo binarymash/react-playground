@@ -161,7 +161,7 @@ export const reducer = produce((draft, action) => {
     case receiveEnvironmentErrorType:
       {
         storeKey = getStoreKey(action.projectId, action.environmentKey);
-        draft.environments[storeKey].isLoading = undefined;
+        draft.environments[storeKey].isLoading = false;
       }
       break;
 
