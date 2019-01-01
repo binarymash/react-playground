@@ -1,4 +1,5 @@
 import { reducer } from './Toggle';
+import * as actionTypes from '../actions/types';
 
 it('should return the initial state', () => {
   const currentState = undefined;
@@ -14,7 +15,7 @@ it('should handle REQUEST_TOGGLE', () => {
   const currentState = undefined;
 
   const action = {
-    type: 'REQUEST_TOGGLE',
+    type: actionTypes.requestToggle,
     projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
     toggleKey: 'my-first-toggle'
   };
@@ -40,7 +41,7 @@ it('should handle RECEIVE_TOGGLE', () => {
   };
 
   const action = {
-    type: 'RECEIVE_TOGGLE',
+    type: actionTypes.receiveToggle,
     projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
     toggleKey: 'my-first-toggle',
     json: {
@@ -100,7 +101,7 @@ it('should handle RECEIVE_TOGGLE_ERROR', () => {
   };
 
   const action = {
-    type: 'RECEIVE_TOGGLE_ERROR',
+    type: actionTypes.receiveToggleError,
     projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
     toggleKey: 'my-first-toggle',
     error: 'some error'

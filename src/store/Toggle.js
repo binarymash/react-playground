@@ -1,9 +1,5 @@
 ﻿import produce from 'immer';
-import {
-  requestToggleType,
-  receiveToggleType,
-  receiveToggleErrorType
-} from '../actions/index';
+import * as actionTypes from '../actions/types';
 
 const getStoreKey = (projectId, toggleKey) => {
   let storeKey = `${projectId}/${toggleKey}`;
@@ -64,7 +60,7 @@ export const reducer = produce((draft, action) => {
   let storeKey = undefined;
 
   switch (action.type) {
-    case requestToggleType:
+    case actionTypes.requestToggle:
       {
         storeKey = getStoreKey(action.projectId, action.toggleKey);
         let projection = draft.toggles[storeKey];
@@ -76,7 +72,7 @@ export const reducer = produce((draft, action) => {
       }
       break;
 
-    case receiveToggleType:
+    case actionTypes.receiveToggle:
       {
         storeKey = getStoreKey(action.projectId, action.toggleKey);
         draft.toggles[storeKey] = action.json;
@@ -84,7 +80,7 @@ export const reducer = produce((draft, action) => {
       }
       break;
 
-    case receiveToggleErrorType:
+    case actionTypes.receiveToggleError:
       {
         storeKey = getStoreKey(action.projectId, action.toggleKey);
         draft.toggles[storeKey].isLoading = false;

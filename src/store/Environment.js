@@ -1,14 +1,5 @@
 ﻿import produce from 'immer';
-import {
-  requestEnvironmentType,
-  receiveEnvironmentType,
-  receiveEnvironmentErrorType,
-  requestEnvironmentStateType,
-  receiveEnvironmentStateType,
-  receiveEnvironmentStateErrorType,
-  toggleStateUpdateSucceeded,
-  toggleStateUpdateFailed
-} from '../actions/index';
+import * as actionTypes from '../actions/types';
 
 const getStoreKey = (projectId, environmentKey) => {
   let storeKey = `${projectId}/${environmentKey}`;
@@ -138,7 +129,7 @@ export const reducer = produce((draft, action) => {
   let projection = undefined;
 
   switch (action.type) {
-    case requestEnvironmentType:
+    case actionTypes.requestEnvironment:
       {
         storeKey = getStoreKey(action.projectId, action.environmentKey);
         projection = draft.environments[storeKey];
@@ -150,7 +141,7 @@ export const reducer = produce((draft, action) => {
       }
       break;
 
-    case receiveEnvironmentType:
+    case actionTypes.receiveEnvironment:
       {
         storeKey = getStoreKey(action.projectId, action.environmentKey);
         draft.environments[storeKey] = action.json;
@@ -158,14 +149,14 @@ export const reducer = produce((draft, action) => {
       }
       break;
 
-    case receiveEnvironmentErrorType:
+    case actionTypes.receiveEnvironmentError:
       {
         storeKey = getStoreKey(action.projectId, action.environmentKey);
         draft.environments[storeKey].isLoading = false;
       }
       break;
 
-    case requestEnvironmentStateType:
+    case actionTypes.requestEnvironmentState:
       {
         storeKey = getStoreKey(action.projectId, action.environmentKey);
         projection = draft.environmentStates[storeKey];
@@ -177,7 +168,7 @@ export const reducer = produce((draft, action) => {
       }
       break;
 
-    case receiveEnvironmentStateType:
+    case actionTypes.receiveEnvironmentState:
       {
         storeKey = getStoreKey(action.projectId, action.environmentKey);
         draft.environmentStates[storeKey] = action.json;
@@ -185,14 +176,14 @@ export const reducer = produce((draft, action) => {
       }
       break;
 
-    case receiveEnvironmentStateErrorType:
+    case actionTypes.receiveEnvironmentStateError:
       {
         storeKey = getStoreKey(action.projectId, action.environmentKey);
         draft.environmentStates[storeKey].isLoading = false;
       }
       break;
 
-    case toggleStateUpdateSucceeded:
+    case actionTypes.toggleStateUpdateSucceeded:
       {
         storeKey = getStoreKey(action.projectId, action.environmentKey);
 

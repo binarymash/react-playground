@@ -1,4 +1,5 @@
 import { reducer } from './Project';
+import * as actionTypes from '../actions/types';
 
 it('should return the initial state', () => {
   const currentState = undefined;
@@ -14,7 +15,7 @@ it('should handle REQUEST_PROJECT', () => {
   const currentState = undefined;
 
   const action = {
-    type: 'REQUEST_PROJECT',
+    type: actionTypes.requestProject,
     projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b'
   };
 
@@ -39,7 +40,7 @@ it('should handle RECEIVE_PROJECT', () => {
   };
 
   const action = {
-    type: 'RECEIVE_PROJECT',
+    type: actionTypes.receiveProject,
     projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
     json: {
       project: {
@@ -120,9 +121,9 @@ it('should handle RECEIVE_PROJECT_ERROR', () => {
   };
 
   const action = {
-    type: 'RECEIVE_PROJECT_ERROR',
+    type: actionTypes.receiveProjectError,
     projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
-    error: {}
+    error: 'some error'
   };
 
   const expectedNewState = {
@@ -173,7 +174,7 @@ it('should handle TOGGLE_ADD_SUCCEEDED', () => {
   };
 
   const action = {
-    type: 'TOGGLE_ADD_SUCCEEDED',
+    type: actionTypes.toggleAddSucceeded,
     projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
     toggleKey: 'my-second-toggle',
     toggleName: 'My Second Toggle'
@@ -259,7 +260,7 @@ it('should handle TOGGLE_DELETE_SUCCEEDED', () => {
   };
 
   const action = {
-    type: 'TOGGLE_DELETE_SUCCEEDED',
+    type: actionTypes.toggleDeleteSucceeded,
     projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
     toggleKey: 'my-first-toggle'
   };
@@ -336,7 +337,7 @@ it('should handle ENVIRONMENT_ADD_SUCCEEDED', () => {
   };
 
   const action = {
-    type: 'ENVIRONMENT_ADD_SUCCEEDED',
+    type: actionTypes.environmentAddSucceeded,
     projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
     environmentKey: 'another-environment',
     environmentName: 'This is my other environment'
@@ -422,7 +423,7 @@ it('should handle ENVIRONMENT_DELETE_SUCCEEDED', () => {
   };
 
   const action = {
-    type: 'ENVIRONMENT_DELETE_SUCCEEDED',
+    type: actionTypes.environmentDeleteSucceeded,
     projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
     environmentKey: 'another-environment'
   };
@@ -499,7 +500,7 @@ it('should handle PROJECT_DELETE_SUCCEEDED', () => {
   };
 
   const action = {
-    type: 'PROJECT_DELETE_SUCCEEDED',
+    type: actionTypes.projectDeleteSucceeded,
     projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b'
   };
 

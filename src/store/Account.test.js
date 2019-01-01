@@ -1,4 +1,5 @@
 import { reducer } from './Account';
+import * as actionTypes from '../actions/types';
 
 it('should return the initial state', () => {
   expect(reducer(undefined, {})).toEqual({
@@ -14,7 +15,7 @@ it('should return the initial state', () => {
 it('should handle INITIALISED', () => {
   expect(
     reducer(undefined, {
-      type: 'INITIALISED'
+      type: actionTypes.initialised
     })
   ).toEqual({
     projection: {
@@ -30,7 +31,7 @@ it('should handle INITIALISED', () => {
 it('should handle REQUEST_ACCOUNT', () => {
   expect(
     reducer(undefined, {
-      type: 'REQUEST_ACCOUNT'
+      type: actionTypes.requestAccount
     })
   ).toEqual({
     projection: {
@@ -45,7 +46,7 @@ it('should handle REQUEST_ACCOUNT', () => {
 it('should handle RECEIVE_ACCOUNT', () => {
   expect(
     reducer(undefined, {
-      type: 'RECEIVE_ACCOUNT',
+      type: actionTypes.receiveAccount,
       json: {
         account: {
           projects: [
@@ -107,7 +108,7 @@ it('should handle RECEIVE_ACCOUNT', () => {
 it('should handle RECEIVE_ACCOUNT_ERROR', () => {
   expect(
     reducer(undefined, {
-      type: 'RECEIVE_ACCOUNT_ERROR'
+      type: actionTypes.receiveAccountError
     })
   ).toEqual({
     projection: {
@@ -148,7 +149,7 @@ it('should handle PROJECT_ADD_SUCCEEDED', () => {
         isLoading: false
       },
       {
-        type: 'PROJECT_ADD_SUCCEEDED',
+        type: actionTypes.projectAddSucceeded,
         id: '8960F481-E25C-442A-AA8B-67A772658D37',
         name: 'Another project'
       }
@@ -211,7 +212,7 @@ it('should handle PROJECT_DELETE_SUCCEEDED', () => {
         isLoading: false
       },
       {
-        type: 'PROJECT_DELETE_SUCCEEDED',
+        type: actionTypes.projectDeleteSucceeded,
         id: '8960F481-E25C-442A-AA8B-67A772658D37'
       }
     )

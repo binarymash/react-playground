@@ -1,4 +1,5 @@
 import { reducer } from './Environment';
+import * as actionTypes from '../actions/types';
 
 it('should return the initial state', () => {
   expect(reducer(undefined, {})).toEqual({
@@ -10,7 +11,7 @@ it('should return the initial state', () => {
 it('should handle REQUEST_ENVIRONMENT', () => {
   expect(
     reducer(undefined, {
-      type: 'REQUEST_ENVIRONMENT',
+      type: actionTypes.requestEnvironment,
       projectId: '2DBE229D-5318-4AD5-A62E-3F3D260C850F',
       environmentKey: 'some-environment'
     })
@@ -36,7 +37,7 @@ it('should handle RECEIVE_ENVIRONMENT', () => {
         environmentStates: {}
       },
       {
-        type: 'RECEIVE_ENVIRONMENT',
+        type: actionTypes.receiveEnvironment,
         projectId: '2DBE229D-5318-4AD5-A62E-3F3D260C850F',
         environmentKey: 'some-environment',
         json: {
@@ -97,10 +98,10 @@ it('should handle RECEIVE_ENVIRONMENT_ERROR', () => {
         environmentStates: {}
       },
       {
-        type: 'RECEIVE_ENVIRONMENT_ERROR',
+        type: actionTypes.receiveEnvironmentError,
         projectId: '2DBE229D-5318-4AD5-A62E-3F3D260C850F',
         environmentKey: 'some-environment',
-        error: {}
+        error: 'some error'
       }
     )
   ).toEqual({
@@ -116,7 +117,7 @@ it('should handle RECEIVE_ENVIRONMENT_ERROR', () => {
 it('should handle REQUEST_ENVIRONMENTSTATE', () => {
   expect(
     reducer(undefined, {
-      type: 'REQUEST_ENVIRONMENTSTATE',
+      type: actionTypes.requestEnvironmentState,
       projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
       environmentKey: 'my-first-environment'
     })
@@ -142,7 +143,7 @@ it('should handle RECEIVE_ENVIRONMENTSTATE', () => {
         }
       },
       {
-        type: 'RECEIVE_ENVIRONMENTSTATE',
+        type: actionTypes.receiveEnvironmentState,
         projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
         environmentKey: 'my-first-environment',
         json: {
@@ -197,10 +198,10 @@ it('should handle RECEIVE_ENVIRONMENTSTATE_ERROR', () => {
         }
       },
       {
-        type: 'RECEIVE_ENVIRONMENTSTATE_ERROR',
+        type: actionTypes.receiveEnvironmentStateError,
         projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
         environmentKey: 'my-first-environment',
-        error: {}
+        error: 'some error'
       }
     )
   ).toEqual({
@@ -238,7 +239,7 @@ it('should handle TOGGLESTATE_UPDATE_SUCCEEDED', () => {
         }
       },
       {
-        type: 'TOGGLESTATE_UPDATE_SUCCEEDED',
+        type: actionTypes.toggleStateUpdateSucceeded,
         projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
         environmentKey: 'my-first-environment',
         toggleKey: 'my-first-toggle',

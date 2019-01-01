@@ -1,91 +1,38 @@
 import { Api } from '../api.js';
 import uuidv1 from 'uuid/v1';
-
-export const initialised = 'INITIALISED';
-
-export const requestAccountType = 'REQUEST_ACCOUNT';
-export const receiveAccountType = 'RECEIVE_ACCOUNT';
-export const receiveAccountErrorType = 'RECEIVE_ACCOUNT_ERROR';
-
-export const requestProjectType = 'REQUEST_PROJECT';
-export const receiveProjectType = 'RECEIVE_PROJECT';
-export const receiveProjectErrorType = 'RECEIVE_PROJECT_ERROR';
-
-export const requestEnvironmentType = 'REQUEST_ENVIRONMENT';
-export const receiveEnvironmentType = 'RECEIVE_ENVIRONMENT';
-export const receiveEnvironmentErrorType = 'RECEIVE_ENVIRONMENT_ERROR';
-
-export const requestEnvironmentStateType = 'REQUEST_ENVIRONMENTSTATE';
-export const receiveEnvironmentStateType = 'RECEIVE_ENVIRONMENTSTATE';
-export const receiveEnvironmentStateErrorType =
-  'RECEIVE_ENVIRONMENTSTATE_ERROR';
-
-export const requestToggleType = 'REQUEST_TOGGLE';
-export const receiveToggleType = 'RECEIVE_TOGGLE';
-export const receiveToggleErrorType = 'RECEIVE_TOGGLE_ERROR';
-
-export const toggleStateUpdateRequested = 'TOGGLESTATE_UPDATE_REQUESTED';
-export const toggleStateUpdateSucceeded = 'TOGGLESTATE_UPDATE_SUCCEEDED';
-export const toggleStateUpdateFailed = 'TOGGLESTATE_UPDATE_FAILED';
-
-export const projectAddRequested = 'PROJECT_ADD_REQUESTED';
-export const projectAddSucceeded = 'PROJECT_ADD_SUCCEEDED';
-export const projectAddFailed = 'PROJECT_ADD_FAILED';
-
-export const projectDeleteRequested = 'PROJECT_DELETE_REQUESTED';
-export const projectDeleteSucceeded = 'PROJECT_DELETE_SUCCEEDED';
-export const projectDeleteFailed = 'PROJECT_DELETE_FAILED';
-
-export const toggleAddRequested = 'TOGGLE_ADD_REQUESTED';
-export const toggleAddSucceeded = 'TOGGLE_ADD_SUCCEEDED';
-export const toggleAddFailed = 'TOGGLE_ADD_FAILED';
-
-export const toggleDeleteRequested = 'TOGGLE_DELETE_REQUESTED';
-export const toggleDeleteSucceeded = 'TOGGLE_DELETE_SUCCEEDED';
-export const toggleDeleteFailed = 'TOGGLE_DELETE_FAILED';
-
-export const environmentAddRequested = 'ENVIRONMENT_ADD_REQUESTED';
-export const environmentAddSucceeded = 'ENVIRONMENT_ADD_SUCCEEDED';
-export const environmentAddFailed = 'ENVIRONMENT_ADD_FAILED';
-
-export const environmentDeleteRequested = 'ENVIRONMENT_DELETE_REQUESTED';
-export const environmentDeleteSucceeded = 'ENVIRONMENT_DELETE_SUCCEEDED';
-export const environmentDeleteFailed = 'ENVIRONMENT_DELETE_FAILED';
-
-export const showModal = 'SHOW_MODAL';
-export const hideModal = 'HIDE_MODAL';
+import * as actionTypes from './types';
 
 const getAccount = (dispatch, getState) => {
-  dispatch({ type: requestAccountType });
+  dispatch({ type: actionTypes.requestAccount });
 
   return Api.getProjects()
     .then(function(json) {
-      dispatch({ type: receiveAccountType, json });
+      dispatch({ type: actionTypes.receiveAccount, json });
     })
     .catch(function(error) {
       dispatch({
-        type: showModal,
+        type: actionTypes.showModal,
         modalType: 'API_ERROR',
         modalProps: { error: error.message }
       });
-      dispatch({ type: receiveAccountErrorType, error });
+      dispatch({ type: actionTypes.receiveAccountError, error });
     });
 };
 
 const getLatestProject = (projectId, dispatch, getState) => {
-  dispatch({ type: requestProjectType, projectId });
+  dispatch({ type: actionTypes.requestProject, projectId });
 
   return Api.getProject(projectId)
     .then(function(json) {
-      dispatch({ type: receiveProjectType, projectId, json });
+      dispatch({ type: actionTypes.receiveProject, projectId, json });
     })
     .catch(error => {
       dispatch({
-        type: showModal,
+        type: actionTypes.showModal,
         modalType: 'API_ERROR',
         modalProps: { error: error.message }
       });
-      dispatch({ type: receiveProjectErrorType, projectId, error });
+      dispatch({ type: actionTypes.receiveProjectError, projectId, error });
     });
 };
 
@@ -95,12 +42,12 @@ const getLatestEnvironment = (
   dispatch,
   getState
 ) => {
-  dispatch({ type: requestEnvironmentType, projectId, environmentKey });
+  dispatch({ type: actionTypes.requestEnvironment, projectId, environmentKey });
 
   return Api.getEnvironment(projectId, environmentKey)
     .then(json => {
       dispatch({
-        type: receiveEnvironmentType,
+        type: actionTypes.receiveEnvironment,
         projectId,
         environmentKey,
         json
@@ -108,12 +55,12 @@ const getLatestEnvironment = (
     })
     .catch(error => {
       dispatch({
-        type: showModal,
+        type: actionTypes.showModal,
         modalType: 'API_ERROR',
         modalProps: { error: error.message }
       });
       dispatch({
-        type: receiveEnvironmentErrorType,
+        type: actionTypes.receiveEnvironmentError,
         projectId,
         environmentKey,
         error
@@ -127,12 +74,16 @@ const getLatestEnvironmentState = (
   dispatch,
   getState
 ) => {
-  dispatch({ type: requestEnvironmentStateType, projectId, environmentKey });
+  dispatch({
+    type: actionTypes.requestEnvironmentState,
+    projectId,
+    environmentKey
+  });
 
   return Api.getEnvironmentState(projectId, environmentKey)
     .then(json => {
       dispatch({
-        type: receiveEnvironmentStateType,
+        type: actionTypes.receiveEnvironmentState,
         projectId,
         environmentKey,
         json
@@ -140,12 +91,12 @@ const getLatestEnvironmentState = (
     })
     .catch(error => {
       dispatch({
-        type: showModal,
+        type: actionTypes.showModal,
         modalType: 'API_ERROR',
         modalProps: { error: error.message }
       });
       dispatch({
-        type: receiveEnvironmentStateErrorType,
+        type: actionTypes.receiveEnvironmentStateError,
         projectId,
         environmentKey,
         error
@@ -154,19 +105,24 @@ const getLatestEnvironmentState = (
 };
 
 const getLatestToggle = (projectId, toggleKey, dispatch, getState) => {
-  dispatch({ type: requestToggleType, projectId, toggleKey });
+  dispatch({ type: actionTypes.requestToggle, projectId, toggleKey });
 
   return Api.getToggle(projectId, toggleKey)
     .then(json => {
-      dispatch({ type: receiveToggleType, projectId, toggleKey, json });
+      dispatch({ type: actionTypes.receiveToggle, projectId, toggleKey, json });
     })
     .catch(error => {
       dispatch({
-        type: showModal,
+        type: actionTypes.showModal,
         modalType: 'API_ERROR',
         modalProps: { error: error.message }
       });
-      dispatch({ type: receiveToggleErrorType, projectId, toggleKey, error });
+      dispatch({
+        type: actionTypes.receiveToggleError,
+        projectId,
+        toggleKey,
+        error
+      });
     });
 };
 
@@ -180,7 +136,7 @@ export const actionCreators = {
         }
       })
       .then(() => {
-        dispatch({ type: initialised });
+        dispatch({ type: actionTypes.initialised });
       });
   },
 
@@ -217,14 +173,14 @@ export const actionCreators = {
     dispatch,
     getState
   ) => {
-    dispatch({ type: toggleStateUpdateRequested });
+    dispatch({ type: actionTypes.toggleStateUpdateRequested });
 
     let newValue = value ? 'True' : 'False';
 
     await Api.setToggleState(projectId, environmentKey, toggleKey, newValue)
       .then(() => {
         dispatch({
-          type: toggleStateUpdateSucceeded,
+          type: actionTypes.toggleStateUpdateSucceeded,
           projectId,
           environmentKey,
           toggleKey,
@@ -233,12 +189,12 @@ export const actionCreators = {
       })
       .catch(error => {
         dispatch({
-          type: showModal,
+          type: actionTypes.showModal,
           modalType: 'API_ERROR',
           modalProps: { error: error.message }
         });
         dispatch({
-          type: toggleStateUpdateFailed,
+          type: actionTypes.toggleStateUpdateFailed,
           projectId,
           environmentKey,
           toggleKey,
@@ -248,49 +204,49 @@ export const actionCreators = {
   },
 
   hideModal: () => async (dispatch, getState) => {
-    dispatch({ type: hideModal });
+    dispatch({ type: actionTypes.hideModal });
   },
 
   addProject: name => async (dispatch, getState) => {
     let id = uuidv1();
-    dispatch({ type: projectAddRequested });
+    dispatch({ type: actionTypes.projectAddRequested });
 
     await Api.addProject(id, name)
       .then(() => {
         dispatch({
-          type: projectAddSucceeded,
+          type: actionTypes.projectAddSucceeded,
           id: id,
           name: name
         });
       })
       .catch(error => {
         dispatch({
-          type: showModal,
+          type: actionTypes.showModal,
           modalType: 'API_ERROR',
           modalProps: { error: error.message }
         });
-        dispatch({ type: projectAddFailed, error });
+        dispatch({ type: actionTypes.projectAddFailed, error });
       });
   },
 
   deleteProject: projectId => async (dispatch, getState) => {
-    dispatch({ type: projectDeleteRequested });
+    dispatch({ type: actionTypes.projectDeleteRequested });
 
     await Api.deleteProject(projectId)
       .then(() => {
         dispatch({
-          type: projectDeleteSucceeded,
+          type: actionTypes.projectDeleteSucceeded,
           projectId: projectId
         });
       })
       .catch(function(error) {
         dispatch({
-          type: showModal,
+          type: actionTypes.showModal,
           modalType: 'API_ERROR',
           modalProps: { error: error.message }
         });
         dispatch({
-          type: projectDeleteFailed,
+          type: actionTypes.projectDeleteFailed,
           projectId,
           error
         });
@@ -301,12 +257,12 @@ export const actionCreators = {
     dispatch,
     getState
   ) => {
-    dispatch({ type: toggleAddRequested });
+    dispatch({ type: actionTypes.toggleAddRequested });
 
     await Api.addToggle(projectId, toggleKey, toggleName)
       .then(() => {
         dispatch({
-          type: toggleAddSucceeded,
+          type: actionTypes.toggleAddSucceeded,
           projectId,
           toggleKey,
           toggleName
@@ -314,32 +270,42 @@ export const actionCreators = {
       })
       .catch(error => {
         dispatch({
-          type: showModal,
+          type: actionTypes.showModal,
           modalType: 'API_ERROR',
           modalProps: { error: error.message }
         });
-        dispatch({ type: toggleAddFailed, projectId, toggleKey, error });
+        dispatch({
+          type: actionTypes.toggleAddFailed,
+          projectId,
+          toggleKey,
+          error
+        });
       });
   },
 
   deleteToggle: (projectId, toggleKey) => async (dispatch, getState) => {
-    dispatch({ type: toggleDeleteRequested });
+    dispatch({ type: actionTypes.toggleDeleteRequested });
 
     await Api.deleteToggle(projectId, toggleKey)
       .then(() => {
         dispatch({
-          type: toggleDeleteSucceeded,
+          type: actionTypes.toggleDeleteSucceeded,
           projectId,
           toggleKey
         });
       })
       .catch(error => {
         dispatch({
-          type: showModal,
+          type: actionTypes.showModal,
           modalType: 'API_ERROR',
           modalProps: { error: error.message }
         });
-        dispatch({ type: toggleDeleteFailed, projectId, toggleKey, error });
+        dispatch({
+          type: actionTypes.toggleDeleteFailed,
+          projectId,
+          toggleKey,
+          error
+        });
       });
   },
 
@@ -347,12 +313,12 @@ export const actionCreators = {
     dispatch,
     getState
   ) => {
-    dispatch({ type: environmentAddRequested });
+    dispatch({ type: actionTypes.environmentAddRequested });
 
     await Api.addEnvironment(projectId, environmentKey, environmentName)
       .then(() => {
         dispatch({
-          type: environmentAddSucceeded,
+          type: actionTypes.environmentAddSucceeded,
           projectId,
           environmentKey,
           environmentName
@@ -360,12 +326,12 @@ export const actionCreators = {
       })
       .catch(error => {
         dispatch({
-          type: showModal,
+          type: actionTypes.showModal,
           modalType: 'API_ERROR',
           modalProps: { error: error.message }
         });
         dispatch({
-          type: environmentAddFailed,
+          type: actionTypes.environmentAddFailed,
           projectId,
           environmentKey,
           error
@@ -377,24 +343,24 @@ export const actionCreators = {
     dispatch,
     getState
   ) => {
-    dispatch({ type: environmentDeleteRequested });
+    dispatch({ type: actionTypes.environmentDeleteRequested });
 
     await Api.deleteEnvironment(projectId, environmentKey)
       .then(() => {
         dispatch({
-          type: environmentDeleteSucceeded,
+          type: actionTypes.environmentDeleteSucceeded,
           projectId: projectId,
           environmentKey: environmentKey
         });
       })
       .catch(function(error) {
         dispatch({
-          type: showModal,
+          type: actionTypes.showModal,
           modalType: 'API_ERROR',
           modalProps: { error: error.message }
         });
         dispatch({
-          type: environmentDeleteFailed,
+          type: actionTypes.environmentDeleteFailed,
           projectId,
           environmentKey,
           error

@@ -1,14 +1,5 @@
 ﻿import produce from 'immer';
-import {
-  requestProjectType,
-  receiveProjectType,
-  receiveProjectErrorType,
-  toggleAddSucceeded,
-  toggleDeleteSucceeded,
-  environmentAddSucceeded,
-  environmentDeleteSucceeded,
-  projectDeleteSucceeded
-} from '../actions/index';
+import * as actionTypes from '../actions/types';
 
 // Read
 
@@ -154,7 +145,7 @@ export const reducer = produce((draft, action) => {
   let projection = draft.projects[action.projectId];
 
   switch (action.type) {
-    case requestProjectType:
+    case actionTypes.requestProject:
       if (!projection) {
         projection = {};
         draft.projects[action.projectId] = projection;
@@ -162,16 +153,16 @@ export const reducer = produce((draft, action) => {
       projection.isLoading = true;
       break;
 
-    case receiveProjectType:
+    case actionTypes.receiveProject:
       draft.projects[action.projectId] = action.json;
       draft.projects[action.projectId].isLoading = false;
       break;
 
-    case receiveProjectErrorType:
+    case actionTypes.receiveProjectError:
       projection.isLoading = false;
       break;
 
-    case toggleAddSucceeded:
+    case actionTypes.toggleAddSucceeded:
       projection.audit = undefined;
       projection.project.audit = setProjectAudit(projection.project.audit);
       projection.project.toggles.push({
@@ -180,7 +171,7 @@ export const reducer = produce((draft, action) => {
       });
       break;
 
-    case toggleDeleteSucceeded:
+    case actionTypes.toggleDeleteSucceeded:
       projection.audit = undefined;
       projection.project.audit = setProjectAudit(projection.project.audit);
       projection.project.toggles.splice(
@@ -191,7 +182,7 @@ export const reducer = produce((draft, action) => {
       );
       break;
 
-    case environmentAddSucceeded:
+    case actionTypes.environmentAddSucceeded:
       projection.audit = undefined;
       projection.project.audit = setProjectAudit(projection.project.audit);
       projection.project.environments.push({
@@ -200,7 +191,7 @@ export const reducer = produce((draft, action) => {
       });
       break;
 
-    case environmentDeleteSucceeded:
+    case actionTypes.environmentDeleteSucceeded:
       projection.audit = undefined;
       projection.project.audit = setProjectAudit(projection.project.audit);
       projection.project.environments.splice(
@@ -211,7 +202,7 @@ export const reducer = produce((draft, action) => {
       );
       break;
 
-    case projectDeleteSucceeded:
+    case actionTypes.projectDeleteSucceeded:
       draft.projects[action.projectId] = undefined;
       break;
   }

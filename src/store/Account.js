@@ -1,12 +1,5 @@
 ﻿import produce from 'immer';
-import {
-  initialised,
-  requestAccountType,
-  receiveAccountType,
-  receiveAccountErrorType,
-  projectAddSucceeded,
-  projectDeleteSucceeded
-} from '../actions/index';
+import * as actionTypes from '../actions/types';
 
 const INITIAL_STATE = {
   projection: {
@@ -40,24 +33,24 @@ export const getIsLoading = state => {
 
 export const reducer = produce((draft, action) => {
   switch (action.type) {
-    case initialised:
+    case actionTypes.initialised:
       draft.isInitialised = true;
       break;
 
-    case requestAccountType:
+    case actionTypes.requestAccount:
       draft.isLoading = true;
       break;
 
-    case receiveAccountType:
+    case actionTypes.receiveAccount:
       draft.isLoading = false;
       draft.projection = action.json;
       break;
 
-    case receiveAccountErrorType:
+    case actionTypes.receiveAccountError:
       draft.isLoading = false;
       break;
 
-    case projectAddSucceeded:
+    case actionTypes.projectAddSucceeded:
       draft.projection.audit = undefined;
       draft.projection.account.audit.lastModified = undefined;
       draft.projection.account.audit.lastModifiedBy = undefined;
@@ -68,7 +61,7 @@ export const reducer = produce((draft, action) => {
       });
       break;
 
-    case projectDeleteSucceeded:
+    case actionTypes.projectDeleteSucceeded:
       draft.projection.audit = undefined;
       draft.projection.account.audit.lastModified = undefined;
       draft.projection.account.audit.lastModifiedBy = undefined;
