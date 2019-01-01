@@ -142,13 +142,19 @@ const INITIAL_STATE = {
   projects: {}
 };
 
+const setProjectAudit = audit => {
+  audit.lastModified = undefined;
+  audit.lastModifiedBy = undefined;
+  audit.version = undefined;
+
+  return audit;
+};
+
 export const reducer = produce((draft, action) => {
-  let projection = undefined;
-  let project = undefined;
+  let projection = draft.projects[action.projectId];
 
   switch (action.type) {
     case requestProjectType:
-      projection = draft.projects[action.projectId];
       if (!projection) {
         projection = {};
         draft.projects[action.projectId] = projection;
@@ -162,57 +168,43 @@ export const reducer = produce((draft, action) => {
       break;
 
     case receiveProjectErrorType:
-      draft.projects[action.projectId].isLoading = false;
+      projection.isLoading = false;
       break;
 
     case toggleAddSucceeded:
-      projection = draft.projects[action.projectId];
       projection.audit = undefined;
-      project = projection.project;
-      project.audit.lastModified = undefined;
-      project.audit.lastModifiedBy = undefined;
-      project.audit.version = undefined;
-      project.toggles.push({
+      projection.project.audit = setProjectAudit(projection.project.audit);
+      projection.project.toggles.push({
         key: action.toggleKey,
         name: action.toggleName
       });
       break;
 
     case toggleDeleteSucceeded:
-      projection = draft.projects[action.projectId];
       projection.audit = undefined;
-      project = projection.project;
-      project.audit.lastModified = undefined;
-      project.audit.lastModifiedBy = undefined;
-      project.audit.version = undefined;
-      project.toggles.splice(
-        project.toggles.findIndex(toggle => toggle.key === action.toggleKey),
+      projection.project.audit = setProjectAudit(projection.project.audit);
+      projection.project.toggles.splice(
+        projection.project.toggles.findIndex(
+          toggle => toggle.key === action.toggleKey
+        ),
         1
       );
       break;
 
     case environmentAddSucceeded:
-      projection = draft.projects[action.projectId];
       projection.audit = undefined;
-      project = projection.project;
-      project.audit.lastModified = undefined;
-      project.audit.lastModifiedBy = undefined;
-      project.audit.version = undefined;
-      project.environments.push({
+      projection.project.audit = setProjectAudit(projection.project.audit);
+      projection.project.environments.push({
         key: action.environmentKey,
         name: action.environmentName
       });
       break;
 
     case environmentDeleteSucceeded:
-      projection = draft.projects[action.projectId];
       projection.audit = undefined;
-      project = projection.project;
-      project.audit.lastModified = undefined;
-      project.audit.lastModifiedBy = undefined;
-      project.audit.version = undefined;
-      project.environments.splice(
-        project.environments.findIndex(
+      projection.project.audit = setProjectAudit(projection.project.audit);
+      projection.project.environments.splice(
+        projection.project.environments.findIndex(
           environment => environment.key === action.environmentKey
         ),
         1
