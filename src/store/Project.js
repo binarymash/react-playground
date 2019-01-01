@@ -133,12 +133,11 @@ const INITIAL_STATE = {
   projects: {}
 };
 
-const setProjectAudit = audit => {
-  audit.lastModified = undefined;
-  audit.lastModifiedBy = undefined;
-  audit.version = undefined;
-
-  return audit;
+const updateAudit = projection => {
+  projection.audit = undefined;
+  projection.project.audit.lastModified = undefined;
+  projection.project.audit.lastModifiedBy = undefined;
+  projection.project.audit.version = undefined;
 };
 
 export const reducer = produce((draft, action) => {
@@ -163,43 +162,43 @@ export const reducer = produce((draft, action) => {
       break;
 
     case actionTypes.toggleAddSucceeded:
-      projection.audit = undefined;
-      projection.project.audit = setProjectAudit(projection.project.audit);
       projection.project.toggles.push({
         key: action.toggleKey,
         name: action.toggleName
       });
+
+      updateAudit(projection);
       break;
 
     case actionTypes.toggleDeleteSucceeded:
-      projection.audit = undefined;
-      projection.project.audit = setProjectAudit(projection.project.audit);
       projection.project.toggles.splice(
         projection.project.toggles.findIndex(
           toggle => toggle.key === action.toggleKey
         ),
         1
       );
+
+      updateAudit(projection);
       break;
 
     case actionTypes.environmentAddSucceeded:
-      projection.audit = undefined;
-      projection.project.audit = setProjectAudit(projection.project.audit);
       projection.project.environments.push({
         key: action.environmentKey,
         name: action.environmentName
       });
+
+      updateAudit(projection);
       break;
 
     case actionTypes.environmentDeleteSucceeded:
-      projection.audit = undefined;
-      projection.project.audit = setProjectAudit(projection.project.audit);
       projection.project.environments.splice(
         projection.project.environments.findIndex(
           environment => environment.key === action.environmentKey
         ),
         1
       );
+
+      updateAudit(projection);
       break;
 
     case actionTypes.projectDeleteSucceeded:

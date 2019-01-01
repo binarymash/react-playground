@@ -130,72 +130,59 @@ export const reducer = produce((draft, action) => {
 
   switch (action.type) {
     case actionTypes.requestEnvironment:
-      {
-        storeKey = getStoreKey(action.projectId, action.environmentKey);
-        projection = draft.environments[storeKey];
-        if (!projection) {
-          projection = {};
-          draft.environments[storeKey] = projection;
-        }
-        projection.isLoading = true;
+      storeKey = getStoreKey(action.projectId, action.environmentKey);
+      projection = draft.environments[storeKey];
+      if (!projection) {
+        projection = {};
+        draft.environments[storeKey] = projection;
       }
+      projection.isLoading = true;
       break;
 
     case actionTypes.receiveEnvironment:
-      {
-        storeKey = getStoreKey(action.projectId, action.environmentKey);
-        draft.environments[storeKey] = action.json;
-        draft.environments[storeKey].isLoading = false;
-      }
+      storeKey = getStoreKey(action.projectId, action.environmentKey);
+      draft.environments[storeKey] = action.json;
+      draft.environments[storeKey].isLoading = false;
       break;
 
     case actionTypes.receiveEnvironmentError:
-      {
-        storeKey = getStoreKey(action.projectId, action.environmentKey);
-        draft.environments[storeKey].isLoading = false;
-      }
+      storeKey = getStoreKey(action.projectId, action.environmentKey);
+      draft.environments[storeKey].isLoading = false;
       break;
 
     case actionTypes.requestEnvironmentState:
-      {
-        storeKey = getStoreKey(action.projectId, action.environmentKey);
-        projection = draft.environmentStates[storeKey];
-        if (!projection) {
-          projection = {};
-          draft.environmentStates[storeKey] = projection;
-        }
-        projection.isLoading = true;
+      storeKey = getStoreKey(action.projectId, action.environmentKey);
+      projection = draft.environmentStates[storeKey];
+      if (!projection) {
+        projection = {};
+        draft.environmentStates[storeKey] = projection;
       }
+      projection.isLoading = true;
       break;
 
     case actionTypes.receiveEnvironmentState:
-      {
-        storeKey = getStoreKey(action.projectId, action.environmentKey);
-        draft.environmentStates[storeKey] = action.json;
-        draft.environmentStates[storeKey].isLoading = false;
-      }
+      storeKey = getStoreKey(action.projectId, action.environmentKey);
+      draft.environmentStates[storeKey] = action.json;
+      draft.environmentStates[storeKey].isLoading = false;
       break;
 
     case actionTypes.receiveEnvironmentStateError:
-      {
-        storeKey = getStoreKey(action.projectId, action.environmentKey);
-        draft.environmentStates[storeKey].isLoading = false;
-      }
+      storeKey = getStoreKey(action.projectId, action.environmentKey);
+      draft.environmentStates[storeKey].isLoading = false;
       break;
 
     case actionTypes.toggleStateUpdateSucceeded:
-      {
-        storeKey = getStoreKey(action.projectId, action.environmentKey);
+      storeKey = getStoreKey(action.projectId, action.environmentKey);
 
-        let projection = draft.environmentStates[storeKey];
-        projection.audit = undefined;
+      projection = draft.environmentStates[storeKey];
+      projection.audit = undefined;
 
-        let toggleState = projection.environmentState.toggleStates.find(ts => {
-          return ts.key === action.toggleKey;
-        });
-        toggleState.version = undefined;
-        toggleState.value = action.value;
-      }
+      let toggleState = projection.environmentState.toggleStates.find(ts => {
+        return ts.key === action.toggleKey;
+      });
+
+      toggleState.version = undefined;
+      toggleState.value = action.value;
       break;
   }
 }, INITIAL_STATE);

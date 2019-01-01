@@ -31,6 +31,13 @@ export const getIsLoading = state => {
   return state.account.isLoading === true;
 };
 
+const updateAudit = projection => {
+  projection.audit = undefined;
+  projection.account.audit.lastModified = undefined;
+  projection.account.audit.lastModifiedBy = undefined;
+  projection.account.audit.version = undefined;
+};
+
 export const reducer = produce((draft, action) => {
   switch (action.type) {
     case actionTypes.initialised:
@@ -51,27 +58,23 @@ export const reducer = produce((draft, action) => {
       break;
 
     case actionTypes.projectAddSucceeded:
-      draft.projection.audit = undefined;
-      draft.projection.account.audit.lastModified = undefined;
-      draft.projection.account.audit.lastModifiedBy = undefined;
-      draft.projection.account.audit.version = undefined;
       draft.projection.account.projects.push({
         id: action.id,
         name: action.name
       });
+
+      updateAudit(draft.projection);
       break;
 
     case actionTypes.projectDeleteSucceeded:
-      draft.projection.audit = undefined;
-      draft.projection.account.audit.lastModified = undefined;
-      draft.projection.account.audit.lastModifiedBy = undefined;
-      draft.projection.account.audit.version = undefined;
       draft.projection.account.projects.splice(
         draft.projection.account.projects.findIndex(
           project => project.id === action.projectId
         ),
         1
       );
+
+      updateAudit(draft.projection);
       break;
   }
 }, INITIAL_STATE);
