@@ -87,7 +87,7 @@ export const reducer = produce((draft, action) => {
     case receiveToggleErrorType:
       {
         storeKey = getStoreKey(action.projectId, action.toggleKey);
-        draft.toggles[storeKey].isLoading = undefined;
+        draft.toggles[storeKey].isLoading = false;
       }
       break;
   }
