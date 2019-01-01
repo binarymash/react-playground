@@ -170,15 +170,12 @@ it('should handle PROJECT_ADD_SUCCEEDED', () => {
         audit: {
           created: '2018-12-27T11:48:19.5302129+00:00',
           createdBy: 'SystemUser',
-          lastModified: '2018-12-27T12:01:20.7401734+00:00',
-          lastModifiedBy: 'AnonymousUser',
-          version: 2
+          lastModified: undefined,
+          lastModifiedBy: undefined,
+          version: undefined
         }
       },
-      audit: {
-        generated: '2018-12-31T16:36:12.5757663+00:00',
-        streamPosition: 13
-      }
+      audit: undefined
     },
     isLoading: false
   });
@@ -204,15 +201,12 @@ it('should handle PROJECT_DELETE_SUCCEEDED', () => {
             audit: {
               created: '2018-12-27T11:48:19.5302129+00:00',
               createdBy: 'SystemUser',
-              lastModified: '2018-12-27T12:01:20.7401734+00:00',
-              lastModifiedBy: 'AnonymousUser',
-              version: 2
+              lastModified: undefined,
+              lastModifiedBy: undefined,
+              version: undefined
             }
           },
-          audit: {
-            generated: '2018-12-31T16:36:12.5757663+00:00',
-            streamPosition: 13
-          }
+          audit: undefined
         },
         isLoading: false
       },
@@ -234,15 +228,12 @@ it('should handle PROJECT_DELETE_SUCCEEDED', () => {
         audit: {
           created: '2018-12-27T11:48:19.5302129+00:00',
           createdBy: 'SystemUser',
-          lastModified: '2018-12-27T12:01:20.7401734+00:00',
-          lastModifiedBy: 'AnonymousUser',
-          version: 2
+          lastModified: undefined,
+          lastModifiedBy: undefined,
+          version: undefined
         }
       },
-      audit: {
-        generated: '2018-12-31T16:36:12.5757663+00:00',
-        streamPosition: 13
-      }
+      audit: undefined
     },
     isLoading: false
   });

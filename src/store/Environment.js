@@ -188,19 +188,21 @@ export const reducer = produce((draft, action) => {
     case receiveEnvironmentStateErrorType:
       {
         storeKey = getStoreKey(action.projectId, action.environmentKey);
-        draft.environmentStates[storeKey].isLoading = undefined;
+        draft.environmentStates[storeKey].isLoading = false;
       }
       break;
 
     case toggleStateUpdateSucceeded:
       {
         storeKey = getStoreKey(action.projectId, action.environmentKey);
-        let toggleState = draft.environmentStates[
-          storeKey
-        ].environmentState.toggleStates.find(ts => {
+
+        let projection = draft.environmentStates[storeKey];
+        projection.audit = undefined;
+
+        let toggleState = projection.environmentState.toggleStates.find(ts => {
           return ts.key === action.toggleKey;
         });
-        toggleState.version = action.version;
+        toggleState.version = undefined;
         toggleState.value = action.value;
       }
       break;

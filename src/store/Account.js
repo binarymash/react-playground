@@ -58,6 +58,10 @@ export const reducer = produce((draft, action) => {
       break;
 
     case projectAddSucceeded:
+      draft.projection.audit = undefined;
+      draft.projection.account.audit.lastModified = undefined;
+      draft.projection.account.audit.lastModifiedBy = undefined;
+      draft.projection.account.audit.version = undefined;
       draft.projection.account.projects.push({
         id: action.id,
         name: action.name
@@ -65,6 +69,10 @@ export const reducer = produce((draft, action) => {
       break;
 
     case projectDeleteSucceeded:
+      draft.projection.audit = undefined;
+      draft.projection.account.audit.lastModified = undefined;
+      draft.projection.account.audit.lastModifiedBy = undefined;
+      draft.projection.account.audit.version = undefined;
       draft.projection.account.projects.splice(
         draft.projection.account.projects.findIndex(
           project => project.id === action.projectId

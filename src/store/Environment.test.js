@@ -112,3 +112,155 @@ it('should handle RECEIVE_ENVIRONMENT_ERROR', () => {
     environmentStates: {}
   });
 });
+
+it('should handle REQUEST_ENVIRONMENTSTATE', () => {
+  expect(
+    reducer(undefined, {
+      type: 'REQUEST_ENVIRONMENTSTATE',
+      projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
+      environmentKey: 'my-first-environment'
+    })
+  ).toEqual({
+    environments: {},
+    environmentStates: {
+      '8f73d020-96c4-407e-8602-74fd4e2ed08b/my-first-environment': {
+        isLoading: true
+      }
+    }
+  });
+});
+
+it('should handle RECEIVE_ENVIRONMENTSTATE', () => {
+  expect(
+    reducer(
+      {
+        environments: {},
+        environmentStates: {
+          '8f73d020-96c4-407e-8602-74fd4e2ed08b/my-first-environment': {
+            isLoading: true
+          }
+        }
+      },
+      {
+        type: 'RECEIVE_ENVIRONMENTSTATE',
+        projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
+        environmentKey: 'my-first-environment',
+        json: {
+          environmentState: {
+            toggleStates: [
+              {
+                key: 'my-first-toggle',
+                value: 'False',
+                version: 12
+              }
+            ]
+          },
+          audit: {
+            generated: '2018-12-31T18:09:15.8617841+00:00',
+            streamPosition: 19
+          }
+        }
+      }
+    )
+  ).toEqual({
+    environments: {},
+    environmentStates: {
+      '8f73d020-96c4-407e-8602-74fd4e2ed08b/my-first-environment': {
+        environmentState: {
+          toggleStates: [
+            {
+              key: 'my-first-toggle',
+              value: 'False',
+              version: 12
+            }
+          ]
+        },
+        audit: {
+          generated: '2018-12-31T18:09:15.8617841+00:00',
+          streamPosition: 19
+        },
+        isLoading: false
+      }
+    }
+  });
+});
+
+it('should handle RECEIVE_ENVIRONMENTSTATE_ERROR', () => {
+  expect(
+    reducer(
+      {
+        environments: {},
+        environmentStates: {
+          '8f73d020-96c4-407e-8602-74fd4e2ed08b/my-first-environment': {
+            isLoading: true
+          }
+        }
+      },
+      {
+        type: 'RECEIVE_ENVIRONMENTSTATE_ERROR',
+        projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
+        environmentKey: 'my-first-environment',
+        error: {}
+      }
+    )
+  ).toEqual({
+    environments: {},
+    environmentStates: {
+      '8f73d020-96c4-407e-8602-74fd4e2ed08b/my-first-environment': {
+        isLoading: false
+      }
+    }
+  });
+});
+
+it('should handle TOGGLESTATE_UPDATE_SUCCEEDED', () => {
+  expect(
+    reducer(
+      {
+        environments: {},
+        environmentStates: {
+          '8f73d020-96c4-407e-8602-74fd4e2ed08b/my-first-environment': {
+            environmentState: {
+              toggleStates: [
+                {
+                  key: 'my-first-toggle',
+                  value: 'False',
+                  version: 12
+                }
+              ]
+            },
+            audit: {
+              generated: '2018-12-31T18:09:15.8617841+00:00',
+              streamPosition: 19
+            },
+            isLoading: false
+          }
+        }
+      },
+      {
+        type: 'TOGGLESTATE_UPDATE_SUCCEEDED',
+        projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
+        environmentKey: 'my-first-environment',
+        toggleKey: 'my-first-toggle',
+        value: 'True'
+      }
+    )
+  ).toEqual({
+    environments: {},
+    environmentStates: {
+      '8f73d020-96c4-407e-8602-74fd4e2ed08b/my-first-environment': {
+        environmentState: {
+          toggleStates: [
+            {
+              key: 'my-first-toggle',
+              value: 'True',
+              version: undefined
+            }
+          ]
+        },
+        audit: undefined,
+        isLoading: false
+      }
+    }
+  });
+});
