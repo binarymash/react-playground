@@ -1,5 +1,84 @@
-import { reducer } from './Account';
+import * as account from './Account';
 import * as actionTypes from '../actions/types';
+
+const nominalAccountState = () => {
+  return {
+    account: {
+      projection: {
+        account: {
+          projects: [
+            {
+              id: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
+              name: 'My First Project'
+            },
+            {
+              id: '1fbde650-09cf-11e9-8a6f-775854a0b1e9',
+              name: 'my new environment'
+            }
+          ],
+          accountId: 'e70fd009-22c4-44e0-ab13-2b6edaf0bbdb',
+          audit: {
+            created: '2018-12-27T11:48:19.5302129+00:00',
+            createdBy: 'SystemUser',
+            lastModified: '2018-12-27T12:01:20.7401734+00:00',
+            lastModifiedBy: 'AnonymousUser',
+            version: 2
+          }
+        },
+        audit: {
+          generated: '2018-12-31T16:36:12.5757663+00:00',
+          streamPosition: 13
+        }
+      },
+      isLoading: false
+    }
+  };
+};
+
+it('should return projects', () => {
+  const currentState = nominalAccountState();
+
+  const expectedResult = [
+    {
+      id: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
+      name: 'My First Project'
+    },
+    {
+      id: '1fbde650-09cf-11e9-8a6f-775854a0b1e9',
+      name: 'my new environment'
+    }
+  ];
+
+  expect(account.getProjects(currentState)).toEqual(expectedResult);
+});
+
+it('should return audit', () => {
+  const currentState = nominalAccountState();
+  const expectedResult = {
+    created: '2018-12-27T11:48:19.5302129+00:00',
+    createdBy: 'SystemUser',
+    lastModified: '2018-12-27T12:01:20.7401734+00:00',
+    lastModifiedBy: 'AnonymousUser',
+    version: 2
+  };
+  expect(account.getAudit(currentState)).toEqual(expectedResult);
+});
+
+it('should return isInitialised', () => {
+  const currentState = nominalAccountState();
+  expect(account.getIsInitialised(currentState)).toEqual(false);
+
+  currentState.account.isInitialised = true;
+  expect(account.getIsInitialised(currentState)).toEqual(true);
+});
+
+it('should return isLoading', () => {
+  const currentState = nominalAccountState();
+  expect(account.getIsLoading(currentState)).toEqual(false);
+
+  currentState.account.isLoading = true;
+  expect(account.getIsLoading(currentState)).toEqual(true);
+});
 
 it('should return the initial state', () => {
   const currentState = undefined;
@@ -13,7 +92,7 @@ it('should return the initial state', () => {
     isLoading: false
   };
 
-  expect(reducer(currentState, action)).toEqual(expectedNewState);
+  expect(account.reducer(currentState, action)).toEqual(expectedNewState);
 });
 
 it('should handle INITIALISED', () => {
@@ -33,7 +112,7 @@ it('should handle INITIALISED', () => {
     isInitialised: true
   };
 
-  expect(reducer(currentState, action)).toEqual(expectedNewState);
+  expect(account.reducer(currentState, action)).toEqual(expectedNewState);
 });
 
 it('should handle REQUEST_ACCOUNT', () => {
@@ -52,7 +131,7 @@ it('should handle REQUEST_ACCOUNT', () => {
     isLoading: true
   };
 
-  expect(reducer(currentState, action)).toEqual(expectedNewState);
+  expect(account.reducer(currentState, action)).toEqual(expectedNewState);
 });
 
 it('should handle RECEIVE_ACCOUNT', () => {
@@ -125,7 +204,7 @@ it('should handle RECEIVE_ACCOUNT', () => {
     isLoading: false
   };
 
-  expect(reducer(currentState, action)).toEqual(expectedNewState);
+  expect(account.reducer(currentState, action)).toEqual(expectedNewState);
 });
 
 it('should handle RECEIVE_ACCOUNT_ERROR', () => {
@@ -152,7 +231,7 @@ it('should handle RECEIVE_ACCOUNT_ERROR', () => {
     isLoading: false
   };
 
-  expect(reducer(currentState, action)).toEqual(expectedNewState);
+  expect(account.reducer(currentState, action)).toEqual(expectedNewState);
 });
 
 it('should handle PROJECT_ADD_SUCCEEDED', () => {
@@ -215,7 +294,7 @@ it('should handle PROJECT_ADD_SUCCEEDED', () => {
     isLoading: false
   };
 
-  expect(reducer(currentState, action)).toEqual(expectedNewState);
+  expect(account.reducer(currentState, action)).toEqual(expectedNewState);
 });
 
 it('should handle PROJECT_DELETE_SUCCEEDED', () => {
@@ -274,5 +353,5 @@ it('should handle PROJECT_DELETE_SUCCEEDED', () => {
     isLoading: false
   };
 
-  expect(reducer(currentState, action)).toEqual(expectedNewState);
+  expect(account.reducer(currentState, action)).toEqual(expectedNewState);
 });

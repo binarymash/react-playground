@@ -31,13 +31,6 @@ export const getIsLoading = state => {
   return state.account.isLoading === true;
 };
 
-const updateAudit = projection => {
-  projection.audit = undefined;
-  projection.account.audit.lastModified = undefined;
-  projection.account.audit.lastModifiedBy = undefined;
-  projection.account.audit.version = undefined;
-};
-
 export const reducer = produce((draft, action) => {
   switch (action.type) {
     case actionTypes.initialised:
@@ -78,3 +71,10 @@ export const reducer = produce((draft, action) => {
       break;
   }
 }, INITIAL_STATE);
+
+const updateAudit = projection => {
+  projection.audit = undefined;
+  projection.account.audit.lastModified = undefined;
+  projection.account.audit.lastModifiedBy = undefined;
+  projection.account.audit.version = undefined;
+};
