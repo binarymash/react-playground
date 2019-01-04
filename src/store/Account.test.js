@@ -1,7 +1,7 @@
 import * as account from './Account';
 import * as actionTypes from '../actions/types';
 
-const nominalAccountState = () => {
+const nominalState = () => {
   return {
     account: {
       projection: {
@@ -36,7 +36,7 @@ const nominalAccountState = () => {
 };
 
 it('should return projects', () => {
-  const currentState = nominalAccountState();
+  const currentState = nominalState();
 
   const expectedResult = [
     {
@@ -53,7 +53,7 @@ it('should return projects', () => {
 });
 
 it('should return audit', () => {
-  const currentState = nominalAccountState();
+  const currentState = nominalState();
   const expectedResult = {
     created: '2018-12-27T11:48:19.5302129+00:00',
     createdBy: 'SystemUser',
@@ -65,7 +65,7 @@ it('should return audit', () => {
 });
 
 it('should return isInitialised', () => {
-  const currentState = nominalAccountState();
+  const currentState = nominalState();
   expect(account.getIsInitialised(currentState)).toEqual(false);
 
   currentState.account.isInitialised = true;
@@ -73,7 +73,7 @@ it('should return isInitialised', () => {
 });
 
 it('should return isLoading', () => {
-  const currentState = nominalAccountState();
+  const currentState = nominalState();
   expect(account.getIsLoading(currentState)).toEqual(false);
 
   currentState.account.isLoading = true;

@@ -1,5 +1,119 @@
-import { reducer } from './Project';
+import * as project from './Project';
 import * as actionTypes from '../actions/types';
+
+const nominalState = () => {
+  return {
+    project: {
+      projects: {
+        '8f73d020-96c4-407e-8602-74fd4e2ed08b': {
+          project: {
+            id: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
+            name: 'My First Project',
+            environments: [
+              {
+                key: 'my-first-environment',
+                name: 'My First Environment'
+              }
+            ],
+            toggles: [
+              {
+                key: 'my-first-toggle',
+                name: 'My First Toggle'
+              }
+            ],
+            audit: {
+              created: '2018-12-27T11:48:19.6625847+00:00',
+              createdBy: 'SystemUser',
+              lastModified: '2018-12-27T11:50:03.1484767+00:00',
+              lastModifiedBy: 'AnonymousUser',
+              version: 5
+            }
+          },
+          audit: {
+            generated: '2018-12-31T18:09:15.8431617+00:00',
+            streamPosition: 10
+          },
+          isLoading: false
+        }
+      }
+    }
+  };
+};
+
+it('should return isLoading', () => {
+  const currentState = nominalState();
+  const projectId = '8f73d020-96c4-407e-8602-74fd4e2ed08b';
+
+  expect(project.getIsLoading(currentState, projectId)).toEqual(false);
+
+  currentState.project.projects[projectId].isLoading = true;
+
+  expect(project.getIsLoading(currentState, projectId)).toEqual(true);
+});
+
+it('should return project', () => {
+  const currentState = nominalState();
+  const projectId = '8f73d020-96c4-407e-8602-74fd4e2ed08b';
+  const expectedResult = {
+    id: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
+    name: 'My First Project',
+    environments: [
+      {
+        key: 'my-first-environment',
+        name: 'My First Environment',
+        projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b'
+      }
+    ],
+    toggles: [
+      {
+        key: 'my-first-toggle',
+        name: 'My First Toggle',
+        projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b'
+      }
+    ],
+    audit: {
+      created: '2018-12-27T11:48:19.6625847+00:00',
+      createdBy: 'SystemUser',
+      lastModified: '2018-12-27T11:50:03.1484767+00:00',
+      lastModifiedBy: 'AnonymousUser',
+      version: 5
+    }
+  };
+
+  expect(project.getProject(currentState, projectId)).toEqual(expectedResult);
+});
+
+it('should return project name', () => {
+  const currentState = nominalState();
+  const projectId = '8f73d020-96c4-407e-8602-74fd4e2ed08b';
+  const expectedResult = 'My First Project';
+
+  expect(project.getProjectName(currentState, projectId)).toEqual(
+    expectedResult
+  );
+});
+
+it('should return environment name', () => {
+  const currentState = nominalState();
+  const projectId = '8f73d020-96c4-407e-8602-74fd4e2ed08b';
+  const environmentKey = 'my-first-environment';
+  const expectedResult = 'My First Environment';
+
+  expect(
+    project.getEnvironmentName(currentState, projectId, environmentKey)
+  ).toEqual(expectedResult);
+});
+
+it('should return toggle name', () => {
+  const currentState = nominalState();
+  const projectId = '8f73d020-96c4-407e-8602-74fd4e2ed08b';
+  const toggleKey = 'my-first-toggle';
+  const expectedResult = 'My First Toggle';
+
+  expect(project.getToggleName(currentState, projectId, toggleKey)).toEqual(
+    expectedResult
+  );
+});
 
 it('should return the initial state', () => {
   const currentState = undefined;
@@ -8,7 +122,7 @@ it('should return the initial state', () => {
     projects: {}
   };
 
-  expect(reducer(currentState, action)).toEqual(expectedNewState);
+  expect(project.reducer(currentState, action)).toEqual(expectedNewState);
 });
 
 it('should handle REQUEST_PROJECT', () => {
@@ -27,7 +141,7 @@ it('should handle REQUEST_PROJECT', () => {
     }
   };
 
-  expect(reducer(currentState, action)).toEqual(expectedNewState);
+  expect(project.reducer(currentState, action)).toEqual(expectedNewState);
 });
 
 it('should handle RECEIVE_PROJECT', () => {
@@ -108,7 +222,7 @@ it('should handle RECEIVE_PROJECT', () => {
     }
   };
 
-  expect(reducer(currentState, action)).toEqual(expectedNewState);
+  expect(project.reducer(currentState, action)).toEqual(expectedNewState);
 });
 
 it('should handle RECEIVE_PROJECT_ERROR', () => {
@@ -134,7 +248,7 @@ it('should handle RECEIVE_PROJECT_ERROR', () => {
     }
   };
 
-  expect(reducer(currentState, action)).toEqual(expectedNewState);
+  expect(project.reducer(currentState, action)).toEqual(expectedNewState);
 });
 
 it('should handle TOGGLE_ADD_SUCCEEDED', () => {
@@ -216,7 +330,7 @@ it('should handle TOGGLE_ADD_SUCCEEDED', () => {
     }
   };
 
-  expect(reducer(currentState, action)).toEqual(expectedNewState);
+  expect(project.reducer(currentState, action)).toEqual(expectedNewState);
 });
 
 it('should handle TOGGLE_DELETE_SUCCEEDED', () => {
@@ -297,7 +411,7 @@ it('should handle TOGGLE_DELETE_SUCCEEDED', () => {
     }
   };
 
-  expect(reducer(currentState, action)).toEqual(expectedNewState);
+  expect(project.reducer(currentState, action)).toEqual(expectedNewState);
 });
 
 it('should handle ENVIRONMENT_ADD_SUCCEEDED', () => {
@@ -379,7 +493,7 @@ it('should handle ENVIRONMENT_ADD_SUCCEEDED', () => {
     }
   };
 
-  expect(reducer(currentState, action)).toEqual(expectedNewState);
+  expect(project.reducer(currentState, action)).toEqual(expectedNewState);
 });
 
 it('should handle ENVIRONMENT_DELETE_SUCCEEDED', () => {
@@ -460,7 +574,7 @@ it('should handle ENVIRONMENT_DELETE_SUCCEEDED', () => {
     }
   };
 
-  expect(reducer(currentState, action)).toEqual(expectedNewState);
+  expect(project.reducer(currentState, action)).toEqual(expectedNewState);
 });
 
 it('should handle PROJECT_DELETE_SUCCEEDED', () => {
@@ -510,5 +624,5 @@ it('should handle PROJECT_DELETE_SUCCEEDED', () => {
     }
   };
 
-  expect(reducer(currentState, action)).toEqual(expectedNewState);
+  expect(project.reducer(currentState, action)).toEqual(expectedNewState);
 });
