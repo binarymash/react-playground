@@ -1,5 +1,161 @@
-import { reducer } from './Environment';
+import * as environment from './Environment';
 import * as actionTypes from '../actions/types';
+
+const nominalState = () => {
+  return {
+    environment: {
+      environments: {
+        '8f73d020-96c4-407e-8602-74fd4e2ed08b/my-first-environment': {
+          environment: {
+            projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
+            key: 'my-first-environment',
+            name: 'My First Environment',
+            audit: {
+              created: '2018-12-27T11:48:19.7507748+00:00',
+              createdBy: 'SystemUser',
+              lastModified: '2018-12-27T11:48:19.7507748+00:00',
+              lastModifiedBy: 'SystemUser',
+              version: 1
+            }
+          },
+          audit: {
+            generated: '2018-12-31T18:09:15.6839632+00:00',
+            streamPosition: 6
+          },
+          isLoading: false
+        }
+      },
+      environmentStates: {
+        '8f73d020-96c4-407e-8602-74fd4e2ed08b/my-first-environment': {
+          environmentState: {
+            toggleStates: [
+              {
+                key: 'my-first-toggle',
+                value: 'True',
+                version: undefined
+              }
+            ]
+          },
+          audit: undefined,
+          isLoading: false
+        }
+      }
+    }
+  };
+};
+
+it('should return isLoading for environment', () => {
+  let currentState = nominalState();
+  expect(
+    environment.getIsEnvironmentLoading(
+      currentState,
+      '8f73d020-96c4-407e-8602-74fd4e2ed08b',
+      'my-first-environment'
+    )
+  ).toEqual(false);
+
+  currentState.environment.environments[
+    '8f73d020-96c4-407e-8602-74fd4e2ed08b/my-first-environment'
+  ].isLoading = true;
+  expect(
+    environment.getIsEnvironmentLoading(
+      currentState,
+      '8f73d020-96c4-407e-8602-74fd4e2ed08b',
+      'my-first-environment'
+    )
+  ).toEqual(true);
+});
+
+it('should return isLoading for environment state', () => {
+  let currentState = nominalState();
+  expect(
+    environment.getIsEnvironmentStateLoading(
+      currentState,
+      '8f73d020-96c4-407e-8602-74fd4e2ed08b',
+      'my-first-environment'
+    )
+  ).toEqual(false);
+
+  currentState.environment.environmentStates[
+    '8f73d020-96c4-407e-8602-74fd4e2ed08b/my-first-environment'
+  ].isLoading = true;
+  expect(
+    environment.getIsEnvironmentStateLoading(
+      currentState,
+      '8f73d020-96c4-407e-8602-74fd4e2ed08b',
+      'my-first-environment'
+    )
+  ).toEqual(true);
+});
+
+it('should return environment', () => {
+  let currentState = nominalState();
+  //todo: funky stuff going on with needing project to get toggle names
+  currentState.project = {
+    projects: {
+      '8f73d020-96c4-407e-8602-74fd4e2ed08b': {
+        project: {
+          id: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
+          name: 'My First Project',
+          environments: [
+            {
+              key: 'my-first-environment',
+              name: 'My First Environment'
+            }
+          ],
+          toggles: [
+            {
+              key: 'my-first-toggle',
+              name: 'My First Toggle'
+            },
+            {
+              key: 'my-second-toggle',
+              name: 'My Second Toggle'
+            }
+          ],
+          audit: {
+            created: '2018-12-27T11:48:19.6625847+00:00',
+            createdBy: 'SystemUser',
+            lastModified: '2018-12-27T11:50:03.1484767+00:00',
+            lastModifiedBy: 'AnonymousUser',
+            version: 5
+          }
+        },
+        audit: {
+          generated: '2018-12-31T18:09:15.8431617+00:00',
+          streamPosition: 10
+        },
+        isLoading: false
+      }
+    }
+  };
+  const expectedResult = {
+    key: 'my-first-environment',
+    name: 'My First Environment',
+    toggles: [
+      {
+        key: 'my-first-toggle',
+        name: 'My First Toggle',
+        value: true,
+        version: undefined //todo: fix
+      }
+    ],
+    audit: {
+      created: '2018-12-27T11:48:19.7507748+00:00',
+      createdBy: 'SystemUser',
+      lastModified: '2018-12-27T11:48:19.7507748+00:00',
+      lastModifiedBy: 'SystemUser'
+    }
+  };
+
+  expect(
+    environment.getEnvironment(
+      currentState,
+      '8f73d020-96c4-407e-8602-74fd4e2ed08b',
+      'my-first-environment'
+    )
+  ).toEqual(expectedResult);
+});
 
 it('should return the initial state', () => {
   const currentState = undefined;
@@ -8,7 +164,7 @@ it('should return the initial state', () => {
     environments: {},
     environmentStates: {}
   };
-  expect(reducer(currentState, action)).toEqual(expectedNewState);
+  expect(environment.reducer(currentState, action)).toEqual(expectedNewState);
 });
 
 it('should handle REQUEST_ENVIRONMENT', () => {
@@ -16,26 +172,26 @@ it('should handle REQUEST_ENVIRONMENT', () => {
 
   const action = {
     type: actionTypes.requestEnvironment,
-    projectId: '2DBE229D-5318-4AD5-A62E-3F3D260C850F',
+    projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
     environmentKey: 'some-environment'
   };
 
   const expectedNewState = {
     environments: {
-      '2DBE229D-5318-4AD5-A62E-3F3D260C850F/some-environment': {
+      '8f73d020-96c4-407e-8602-74fd4e2ed08b/some-environment': {
         isLoading: true
       }
     },
     environmentStates: {}
   };
 
-  expect(reducer(currentState, action)).toEqual(expectedNewState);
+  expect(environment.reducer(currentState, action)).toEqual(expectedNewState);
 });
 
 it('should handle RECEIVE_ENVIRONMENT', () => {
   const currentState = {
     environments: {
-      '2DBE229D-5318-4AD5-A62E-3F3D260C850F/some-environment': {
+      '8f73d020-96c4-407e-8602-74fd4e2ed08b/some-environment': {
         isLoading: true
       }
     },
@@ -44,7 +200,7 @@ it('should handle RECEIVE_ENVIRONMENT', () => {
 
   const action = {
     type: actionTypes.receiveEnvironment,
-    projectId: '2DBE229D-5318-4AD5-A62E-3F3D260C850F',
+    projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
     environmentKey: 'some-environment',
     json: {
       environment: {
@@ -68,7 +224,7 @@ it('should handle RECEIVE_ENVIRONMENT', () => {
 
   const expectedNewState = {
     environments: {
-      '2DBE229D-5318-4AD5-A62E-3F3D260C850F/some-environment': {
+      '8f73d020-96c4-407e-8602-74fd4e2ed08b/some-environment': {
         environment: {
           projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
           key: 'some-environment',
@@ -91,13 +247,13 @@ it('should handle RECEIVE_ENVIRONMENT', () => {
     environmentStates: {}
   };
 
-  expect(reducer(currentState, action)).toEqual(expectedNewState);
+  expect(environment.reducer(currentState, action)).toEqual(expectedNewState);
 });
 
 it('should handle RECEIVE_ENVIRONMENT_ERROR', () => {
   const currentState = {
     environments: {
-      '2DBE229D-5318-4AD5-A62E-3F3D260C850F/some-environment': {
+      '8f73d020-96c4-407e-8602-74fd4e2ed08b/some-environment': {
         isLoading: true
       }
     },
@@ -106,21 +262,21 @@ it('should handle RECEIVE_ENVIRONMENT_ERROR', () => {
 
   const action = {
     type: actionTypes.receiveEnvironmentError,
-    projectId: '2DBE229D-5318-4AD5-A62E-3F3D260C850F',
+    projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
     environmentKey: 'some-environment',
     error: 'some error'
   };
 
   const expectedNewState = {
     environments: {
-      '2DBE229D-5318-4AD5-A62E-3F3D260C850F/some-environment': {
+      '8f73d020-96c4-407e-8602-74fd4e2ed08b/some-environment': {
         isLoading: false
       }
     },
     environmentStates: {}
   };
 
-  expect(reducer(currentState, action)).toEqual(expectedNewState);
+  expect(environment.reducer(currentState, action)).toEqual(expectedNewState);
 });
 
 it('should handle REQUEST_ENVIRONMENTSTATE', () => {
@@ -141,7 +297,7 @@ it('should handle REQUEST_ENVIRONMENTSTATE', () => {
     }
   };
 
-  expect(reducer(currentState, action)).toEqual(expectedNewState);
+  expect(environment.reducer(currentState, action)).toEqual(expectedNewState);
 });
 
 it('should handle RECEIVE_ENVIRONMENTSTATE', () => {
@@ -197,7 +353,7 @@ it('should handle RECEIVE_ENVIRONMENTSTATE', () => {
     }
   };
 
-  expect(reducer(currentState, actions)).toEqual(expectedNewState);
+  expect(environment.reducer(currentState, actions)).toEqual(expectedNewState);
 });
 
 it('should handle RECEIVE_ENVIRONMENTSTATE_ERROR', () => {
@@ -226,7 +382,7 @@ it('should handle RECEIVE_ENVIRONMENTSTATE_ERROR', () => {
     }
   };
 
-  expect(reducer(currentState, action)).toEqual(expectedNewState);
+  expect(environment.reducer(currentState, action)).toEqual(expectedNewState);
 });
 
 it('should handle TOGGLESTATE_UPDATE_SUCCEEDED', () => {
@@ -279,5 +435,5 @@ it('should handle TOGGLESTATE_UPDATE_SUCCEEDED', () => {
     }
   };
 
-  expect(reducer(currentState, action)).toEqual(expectedNewState);
+  expect(environment.reducer(currentState, action)).toEqual(expectedNewState);
 });
