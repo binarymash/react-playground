@@ -1,4 +1,4 @@
-const baseUrl = 'http://localhost:2316/api';
+const baseUrl = 'http://localhost:2316/management-api';
 
 export const Api = {
   // Read
