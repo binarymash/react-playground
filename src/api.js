@@ -25,7 +25,8 @@ export const Api = {
 
   getEnvironment: (projectId, environmentKey) => {
     const url =
-      baseUrl + `/projects/${projectId}/environments/${environmentKey}`;
+      baseUrl +
+      `/projects/${projectId}/environments/${environmentKey}/definition`;
     return fetch(url).then(function(response) {
       if (response.ok) {
         return response.json();
@@ -35,7 +36,8 @@ export const Api = {
   },
 
   getEnvironmentState: (projectId, environmentKey) => {
-    const url = baseUrl + `/states/${projectId}/${environmentKey}`;
+    const url =
+      baseUrl + `/projects/${projectId}/environments/${environmentKey}/state`;
     return fetch(url).then(function(response) {
       if (response.ok) {
         return response.json();
@@ -45,7 +47,8 @@ export const Api = {
   },
 
   getToggle: (projectId, toggleKey) => {
-    const url = baseUrl + `/projects/${projectId}/toggles/${toggleKey}`;
+    const url =
+      baseUrl + `/projects/${projectId}/toggles/${toggleKey}/definition`;
     return fetch(url).then(function(response) {
       if (response.ok) {
         return response.json();
