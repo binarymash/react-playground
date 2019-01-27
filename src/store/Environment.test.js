@@ -385,7 +385,7 @@ it('should handle RECEIVE_ENVIRONMENTSTATE_ERROR', () => {
   expect(environment.reducer(currentState, action)).toEqual(expectedNewState);
 });
 
-it('should handle TOGGLESTATE_UPDATE_SUCCEEDED', () => {
+it('should handle TOGGLEENVIRONMENTSTATE_UPDATE_SUCCEEDED', () => {
   const currentState = {
     environments: {},
     environmentStates: {
@@ -409,7 +409,7 @@ it('should handle TOGGLESTATE_UPDATE_SUCCEEDED', () => {
   };
 
   const action = {
-    type: actionTypes.toggleStateUpdateSucceeded,
+    type: actionTypes.toggleEnvironmentStateUpdateSucceeded,
     projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
     environmentKey: 'my-first-environment',
     toggleKey: 'my-first-toggle',

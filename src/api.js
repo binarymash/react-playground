@@ -183,7 +183,7 @@ export const Api = {
     });
   },
 
-  setToggleState: (projectId, environmentKey, toggleKey, value) => {
+  setToggleEnvironmentState: (projectId, environmentKey, toggleKey, value) => {
     const url =
       baseUrl +
       `/projects/${projectId}/environments/${environmentKey}/toggles/${toggleKey}/change-state`;

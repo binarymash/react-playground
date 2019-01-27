@@ -169,18 +169,25 @@ export const actionCreators = {
     await getLatestToggle(projectId, toggleKey, dispatch, getState);
   },
 
-  setToggleValue: (projectId, environmentKey, toggleKey, value) => async (
-    dispatch,
-    getState
-  ) => {
-    dispatch({ type: actionTypes.toggleStateUpdateRequested });
+  setToggleEnvironmentState: (
+    projectId,
+    environmentKey,
+    toggleKey,
+    value
+  ) => async (dispatch, getState) => {
+    dispatch({ type: actionTypes.toggleEnvironmentStateUpdateRequested });
 
     let newValue = value ? 'True' : 'False';
 
-    await Api.setToggleState(projectId, environmentKey, toggleKey, newValue)
+    await Api.setToggleEnvironmentState(
+      projectId,
+      environmentKey,
+      toggleKey,
+      newValue
+    )
       .then(() => {
         dispatch({
-          type: actionTypes.toggleStateUpdateSucceeded,
+          type: actionTypes.toggleEnvironmentStateUpdateSucceeded,
           projectId,
           environmentKey,
           toggleKey,
@@ -194,7 +201,7 @@ export const actionCreators = {
           modalProps: { error: error.message }
         });
         dispatch({
-          type: actionTypes.toggleStateUpdateFailed,
+          type: actionTypes.toggleEnvironmentStateUpdateFailed,
           projectId,
           environmentKey,
           toggleKey,

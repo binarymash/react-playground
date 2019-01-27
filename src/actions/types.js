@@ -20,9 +20,12 @@ export const requestToggle = 'REQUEST_TOGGLE';
 export const receiveToggle = 'RECEIVE_TOGGLE';
 export const receiveToggleError = 'RECEIVE_TOGGLE_ERROR';
 
-export const toggleStateUpdateRequested = 'TOGGLESTATE_UPDATE_REQUESTED';
-export const toggleStateUpdateSucceeded = 'TOGGLESTATE_UPDATE_SUCCEEDED';
-export const toggleStateUpdateFailed = 'TOGGLESTATE_UPDATE_FAILED';
+export const toggleEnvironmentStateUpdateRequested =
+  'TOGGLEENVIRONMENTSTATE_UPDATE_REQUESTED';
+export const toggleEnvironmentStateUpdateSucceeded =
+  'TOGGLEENVIRONMENTSTATE_UPDATE_SUCCEEDED';
+export const toggleEnvironmentStateUpdateFailed =
+  'TOGGLEENVIRONMENTSTATE_UPDATE_FAILED';
 
 export const projectAddRequested = 'PROJECT_ADD_REQUESTED';
 export const projectAddSucceeded = 'PROJECT_ADD_SUCCEEDED';
