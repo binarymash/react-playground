@@ -7,16 +7,16 @@ import Switch from 'react-bootstrap-switch';
 import '../components/react-bootstrap-switch.css';
 import { Link } from 'react-router-dom';
 
-export class ToggleState extends Component {
+export class EnvironmentState extends Component {
   render() {
     return (
       <ListGroupItem>
         <Link
-          to={`/projects/${this.props.projectId}/toggles/${
-            this.props.toggle.key
+          to={`/projects/${this.props.projectId}/environments/${
+            this.props.environment.key
           }`}
         >
-          {this.props.toggle.name}
+          {this.props.environment.name}
         </Link>
         <span className="pull-right">
           <Switch
@@ -24,7 +24,7 @@ export class ToggleState extends Component {
             onColor="success"
             offColor="danger"
             animate={false}
-            value={this.props.toggle.value}
+            value={this.props.environment.value}
             onChange={(el, newState) => this.handleSwitch(el, newState)}
           />
         </span>
@@ -35,9 +35,9 @@ export class ToggleState extends Component {
   handleSwitch = (elem, newState) => {
     this.props.setToggleEnvironmentState(
       this.props.projectId,
-      this.props.environmentKey,
-      this.props.toggle.key,
-      this.props.toggle.version,
+      this.props.environment.key,
+      this.props.toggleKey,
+      this.props.environment.version,
       newState
     );
   };
@@ -50,4 +50,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   null,
   mapDispatchToProps
-)(ToggleState);
+)(EnvironmentState);

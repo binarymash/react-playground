@@ -129,6 +129,7 @@ it('should return environment', () => {
       }
     }
   };
+
   const expectedResult = {
     key: 'my-first-environment',
     name: 'My First Environment',

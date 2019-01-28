@@ -87,12 +87,12 @@ const getToggleState = (project, toggleState) => {
   return {
     key: toggleState.key,
     name: name,
-    value: getToggleStateValue(toggleState.value),
+    value: getStateValue(toggleState.value),
     version: toggleState.version
   };
 };
 
-const getToggleStateValue = value => {
+const getStateValue = value => {
   if (value === 'True') {
     return true;
   }
@@ -175,14 +175,16 @@ export const reducer = produce((draft, action) => {
       storeKey = getStoreKey(action.projectId, action.environmentKey);
 
       projection = draft.environmentStates[storeKey];
-      projection.audit = undefined;
+      if (projection) {
+        projection.audit = undefined;
 
-      let toggleState = projection.environmentState.toggleStates.find(ts => {
-        return ts.key === action.toggleKey;
-      });
+        let toggleState = projection.environmentState.toggleStates.find(ts => {
+          return ts.key === action.toggleKey;
+        });
 
-      toggleState.version = undefined;
-      toggleState.value = action.value;
+        toggleState.version = undefined;
+        toggleState.value = action.value;
+      }
       break;
   }
 }, INITIAL_STATE);

@@ -1,8 +1,8 @@
 ﻿import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { PageHeader } from 'react-bootstrap';
 import { actionCreators } from '../actions/index';
+import { PageHeader } from 'react-bootstrap';
 import {
   getEnvironment,
   getIsEnvironmentLoading,
@@ -13,7 +13,7 @@ import ToggleStates from '../components/ToggleStates';
 import Audit from '../components/Audit';
 import PageLoading from '../components/PageLoading';
 
-class EnvironmentStatePage extends Component {
+class EnvironmentPage extends Component {
   componentWillMount() {
     this.props.selectEnvironment(
       this.props.match.params.projectId,
@@ -62,6 +62,7 @@ class EnvironmentStatePage extends Component {
           environmentKey={this.props.match.params.environmentKey}
           isLoading={this.props.isEnvironmentStateLoading}
         />
+
         <Audit audit={this.props.environment.audit} />
       </div>
     );
@@ -95,4 +96,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(EnvironmentStatePage);
+)(EnvironmentPage);

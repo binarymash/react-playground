@@ -9,7 +9,7 @@ import { getIsInitialised } from './store/Account';
 import Layout from './containers/Layout';
 import DashboardPage from './containers/DashboardPage';
 import ProjectPage from './containers/ProjectPage';
-import EnvironmentStatePage from './containers/EnvironmentStatePage';
+import EnvironmentPage from './containers/EnvironmentPage';
 import TogglePage from './containers/TogglePage';
 import ModalRoot from './containers/modals/ModalRoot';
 import Loading from './components/Loading';
@@ -44,7 +44,7 @@ class App extends Component {
         <Route
           exact
           path="/projects/:projectId/environments/:environmentKey"
-          component={EnvironmentStatePage}
+          component={EnvironmentPage}
         />
         <Route
           exact

@@ -126,6 +126,37 @@ const getLatestToggle = (projectId, toggleKey, dispatch, getState) => {
     });
 };
 
+const getLatestToggleState = (projectId, toggleKey, dispatch, getState) => {
+  dispatch({
+    type: actionTypes.requestToggleState,
+    projectId,
+    toggleKey
+  });
+
+  return Api.getToggleState(projectId, toggleKey)
+    .then(json => {
+      dispatch({
+        type: actionTypes.receiveToggleState,
+        projectId,
+        toggleKey,
+        json
+      });
+    })
+    .catch(error => {
+      dispatch({
+        type: actionTypes.showModal,
+        modalType: 'API_ERROR',
+        modalProps: { error: error.message }
+      });
+      dispatch({
+        type: actionTypes.receiveToggleStateError,
+        projectId,
+        toggleKey,
+        error
+      });
+    });
+};
+
 export const actionCreators = {
   initialise: () => async (dispatch, getState) => {
     await getAccount(dispatch, getState)
@@ -167,6 +198,7 @@ export const actionCreators = {
 
   selectToggle: (projectId, toggleKey) => async (dispatch, getState) => {
     await getLatestToggle(projectId, toggleKey, dispatch, getState);
+    await getLatestToggleState(projectId, toggleKey, dispatch, getState);
   },
 
   setToggleEnvironmentState: (

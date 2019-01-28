@@ -4,7 +4,7 @@ export const Api = {
   // Read
 
   getProjects: () => {
-    const url = baseUrl + `/projects`;
+    const url = `${baseUrl}/projects`;
     return fetch(url).then(function(response) {
       if (response.ok) {
         return response.json();
@@ -14,7 +14,8 @@ export const Api = {
   },
 
   getProject: projectId => {
-    const url = baseUrl + `/projects/${projectId}`;
+    const url = `${baseUrl}/projects/${projectId}`;
+
     return fetch(url).then(function(response) {
       if (response.ok) {
         return response.json();
@@ -24,9 +25,8 @@ export const Api = {
   },
 
   getEnvironment: (projectId, environmentKey) => {
-    const url =
-      baseUrl +
-      `/projects/${projectId}/environments/${environmentKey}/definition`;
+    const url = `${baseUrl}/projects/${projectId}/environments/${environmentKey}/definition`;
+
     return fetch(url).then(function(response) {
       if (response.ok) {
         return response.json();
@@ -36,8 +36,8 @@ export const Api = {
   },
 
   getEnvironmentState: (projectId, environmentKey) => {
-    const url =
-      baseUrl + `/projects/${projectId}/environments/${environmentKey}/state`;
+    const url = `${baseUrl}/projects/${projectId}/environments/${environmentKey}/state`;
+
     return fetch(url).then(function(response) {
       if (response.ok) {
         return response.json();
@@ -47,8 +47,19 @@ export const Api = {
   },
 
   getToggle: (projectId, toggleKey) => {
-    const url =
-      baseUrl + `/projects/${projectId}/toggles/${toggleKey}/definition`;
+    const url = `${baseUrl}/projects/${projectId}/toggles/${toggleKey}/definition`;
+
+    return fetch(url).then(function(response) {
+      if (response.ok) {
+        return response.json();
+      }
+      throw new Error(response.status);
+    });
+  },
+
+  getToggleState: (projectId, toggleKey) => {
+    const url = `${baseUrl}/projects/${projectId}/toggles/${toggleKey}/state`;
+
     return fetch(url).then(function(response) {
       if (response.ok) {
         return response.json();

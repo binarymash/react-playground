@@ -20,6 +20,10 @@ export const requestToggle = 'REQUEST_TOGGLE';
 export const receiveToggle = 'RECEIVE_TOGGLE';
 export const receiveToggleError = 'RECEIVE_TOGGLE_ERROR';
 
+export const requestToggleState = 'REQUEST_TOGGLESTATE';
+export const receiveToggleState = 'RECEIVE_TOGGLESTATE';
+export const receiveToggleStateError = 'RECEIVE_TOGGLESTATE_ERROR';
+
 export const toggleEnvironmentStateUpdateRequested =
   'TOGGLEENVIRONMENTSTATE_UPDATE_REQUESTED';
 export const toggleEnvironmentStateUpdateSucceeded =

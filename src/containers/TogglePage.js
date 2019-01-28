@@ -3,8 +3,13 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { actionCreators } from '../actions/index';
 import { PageHeader } from 'react-bootstrap';
-import { getToggle, getIsToggleLoading } from '../store/Toggle';
+import {
+  getToggle,
+  getIsToggleLoading,
+  getIsToggleStateLoading
+} from '../store/Toggle';
 import Key from '../components/Key';
+import EnvironmentStates from '../components/EnvironmentStates';
 import Audit from '../components/Audit';
 import PageLoading from '../components/PageLoading';
 
@@ -31,7 +36,7 @@ class TogglePage extends Component {
   }
 
   render() {
-    if (this.props.isLoading) {
+    if (this.props.isToggleStateLoading) {
       return <PageLoading />;
     }
 
@@ -49,6 +54,14 @@ class TogglePage extends Component {
             </small>
           </div>
         </PageHeader>
+
+        <EnvironmentStates
+          environments={this.props.toggle.environments}
+          projectId={this.props.match.params.projectId}
+          toggleKey={this.props.match.params.toggleKey}
+          isLoading={this.props.isToggleStateLoading}
+        />
+
         <Audit audit={this.props.toggle.audit} />
       </div>
     );
@@ -62,7 +75,12 @@ const mapStateToProps = (state, ownProps) => {
       ownProps.match.params.projectId,
       ownProps.match.params.toggleKey
     ),
-    isLoading: getIsToggleLoading(
+    isToggleLoading: getIsToggleLoading(
+      state,
+      ownProps.match.params.projectId,
+      ownProps.match.params.toggleKey
+    ),
+    isToggleStateLoading: getIsToggleStateLoading(
       state,
       ownProps.match.params.projectId,
       ownProps.match.params.toggleKey
