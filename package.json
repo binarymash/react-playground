@@ -25,7 +25,8 @@
     "reselect": "^3.0.1",
     "rimraf": "^2.6.2",
     "uuid": "^3.3.2",
-    "validator": "^10.10.0"
+    "validator": "^10.10.0",
+    "snyk": "^1.316.1"
   },
   "lint-staged": {
     "src/**/*.{js,jsx,json,css}": [
@@ -38,7 +39,9 @@
     "start": "rimraf ./build && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "browserslist": [
     ">0.2%",
@@ -49,5 +52,6 @@
   "devDependencies": {
     "enzyme": "^3.8.0",
     "enzyme-adapter-react-16": "^1.7.1"
-  }
+  },
+  "snyk": true
 }
