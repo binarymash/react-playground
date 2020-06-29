@@ -12,6 +12,8 @@ import Key from '../components/Key';
 import EnvironmentStates from '../components/EnvironmentStates';
 import Audit from '../components/Audit';
 import PageLoading from '../components/PageLoading';
+import Fade from '../services/transitions/fade.js';
+import { motion, AnimatePresence } from 'framer-motion';
 
 class TogglePage extends Component {
   componentWillMount() {
@@ -45,25 +47,27 @@ class TogglePage extends Component {
     }
 
     return (
-      <div>
-        <PageHeader>
-          {this.props.toggle.name}
-          <div>
-            <small>
-              <Key value={this.props.toggle.key} />
-            </small>
-          </div>
-        </PageHeader>
+      <AnimatePresence>
+        <motion.div initial="initial" animate="in" exit="out" variants={Fade}>
+          <PageHeader>
+            {this.props.toggle.name}
+            <div>
+              <small>
+                <Key value={this.props.toggle.key} />
+              </small>
+            </div>
+          </PageHeader>
 
-        <EnvironmentStates
-          environments={this.props.toggle.environments}
-          projectId={this.props.match.params.projectId}
-          toggleKey={this.props.match.params.toggleKey}
-          isLoading={this.props.isToggleStateLoading}
-        />
+          <EnvironmentStates
+            environments={this.props.toggle.environments}
+            projectId={this.props.match.params.projectId}
+            toggleKey={this.props.match.params.toggleKey}
+            isLoading={this.props.isToggleStateLoading}
+          />
 
-        <Audit audit={this.props.toggle.audit} />
-      </div>
+          <Audit audit={this.props.toggle.audit} />
+        </motion.div>
+      </AnimatePresence>
     );
   }
 }
@@ -92,7 +96,4 @@ const mapDispatchToProps = dispatch => {
   return bindActionCreators(actionCreators, dispatch);
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(TogglePage);
+export default connect(mapStateToProps, mapDispatchToProps)(TogglePage);

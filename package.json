@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "bootstrap": "^3.4.1",
+    "framer-motion": "^1.11.1",
     "husky": "^0.14.3",
     "immer": "^1.12.1",
     "lint-staged": "^7.3.0",

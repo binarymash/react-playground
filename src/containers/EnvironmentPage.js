@@ -12,6 +12,20 @@ import Key from '../components/Key';
 import ToggleStates from '../components/ToggleStates';
 import Audit from '../components/Audit';
 import PageLoading from '../components/PageLoading';
+import Fade from '../services/transitions/fade.js';
+import { motion, AnimatePresence } from 'framer-motion';
+
+const pageVariant = {
+  initial: {
+    opacity: 0
+  },
+  in: {
+    opacity: 1
+  },
+  out: {
+    opacity: 0
+  }
+};
 
 class EnvironmentPage extends Component {
   componentWillMount() {
@@ -46,25 +60,27 @@ class EnvironmentPage extends Component {
     }
 
     return (
-      <div>
-        <PageHeader>
-          {this.props.environment.name}
-          <div>
-            <small>
-              <Key value={this.props.environment.key} />
-            </small>
-          </div>
-        </PageHeader>
+      <AnimatePresence>
+        <motion.div initial="initial" animate="in" exit="out" variants={Fade}>
+          <PageHeader>
+            {this.props.environment.name}
+            <div>
+              <small>
+                <Key value={this.props.environment.key} />
+              </small>
+            </div>
+          </PageHeader>
 
-        <ToggleStates
-          toggles={this.props.environment.toggles}
-          projectId={this.props.match.params.projectId}
-          environmentKey={this.props.match.params.environmentKey}
-          isLoading={this.props.isEnvironmentStateLoading}
-        />
+          <ToggleStates
+            toggles={this.props.environment.toggles}
+            projectId={this.props.match.params.projectId}
+            environmentKey={this.props.match.params.environmentKey}
+            isLoading={this.props.isEnvironmentStateLoading}
+          />
 
-        <Audit audit={this.props.environment.audit} />
-      </div>
+          <Audit audit={this.props.environment.audit} />
+        </motion.div>
+      </AnimatePresence>
     );
   }
 }
@@ -93,7 +109,4 @@ const mapDispatchToProps = dispatch => {
   return bindActionCreators(actionCreators, dispatch);
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(EnvironmentPage);
+export default connect(mapStateToProps, mapDispatchToProps)(EnvironmentPage);

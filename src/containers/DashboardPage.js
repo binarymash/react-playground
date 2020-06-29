@@ -7,6 +7,8 @@ import { getProjects, getIsLoading, getAudit } from '../store/Account';
 import Projects from '../components/Projects';
 import Audit from '../components/Audit';
 import PageLoading from '../components/PageLoading';
+import Fade from '../services/transitions/fade.js';
+import { motion, AnimatePresence } from 'framer-motion';
 
 class DashboardPage extends Component {
   componentWillMount() {
@@ -23,11 +25,13 @@ class DashboardPage extends Component {
     }
 
     return (
-      <div>
-        <PageHeader>Dashboard</PageHeader>
-        <Projects projects={this.props.projects} />
-        <Audit audit={this.props.audit} />
-      </div>
+      <AnimatePresence>
+        <motion.div initial="initial" animate="in" exit="out" variants={Fade}>
+          <PageHeader>Dashboard</PageHeader>
+          <Projects projects={this.props.projects} />
+          <Audit audit={this.props.audit} />
+        </motion.div>
+      </AnimatePresence>
     );
   }
 }
@@ -44,7 +48,4 @@ const mapDispatchToProps = dispatch => {
   return bindActionCreators(actionCreators, dispatch);
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(DashboardPage);
+export default connect(mapStateToProps, mapDispatchToProps)(DashboardPage);

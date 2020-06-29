@@ -9,6 +9,8 @@ import Environments from '../components/Environments';
 import Toggles from '../components/Toggles';
 import Audit from '../components/Audit';
 import PageLoading from '../components/PageLoading';
+import Fade from '../services/transitions/fade.js';
+import { motion, AnimatePresence } from 'framer-motion';
 
 class ProjectPage extends Component {
   componentWillMount() {
@@ -33,25 +35,27 @@ class ProjectPage extends Component {
     }
 
     return (
-      <div>
-        <PageHeader>
-          {this.props.project.name}
-          <div>
-            <small>
-              <Key value={this.props.project.id} />
-            </small>
-          </div>
-        </PageHeader>
-        <Environments
-          environments={this.props.project.environments}
-          projectId={this.props.project.id}
-        />
-        <Toggles
-          toggles={this.props.project.toggles}
-          projectId={this.props.project.id}
-        />
-        <Audit audit={this.props.project.audit} />
-      </div>
+      <AnimatePresence>
+        <motion.div initial="initial" animate="in" exit="out" variants={Fade}>
+          <PageHeader>
+            {this.props.project.name}
+            <div>
+              <small>
+                <Key value={this.props.project.id} />
+              </small>
+            </div>
+          </PageHeader>
+          <Environments
+            environments={this.props.project.environments}
+            projectId={this.props.project.id}
+          />
+          <Toggles
+            toggles={this.props.project.toggles}
+            projectId={this.props.project.id}
+          />
+          <Audit audit={this.props.project.audit} />
+        </motion.div>
+      </AnimatePresence>
     );
   }
 }
@@ -67,7 +71,4 @@ const mapDispatchToProps = dispatch => {
   return bindActionCreators(actionCreators, dispatch);
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ProjectPage);
+export default connect(mapStateToProps, mapDispatchToProps)(ProjectPage);
