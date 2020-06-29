@@ -1,6 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, Glyphicon, ListGroupItem } from 'react-bootstrap';
+import { Button, Glyphicon } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 export class Project extends Component {
@@ -20,19 +20,23 @@ export class Project extends Component {
     }
 
     return (
-      <ListGroupItem>
-        <Link to={`/projects/${this.props.project.id}`}>
-          {this.props.project.name}
-        </Link>
-        <Button
-          className="pull-right"
-          bsStyle="danger"
-          bsSize="xsmall"
-          onClick={this.handleDeleteClick}
-        >
-          <Glyphicon glyph="remove" /> Delete
-        </Button>
-      </ListGroupItem>
+      <tr>
+        <td class="fill">
+          <Link to={`/projects/${this.props.project.id}`}>
+            {this.props.project.name}
+          </Link>
+        </td>
+        <td>
+          <Button
+            className="pull-right"
+            bsStyle="danger"
+            bsSize="xsmall"
+            onClick={this.handleDeleteClick}
+          >
+            <Glyphicon glyph="remove" /> Delete
+          </Button>
+        </td>
+      </tr>
     );
   }
 }

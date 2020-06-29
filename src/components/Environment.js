@@ -1,6 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, Glyphicon, ListGroupItem } from 'react-bootstrap';
+import { Button, Glyphicon } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 export class Environment extends Component {
@@ -21,23 +21,25 @@ export class Environment extends Component {
     }
 
     return (
-      <ListGroupItem>
-        <Link
-          to={`/projects/${this.props.environment.projectId}/environments/${
-            this.props.environment.key
-          }`}
-        >
-          {this.props.environment.name}
-        </Link>
-        <Button
-          className="pull-right"
-          bsStyle="danger"
-          bsSize="xsmall"
-          onClick={this.handleDeleteClick}
-        >
-          <Glyphicon glyph="remove" /> Delete
-        </Button>
-      </ListGroupItem>
+      <tr>
+        <td class="fill">
+          <Link
+            to={`/projects/${this.props.environment.projectId}/environments/${this.props.environment.key}`}
+          >
+            {this.props.environment.name}
+          </Link>
+        </td>
+        <td>
+          <Button
+            className="pull-right"
+            bsStyle="danger"
+            bsSize="xsmall"
+            onClick={this.handleDeleteClick}
+          >
+            <Glyphicon glyph="remove" /> Delete
+          </Button>
+        </td>
+      </tr>
     );
   }
 }

@@ -3,7 +3,6 @@ import { actionCreators } from '../../actions/index';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Glyphicon, Modal, Button } from 'react-bootstrap';
-import { hideModal } from '../../actions/index';
 
 class DeleteToggleModal extends Component {
   handleOkClick = () => {
@@ -47,7 +46,4 @@ const mapDispatchToProps = dispatch => {
   return bindActionCreators(actionCreators, dispatch);
 };
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(DeleteToggleModal);
+export default connect(null, mapDispatchToProps)(DeleteToggleModal);

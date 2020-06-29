@@ -15,18 +15,6 @@ import PageLoading from '../components/PageLoading';
 import Fade from '../services/transitions/fade.js';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const pageVariant = {
-  initial: {
-    opacity: 0
-  },
-  in: {
-    opacity: 1
-  },
-  out: {
-    opacity: 0
-  }
-};
-
 class EnvironmentPage extends Component {
   componentWillMount() {
     this.props.selectEnvironment(

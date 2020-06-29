@@ -1,7 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { actionCreators } from '../actions/index';
 import { Nav, Navbar, NavItem } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
@@ -31,11 +30,6 @@ const mapDispatchToProps = dispatch => {
   return bindActionCreators(actionCreators, dispatch);
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-  null,
-  {
-    pure: false
-  }
-)(NavMenu);
+export default connect(mapStateToProps, mapDispatchToProps, null, {
+  pure: false
+})(NavMenu);

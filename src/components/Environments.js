@@ -1,13 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {
-  Badge,
-  Button,
-  ButtonToolbar,
-  Glyphicon,
-  ListGroup,
-  Panel
-} from 'react-bootstrap';
+import { Badge, Button, Glyphicon, Table } from 'react-bootstrap';
 import Environment from './Environment';
 
 export class Environments extends Component {
@@ -31,27 +24,26 @@ export class Environments extends Component {
         <h2>
           Environments <Badge>{this.props.environments.length}</Badge>
         </h2>
-        <Panel>
-          <Panel.Heading>
-            <ButtonToolbar>
-              <Button
-                className="pull-right"
-                bsSize="small"
-                bsStyle="success"
-                onClick={this.handleAddClick}
-              >
-                <Glyphicon glyph="plus" /> Add new environment
-              </Button>
-            </ButtonToolbar>
-          </Panel.Heading>
-          <Panel.Body>
-            <ListGroup>
+
+        <div>
+          <div class="tableToolbar">
+            <Button
+              className="pull-right"
+              bsSize="small"
+              bsStyle="success"
+              onClick={this.handleAddClick}
+            >
+              <Glyphicon glyph="plus" /> Add new environment
+            </Button>
+          </div>
+          <Table striped bordered hover>
+            <tbody>
               {this.props.environments.map(environment => (
                 <Environment key={environment.key} environment={environment} />
               ))}
-            </ListGroup>
-          </Panel.Body>
-        </Panel>
+            </tbody>
+          </Table>
+        </div>
       </section>
     );
   }

@@ -1,14 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {
-  Badge,
-  Button,
-  ButtonGroup,
-  ButtonToolbar,
-  Glyphicon,
-  ListGroup,
-  Panel
-} from 'react-bootstrap';
+import { Badge, Button, Glyphicon, Table } from 'react-bootstrap';
 import Project from './Project';
 
 export class Projects extends Component {
@@ -30,27 +22,25 @@ export class Projects extends Component {
         <h2>
           Projects <Badge>{this.props.projects.length}</Badge>
         </h2>
-        <Panel>
-          <Panel.Heading>
-            <ButtonToolbar>
-              <Button
-                className="pull-right"
-                bsSize="small"
-                bsStyle="success"
-                onClick={this.handleAddClick}
-              >
-                <Glyphicon glyph="plus" /> Add new project
-              </Button>
-            </ButtonToolbar>
-          </Panel.Heading>
-          <Panel.Body>
-            <ListGroup>
-              {this.props.projects.map(project => (
-                <Project key={project.id} project={project} />
-              ))}
-            </ListGroup>
-          </Panel.Body>
-        </Panel>
+
+        <div class="tableToolbar">
+          <Button
+            className="pull-right"
+            bsSize="small"
+            bsStyle="success"
+            onClick={this.handleAddClick}
+          >
+            <Glyphicon glyph="plus" /> Add new project
+          </Button>
+        </div>
+
+        <Table striped bordered hover>
+          <tbody>
+            {this.props.projects.map(project => (
+              <Project key={project.id} project={project} />
+            ))}
+          </tbody>
+        </Table>
       </section>
     );
   }

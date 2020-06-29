@@ -1,14 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {
-  Badge,
-  Button,
-  ButtonGroup,
-  ButtonToolbar,
-  Glyphicon,
-  ListGroup,
-  Panel
-} from 'react-bootstrap';
+import { Badge, Button, Glyphicon, Table } from 'react-bootstrap';
 import Toggle from './Toggle';
 import Loading from './Loading';
 
@@ -31,11 +23,13 @@ export class Toggles extends Component {
       content = <Loading />;
     } else if (this.props.toggles) {
       content = (
-        <ListGroup>
-          {this.props.toggles.map(toggle => (
-            <Toggle key={toggle.key} toggle={toggle} />
-          ))}
-        </ListGroup>
+        <Table striped bordered hover>
+          <tbody>
+            {this.props.toggles.map(toggle => (
+              <Toggle key={toggle.key} toggle={toggle} />
+            ))}
+          </tbody>
+        </Table>
       );
       length = this.props.toggles.length;
     }
@@ -45,21 +39,18 @@ export class Toggles extends Component {
         <h2>
           Toggles <Badge>{length}</Badge>
         </h2>
-        <Panel>
-          <Panel.Heading>
-            <ButtonToolbar>
-              <Button
-                className="pull-right"
-                bsSize="small"
-                bsStyle="success"
-                onClick={this.handleAddClick}
-              >
-                <Glyphicon glyph="plus" /> Add new toggle
-              </Button>
-            </ButtonToolbar>
-          </Panel.Heading>
-          <Panel.Body>{content}</Panel.Body>
-        </Panel>
+
+        <div class="tableToolbar">
+          <Button
+            className="pull-right"
+            bsSize="small"
+            bsStyle="success"
+            onClick={this.handleAddClick}
+          >
+            <Glyphicon glyph="plus" /> Add new toggle
+          </Button>
+        </div>
+        {content}
       </section>
     );
   }
