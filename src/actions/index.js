@@ -1,4 +1,4 @@
-import { Api } from '../api.js';
+import { Api } from '../services/api/api.js';
 import uuidv1 from 'uuid/v1';
 import * as actionTypes from './types';
 

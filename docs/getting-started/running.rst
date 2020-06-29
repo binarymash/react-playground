@@ -10,7 +10,7 @@ Prerequisites
 Configuring
 -----------
 
-If you are running the default configuration of the sample Evelyn REST API server then you shouldn't have to make any changes to the management UI configuration. Otherwise, you might need to change where the management UI is trying to access the REST API server - this is currently hard-coded in ``./src/api.js``.
+If you are running the default configuration of the sample Evelyn REST API server then you shouldn't have to make any changes to the management UI configuration. Otherwise, you might need to change where the management UI is trying to access the REST API server - this is configurable in ``./.env``.
 
 Running
 -------

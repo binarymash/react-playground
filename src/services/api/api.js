@@ -1,10 +1,10 @@
-const baseUrl = 'http://localhost:2316/management-api';
+import Config from './config.js';
 
 export const Api = {
   // Read
 
   getProjects: () => {
-    const url = `${baseUrl}/projects`;
+    const url = `${Config.query.baseUrl}/projects`;
     return fetch(url).then(function(response) {
       if (response.ok) {
         return response.json();
@@ -14,7 +14,7 @@ export const Api = {
   },
 
   getProject: projectId => {
-    const url = `${baseUrl}/projects/${projectId}`;
+    const url = `${Config.query.baseUrl}/projects/${projectId}`;
 
     return fetch(url).then(function(response) {
       if (response.ok) {
@@ -25,7 +25,7 @@ export const Api = {
   },
 
   getEnvironment: (projectId, environmentKey) => {
-    const url = `${baseUrl}/projects/${projectId}/environments/${environmentKey}/definition`;
+    const url = `${Config.query.baseUrl}/projects/${projectId}/environments/${environmentKey}`;
 
     return fetch(url).then(function(response) {
       if (response.ok) {
@@ -36,7 +36,7 @@ export const Api = {
   },
 
   getEnvironmentState: (projectId, environmentKey) => {
-    const url = `${baseUrl}/projects/${projectId}/environments/${environmentKey}/state`;
+    const url = `${Config.query.baseUrl}/projects/${projectId}/environments/${environmentKey}/state`;
 
     return fetch(url).then(function(response) {
       if (response.ok) {
@@ -47,7 +47,7 @@ export const Api = {
   },
 
   getToggle: (projectId, toggleKey) => {
-    const url = `${baseUrl}/projects/${projectId}/toggles/${toggleKey}/definition`;
+    const url = `${Config.query.baseUrl}/projects/${projectId}/toggles/${toggleKey}`;
 
     return fetch(url).then(function(response) {
       if (response.ok) {
@@ -58,7 +58,7 @@ export const Api = {
   },
 
   getToggleState: (projectId, toggleKey) => {
-    const url = `${baseUrl}/projects/${projectId}/toggles/${toggleKey}/state`;
+    const url = `${Config.query.baseUrl}/projects/${projectId}/toggles/${toggleKey}/state`;
 
     return fetch(url).then(function(response) {
       if (response.ok) {
@@ -71,7 +71,7 @@ export const Api = {
   // Write
 
   addProject: (id, name) => {
-    const url = baseUrl + `/projects/create`;
+    const url = `${Config.command.baseUrl}/projects/create`;
 
     let request = {
       method: 'POST',
@@ -93,7 +93,7 @@ export const Api = {
   },
 
   deleteProject: projectId => {
-    const url = baseUrl + `/projects/${projectId}/delete`;
+    const url = `${Config.command.baseUrl}/projects/${projectId}/delete`;
 
     let request = {
       method: 'POST',
@@ -112,7 +112,7 @@ export const Api = {
   },
 
   addToggle: (projectId, toggleKey, toggleName) => {
-    const url = baseUrl + `/projects/${projectId}/toggles/add`;
+    const url = `${Config.command.baseUrl}/projects/${projectId}/toggles/add`;
 
     let request = {
       method: 'POST',
@@ -134,7 +134,7 @@ export const Api = {
   },
 
   deleteToggle: (projectId, toggleKey) => {
-    const url = baseUrl + `/projects/${projectId}/toggles/${toggleKey}/delete`;
+    const url = `${Config.command.baseUrl}/projects/${projectId}/toggles/${toggleKey}/delete`;
 
     let request = {
       method: 'POST',
@@ -153,7 +153,7 @@ export const Api = {
   },
 
   addEnvironment: (projectId, environmentKey, environmentName) => {
-    const url = baseUrl + `/projects/${projectId}/environments/add`;
+    const url = `${Config.command.baseUrl}/projects/${projectId}/environments/add`;
 
     let request = {
       method: 'POST',
@@ -175,8 +175,7 @@ export const Api = {
   },
 
   deleteEnvironment: (projectId, environmentKey) => {
-    const url =
-      baseUrl + `/projects/${projectId}/environments/${environmentKey}/delete`;
+    const url = `${Config.command.baseUrl}/projects/${projectId}/environments/${environmentKey}/delete`;
 
     let request = {
       method: 'POST',
@@ -195,9 +194,7 @@ export const Api = {
   },
 
   setToggleEnvironmentState: (projectId, environmentKey, toggleKey, value) => {
-    const url =
-      baseUrl +
-      `/projects/${projectId}/environments/${environmentKey}/toggles/${toggleKey}/change-state`;
+    const url = `${Config.command.baseUrl}/projects/${projectId}/environments/${environmentKey}/toggles/${toggleKey}/change-state`;
 
     let request = {
       method: 'POST',
