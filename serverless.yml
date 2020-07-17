@@ -1,0 +1,112 @@
+service: evelyn-management-ui
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: ${opt:stage, 'dev'}
+  region: eu-west-1
+
+plugins:
+  - serverless-s3-sync
+
+custom:
+  hostedZoneName: evelyn.binarymash.com
+  siteName: www.dev.evelyn.binarymash.com
+  s3Sync:
+    - bucketName: ${self:custom.siteName}
+      localDir: build
+  # direct to s3
+  # aliasDNSName: s3-website-us-east-1.amazonaws.com #s3 bucket
+  # aliasHostedZoneId: Z3AQBSTGFYJSTF #s3 bucket
+  # dnsRecordName : !Ref StaticSite
+  # end of direct to s3
+  # via cloudfront
+  aliasDNSName: !GetAtt Distribution.DomainName
+  aliasHostedZoneId: Z2FDTNDATAQYW2 # this is the cloudfront zone id and is invariant - see https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-route53-aliastarget.html
+  dnsRecordName: ${self:custom.siteName}
+  # end of via cloudfront
+  acmCertificateArn: arn:aws:acm:us-east-1:378667942638:certificate/703796b6-3c6a-4728-a18c-3783583be61a # certificate must be created in us-east-1
+
+resources:
+  Resources:
+    StaticSite:
+      Type: AWS::S3::Bucket
+      Properties:
+        AccessControl: PublicRead
+        BucketName: ${self:custom.siteName}
+        WebsiteConfiguration:
+          IndexDocument: index.html
+
+    StaticSiteS3BucketPolicy:
+      Type: AWS::S3::BucketPolicy
+      Properties:
+        Bucket:
+          Ref: StaticSite
+        PolicyDocument:
+          Statement:
+            - Sid: PublicReadGetObject
+              Effect: Allow
+              Principal: "*"
+              Action:
+              - s3:GetObject
+              Resource:
+                Fn::Join: [
+                  "", [
+                    "arn:aws:s3:::",
+                    {
+                      "Ref": "StaticSite"
+                    },
+                    "/*"
+                  ]
+                ]
+
+    # assumes we already have a hosted zone set up (custom.hostedZoneName)
+    DnsRecord:
+      Type: "AWS::Route53::RecordSet"
+      Properties:
+        AliasTarget:
+          DNSName: ${self:custom.aliasDNSName}
+          HostedZoneId: ${self:custom.aliasHostedZoneId}
+        HostedZoneName: ${self:custom.hostedZoneName}.
+        Name: ${self:custom.siteName}
+        Type: 'A'        
+
+    # don't need this if going direct to s3
+    Distribution:
+      Type: AWS::CloudFront::Distribution
+      Properties: 
+        DistributionConfig: 
+          Aliases: 
+            - ${self:custom.siteName}
+          DefaultCacheBehavior: 
+            AllowedMethods: 
+              - GET
+              - HEAD
+            Compress: 'true'
+            DefaultTTL: 300
+            ForwardedValues:
+              QueryString: 'false'
+              Cookies:
+                Forward: none
+            TargetOriginId: S3-www.dev.evelyn.binarymash.com
+            ViewerProtocolPolicy: redirect-to-https
+          DefaultRootObject: index.html
+          Enabled: 'true'
+          Origins: 
+            - S3OriginConfig: 
+                OriginAccessIdentity: ''      
+              DomainName: !GetAtt StaticSite.DomainName
+              Id: S3-www.dev.evelyn.binarymash.com
+          PriceClass: PriceClass_100
+          Restrictions: 
+            GeoRestriction: 
+              Locations: 
+                - GB
+              RestrictionType: whitelist
+          ViewerCertificate: 
+            AcmCertificateArn: ${self:custom.acmCertificateArn}
+            MinimumProtocolVersion: TLSv1.2_2018
+            SslSupportMethod: sni-only
+        Tags: 
+          - Key: CreatedBy
+            Value: CloudFormation in sls        

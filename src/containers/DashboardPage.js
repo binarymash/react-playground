@@ -27,7 +27,7 @@ class DashboardPage extends Component {
     return (
       <AnimatePresence>
         <motion.div initial="initial" animate="in" exit="out" variants={Fade}>
-          <PageHeader>Dashboard</PageHeader>
+          <PageHeader>My Dashboard</PageHeader>
           <Projects projects={this.props.projects} />
           <Audit audit={this.props.audit} />
         </motion.div>
