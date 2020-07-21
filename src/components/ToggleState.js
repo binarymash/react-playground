@@ -10,7 +10,7 @@ export class ToggleState extends Component {
   render() {
     return (
       <tr>
-        <td class="fill">
+        <td className="fill">
           <Link
             to={`/projects/${this.props.projectId}/toggles/${this.props.toggle.key}`}
           >

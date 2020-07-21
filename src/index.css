@@ -18,3 +18,9 @@ div.tableToolbar {
   padding: 10px;
   overflow: auto;
 }
+
+span.menu-sep {
+  vertical-align: middle;
+  padding: 0px 2px;
+  color: #bbb;
+}

@@ -157,6 +157,42 @@ const getLatestToggleState = (projectId, toggleKey, dispatch, getState) => {
     });
 };
 
+const getLatestX509Certificate = (
+  projectId,
+  strategyId,
+  dispatch,
+  getState
+) => {
+  dispatch({
+    type: actionTypes.requestClientAccessStrategy,
+    projectId,
+    strategyId
+  });
+
+  return Api.getX509Certificate(projectId, strategyId)
+    .then(json => {
+      dispatch({
+        type: actionTypes.receiveClientAccessStrategy,
+        projectId,
+        strategyId,
+        json
+      });
+    })
+    .catch(error => {
+      dispatch({
+        type: actionTypes.showModal,
+        modalType: 'API_ERROR',
+        modalProps: { error: error.message }
+      });
+      dispatch({
+        type: actionTypes.receiveClientAccessStrategyError,
+        projectId,
+        strategyId,
+        error
+      });
+    });
+};
+
 export const actionCreators = {
   initialise: () => async (dispatch, getState) => {
     await getAccount(dispatch, getState)
@@ -199,6 +235,13 @@ export const actionCreators = {
   selectToggle: (projectId, toggleKey) => async (dispatch, getState) => {
     await getLatestToggle(projectId, toggleKey, dispatch, getState);
     await getLatestToggleState(projectId, toggleKey, dispatch, getState);
+  },
+
+  selectClientAccessStrategy: (projectId, strategyId) => async (
+    dispatch,
+    getState
+  ) => {
+    await getLatestX509Certificate(projectId, strategyId, dispatch);
   },
 
   setToggleEnvironmentState: (
@@ -402,6 +445,34 @@ export const actionCreators = {
           type: actionTypes.environmentDeleteFailed,
           projectId,
           environmentKey,
+          error
+        });
+      });
+  },
+
+  addClientAccessStrategyX509: projectId => async (dispatch, getState) => {
+    let strategyId = uuidv1();
+
+    dispatch({ type: actionTypes.clientAccessStrategyX509AddRequested });
+
+    await Api.addClientAccessStrategyX509(projectId, strategyId)
+      .then(() => {
+        dispatch({
+          type: actionTypes.clientAccessStrategyX509AddSucceeded,
+          projectId,
+          strategyId
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: actionTypes.showModal,
+          modalType: 'API_ERROR',
+          modalProps: { error: error.message }
+        });
+        dispatch({
+          type: actionTypes.clientAccessStrategyX509AddFailed,
+          projectId,
+          strategyId,
           error
         });
       });

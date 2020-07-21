@@ -23,7 +23,7 @@ export class Projects extends Component {
           Projects <Badge>{this.props.projects.length}</Badge>
         </h2>
 
-        <div class="tableToolbar">
+        <div className="tableToolbar">
           <Button
             className="pull-right"
             bsSize="small"

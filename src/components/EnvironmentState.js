@@ -10,7 +10,7 @@ export class EnvironmentState extends Component {
   render() {
     return (
       <tr>
-        <td class="fill">
+        <td className="fill">
           <Link
             to={`/projects/${this.props.projectId}/environments/${this.props.environment.key}`}
           >

@@ -11,6 +11,7 @@ import DashboardPage from './containers/DashboardPage';
 import ProjectPage from './containers/ProjectPage';
 import EnvironmentPage from './containers/EnvironmentPage';
 import TogglePage from './containers/TogglePage';
+import ClientAccessStrategyX509Page from './containers/ClientAccessStrategyX509Page';
 import ModalRoot from './containers/modals/ModalRoot';
 import Loading from './components/Loading';
 
@@ -51,6 +52,11 @@ class App extends Component {
           path="/projects/:projectId/toggles/:toggleKey"
           component={TogglePage}
         />
+        <Route
+          exact
+          path="/projects/:projectId/certificates/:strategyId"
+          component={ClientAccessStrategyX509Page}
+        />
         <ModalRoot />
       </Layout>
     );
@@ -67,9 +73,4 @@ const mapDispatchToProps = dispatch => {
   return bindActionCreators(actionCreators, dispatch);
 };
 
-export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(App)
-);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

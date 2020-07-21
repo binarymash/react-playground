@@ -212,5 +212,37 @@ export const Api = {
         throw new Error(response.status);
       }
     });
+  },
+
+  getX509Certificate: (projectId, strategyId) => {
+    const url = `${Config.query.baseUrl}/projects/${projectId}/certificates/${strategyId}`;
+
+    return fetch(url).then(function(response) {
+      if (response.ok) {
+        return response.json();
+      }
+      throw new Error(response.status);
+    });
+  },
+
+  clientAccessStrategyAddX509: (projectId, strategyId) => {
+    const url = `${Config.command.baseUrl}/projects/${projectId}/certificates/add`;
+
+    let request = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      },
+      body: JSON.stringify({
+        clientAccessStrategyId: strategyId
+      })
+    };
+
+    return fetch(url, request).then(function(response) {
+      if (!response.ok) {
+        throw new Error(response.status);
+      }
+    });
   }
 };

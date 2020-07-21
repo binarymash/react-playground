@@ -26,7 +26,7 @@ export class Environments extends Component {
         </h2>
 
         <div>
-          <div class="tableToolbar">
+          <div className="tableToolbar">
             <Button
               className="pull-right"
               bsSize="small"

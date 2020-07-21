@@ -22,7 +22,7 @@ export class Toggle extends Component {
 
     return (
       <tr>
-        <td class="fill">
+        <td className="fill">
           <Link
             to={`/projects/${this.props.toggle.projectId}/toggles/${this.props.toggle.key}`}
           >

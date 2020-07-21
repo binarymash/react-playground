@@ -28,6 +28,7 @@ export const getProject = (state, projectId) => {
     name: project.name,
     environments: getEnvironments(project),
     toggles: getToggles(project),
+    clientAccessStrategies: getClientAccessStrategies(project),
     audit: project.audit
   };
 };
@@ -83,6 +84,26 @@ export const getToggleName = (state, projectId, toggleKey) => {
   return null;
 };
 
+export const getClientAccessStrategyName = (state, projectId, strategyId) => {
+  const projection = state.project.projects[projectId];
+  let project = undefined;
+
+  if (projection) {
+    project = projection.project;
+  }
+
+  if (project) {
+    let strategy = project.clientAccessStrategies.find(
+      t => t.id === strategyId
+    );
+    if (strategy) {
+      return strategy.id;
+    }
+  }
+
+  return null;
+};
+
 const getEnvironments = project => {
   if (!project.environments) {
     return [];
@@ -114,6 +135,25 @@ const getToggle = (projectId, toggle) => {
     projectId: projectId,
     key: toggle.key,
     name: toggle.name
+  };
+};
+
+const getClientAccessStrategies = project => {
+  if (!project.clientAccessStrategies) {
+    return [];
+  }
+
+  return project.clientAccessStrategies.map(strategy =>
+    getStrategy(project.id, strategy)
+  );
+};
+
+const getStrategy = (projectId, strategy) => {
+  return {
+    projectId: projectId,
+    id: strategy.id,
+    key: strategy.key,
+    value: strategy.value
   };
 };
 

@@ -7,6 +7,7 @@ import { getProject, getIsLoading } from '../store/Project';
 import Key from '../components/Key';
 import Environments from '../components/Environments';
 import Toggles from '../components/Toggles';
+import AccessStrategies from '../components/AccessStrategies';
 import Audit from '../components/Audit';
 import PageLoading from '../components/PageLoading';
 import Fade from '../services/transitions/fade.js';
@@ -51,6 +52,10 @@ class ProjectPage extends Component {
           />
           <Toggles
             toggles={this.props.project.toggles}
+            projectId={this.props.project.id}
+          />
+          <AccessStrategies
+            strategies={this.props.project.clientAccessStrategies}
             projectId={this.props.project.id}
           />
           <Audit audit={this.props.project.audit} />

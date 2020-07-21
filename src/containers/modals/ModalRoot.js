@@ -7,6 +7,8 @@ import AddEnvironmentModal from './AddEnvironmentModal';
 import DeleteEnvironmentModal from './DeleteEnvironmentModal';
 import AddToggleModal from './AddToggleModal';
 import DeleteToggleModal from './DeleteToggleModal';
+import AddAccessStrategyModal from './AddAccessStrategyModal';
+import DeleteAccessStrategyModal from './DeleteAccessStrategyModal';
 import './modal.css';
 
 class ModalRoot extends Component {
@@ -33,7 +35,9 @@ const MODAL_COMPONENTS = {
   ADD_ENVIRONMENT: AddEnvironmentModal,
   DELETE_ENVIRONMENT: DeleteEnvironmentModal,
   ADD_TOGGLE: AddToggleModal,
-  DELETE_TOGGLE: DeleteToggleModal
+  DELETE_TOGGLE: DeleteToggleModal,
+  ADD_ACCESS_STRATEGY: AddAccessStrategyModal,
+  DELETE_ACCESS_STRATEGY: DeleteAccessStrategyModal
 };
 
 export default connect(mapStateToProps)(ModalRoot);

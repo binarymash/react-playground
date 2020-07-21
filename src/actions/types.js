@@ -24,6 +24,11 @@ export const requestToggleState = 'REQUEST_TOGGLESTATE';
 export const receiveToggleState = 'RECEIVE_TOGGLESTATE';
 export const receiveToggleStateError = 'RECEIVE_TOGGLESTATE_ERROR';
 
+export const requestClientAccessStrategy = 'REQUEST_CLIENT_ACCESS_STRATEGY';
+export const receiveClientAccessStrategy = 'RECEIVE_CLIENT_ACCESS_STRATEGY';
+export const receiveClientAccessStrategyError =
+  'RECEIVE_CLIENT_ACCESS_STRATEGY_ERROR';
+
 export const toggleEnvironmentStateUpdateRequested =
   'TOGGLEENVIRONMENTSTATE_UPDATE_REQUESTED';
 export const toggleEnvironmentStateUpdateSucceeded =
@@ -54,6 +59,13 @@ export const environmentAddFailed = 'ENVIRONMENT_ADD_FAILED';
 export const environmentDeleteRequested = 'ENVIRONMENT_DELETE_REQUESTED';
 export const environmentDeleteSucceeded = 'ENVIRONMENT_DELETE_SUCCEEDED';
 export const environmentDeleteFailed = 'ENVIRONMENT_DELETE_FAILED';
+
+export const clientAccessStrategyX509AddRequested =
+  'CLIENT_ACCESS_STRATEGY_X509_ADD_REQUESTED';
+export const clientAccessStrategyX509AddSucceeded =
+  'CLIENT_ACCESS_STRATEGY_X509_ADD_SUCCEEDED';
+export const clientAccessStrategyX509AddFailed =
+  'CLIENT_ACCESS_STRATEGY_X509_ADD_FAILED';
 
 export const showModal = 'SHOW_MODAL';
 export const hideModal = 'HIDE_MODAL';

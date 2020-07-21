@@ -22,7 +22,7 @@ export class Environment extends Component {
 
     return (
       <tr>
-        <td class="fill">
+        <td className="fill">
           <Link
             to={`/projects/${this.props.environment.projectId}/environments/${this.props.environment.key}`}
           >

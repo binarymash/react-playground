@@ -3,27 +3,31 @@ import { connect } from 'react-redux';
 import { Button, Glyphicon } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-export class Project extends Component {
+export class AccessStrategyX509 extends Component {
   handleDeleteClick = () => {
     this.props.dispatch({
       type: 'SHOW_MODAL',
-      modalType: 'DELETE_PROJECT',
+      modalType: 'DELETE_ACCESS_STRATEGY_X509',
       modalProps: {
-        projectId: this.props.project.id
+        projectId: this.props.projectId,
+        strategyId: this.props.strategy.id
       }
     });
   };
 
   render() {
-    if (!this.props.project) {
+    if (!this.props.strategy) {
       return <div />;
     }
 
     return (
       <tr>
+        <td>X509 Certificate</td>
         <td className="fill">
-          <Link to={`/projects/${this.props.project.id}`}>
-            {this.props.project.name}
+          <Link
+            to={`/projects/${this.props.strategy.projectId}/certificates/${this.props.strategy.id}`}
+          >
+            {this.props.strategy.id}
           </Link>
         </td>
         <td>
@@ -41,4 +45,4 @@ export class Project extends Component {
   }
 }
 
-export default connect()(Project);
+export default connect()(AccessStrategyX509);

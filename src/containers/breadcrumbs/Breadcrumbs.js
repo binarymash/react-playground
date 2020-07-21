@@ -5,6 +5,8 @@ import ProjectBreadcrumb from './ProjectBreadcrumb';
 import DashboardBreadcrumb from './DashboardBreadcrumb';
 import EnvironmentBreadcrumb from './EnvironmentBreadcrumb';
 import ToggleBreadcrumb from './ToggleBreadcrumb';
+import X509Breadcrumb from './X509Breadcrumb';
+import { Glyphicon } from 'react-bootstrap';
 
 // define some custom breadcrumbs for certain routes (optional)
 const routes = [
@@ -14,7 +16,8 @@ const routes = [
     path: '/projects/:id/environments/:environmentKey',
     breadcrumb: EnvironmentBreadcrumb
   },
-  { path: '/projects/:id/toggles/:toggleKey', breadcrumb: ToggleBreadcrumb }
+  { path: '/projects/:id/toggles/:toggleKey', breadcrumb: ToggleBreadcrumb },
+  { path: '/projects/:id/certificates/:strategyId', breadcrumb: X509Breadcrumb }
 ];
 
 const style = {
@@ -32,7 +35,11 @@ const Breadcrumbs = ({ breadcrumbs }) => (
         ) : (
           <span>{breadcrumb}</span>
         )}
-        {index < breadcrumbs.length - 1 && <i> / </i>}
+        {index < breadcrumbs.length - 1 && (
+          <span className="menu-sep">
+            <Glyphicon glyph="menu-right" />
+          </span>
+        )}
       </span>
     ))}
   </div>

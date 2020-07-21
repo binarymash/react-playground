@@ -10,7 +10,10 @@ plugins:
   - serverless-s3-sync
 
 custom:
+  # prerequisites
   hostedZoneName: evelyn.binarymash.com
+  acmCertificateArn: arn:aws:acm:us-east-1:378667942638:certificate/703796b6-3c6a-4728-a18c-3783583be61a # certificate must be created in us-east-1
+  # config
   siteName: www.dev.evelyn.binarymash.com
   s3Sync:
     - bucketName: ${self:custom.siteName}
@@ -25,7 +28,6 @@ custom:
   aliasHostedZoneId: Z2FDTNDATAQYW2 # this is the cloudfront zone id and is invariant - see https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-route53-aliastarget.html
   dnsRecordName: ${self:custom.siteName}
   # end of via cloudfront
-  acmCertificateArn: arn:aws:acm:us-east-1:378667942638:certificate/703796b6-3c6a-4728-a18c-3783583be61a # certificate must be created in us-east-1
 
 resources:
   Resources:

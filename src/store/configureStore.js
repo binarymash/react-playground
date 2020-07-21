@@ -5,6 +5,7 @@ import * as Account from './Account';
 import * as Project from './Project';
 import * as Environment from './Environment';
 import * as Toggle from './Toggle';
+import * as Strategy from './ClientAccessStrategy';
 import * as Modal from './Modal';
 
 export default function configureStore(history, initialState) {
@@ -13,7 +14,8 @@ export default function configureStore(history, initialState) {
     project: Project.reducer,
     environment: Environment.reducer,
     toggle: Toggle.reducer,
-    modal: Modal.reducer
+    modal: Modal.reducer,
+    strategy: Strategy.reducer
   };
 
   const middleware = [thunk, routerMiddleware(history)];
@@ -37,9 +39,6 @@ export default function configureStore(history, initialState) {
   return createStore(
     rootReducer,
     initialState,
-    compose(
-      applyMiddleware(...middleware),
-      ...enhancers
-    )
+    compose(applyMiddleware(...middleware), ...enhancers)
   );
 }
