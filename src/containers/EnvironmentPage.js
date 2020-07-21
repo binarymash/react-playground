@@ -16,25 +16,25 @@ import Fade from '../services/transitions/fade.js';
 import { motion, AnimatePresence } from 'framer-motion';
 
 class EnvironmentPage extends Component {
-  componentWillMount() {
+  componentDidMount() {
     this.props.selectEnvironment(
       this.props.match.params.projectId,
       this.props.match.params.environmentKey
     );
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentDidUpdate(prevProps) {
     if (
-      nextProps.match.params.projectId === this.props.match.params.projectId &&
-      nextProps.match.params.environmentKey ===
+      prevProps.match.params.projectId === this.props.match.params.projectId &&
+      prevProps.match.params.environmentKey ===
         this.props.match.params.environmentKey
     ) {
       return;
     }
 
     this.props.selectEnvironment(
-      nextProps.match.params.projectId,
-      nextProps.match.params.environmentKey
+      this.props.match.params.projectId,
+      this.props.match.params.environmentKey
     );
   }
 

@@ -14,16 +14,16 @@ import Fade from '../services/transitions/fade.js';
 import { motion, AnimatePresence } from 'framer-motion';
 
 class ProjectPage extends Component {
-  componentWillMount() {
+  componentDidMount() {
     this.props.selectProject(this.props.match.params.id);
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.match.params.id === this.props.match.params.id) {
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevProps.match.params.id === this.props.match.params.id) {
       return;
     }
 
-    this.props.selectProject(nextProps.match.params.id);
+    this.props.selectProject(this.props.match.params.id);
   }
 
   render() {

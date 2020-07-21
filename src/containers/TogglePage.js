@@ -16,24 +16,24 @@ import Fade from '../services/transitions/fade.js';
 import { motion, AnimatePresence } from 'framer-motion';
 
 class TogglePage extends Component {
-  componentWillMount() {
+  componentDidMount() {
     this.props.selectToggle(
       this.props.match.params.projectId,
       this.props.match.params.toggleKey
     );
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentDidUpdate(prevProps) {
     if (
-      nextProps.match.params.projectId === this.props.match.params.projectId &&
-      nextProps.match.params.toggleKey === this.props.match.params.toggleKey
+      prevProps.match.params.projectId === this.props.match.params.projectId &&
+      prevProps.match.params.toggleKey === this.props.match.params.toggleKey
     ) {
       return;
     }
 
     this.props.selectToggle(
-      nextProps.match.params.projectId,
-      nextProps.match.params.toggleKey
+      this.props.match.params.projectId,
+      this.props.match.params.toggleKey
     );
   }
 

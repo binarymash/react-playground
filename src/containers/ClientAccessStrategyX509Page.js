@@ -13,24 +13,24 @@ import Fade from '../services/transitions/fade.js';
 import { motion, AnimatePresence } from 'framer-motion';
 
 class ClientAccessStrategyX509Page extends Component {
-  componentWillMount() {
+  componentDidMount() {
     this.props.selectClientAccessStrategy(
       this.props.match.params.projectId,
       this.props.match.params.strategyId
     );
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentDidUpdate(prevProps) {
     if (
-      nextProps.match.params.projectId === this.props.match.params.projectId &&
-      nextProps.match.params.strategyId === this.props.match.params.strategyId
+      prevProps.match.params.projectId === this.props.match.params.projectId &&
+      prevProps.match.params.strategyId === this.props.match.params.strategyId
     ) {
       return;
     }
 
     this.props.selectClientAccessStrategy(
-      nextProps.match.params.projectId,
-      nextProps.match.params.strategyId
+      this.props.match.params.projectId,
+      this.props.match.params.strategyId
     );
   }
 

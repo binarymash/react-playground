@@ -11,7 +11,7 @@ import Fade from '../services/transitions/fade.js';
 import { motion, AnimatePresence } from 'framer-motion';
 
 class DashboardPage extends Component {
-  componentWillMount() {
+  componentDidMount() {
     this.props.requestAccount();
   }
 
