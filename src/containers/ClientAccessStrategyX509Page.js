@@ -47,7 +47,7 @@ class ClientAccessStrategyX509Page extends Component {
       <AnimatePresence>
         <motion.div initial="initial" animate="in" exit="out" variants={Fade}>
           <h1>
-            X509 Certificate
+            X.509 Certificate
             <div>
               <small>{this.props.strategy.clientCertificate.id}</small>
             </div>

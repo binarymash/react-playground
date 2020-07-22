@@ -7,7 +7,7 @@ import FormControl from 'react-bootstrap/FormControl';
 import FormGroup from 'react-bootstrap/FormGroup';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
-import { BsX, BsCheck, BsPlus } from 'react-icons/bs';
+import { BsX, BsCheck } from 'react-icons/bs';
 import { hideModal } from '../../actions/index';
 import validator from 'validator';
 
@@ -106,14 +106,14 @@ class AddEnvironment extends Component {
   render() {
     return (
       <Modal
+        size="lg"
+        centered={true}
         show={true}
         animation={false}
         onHide={() => this.props.hideModal()}
       >
         <Modal.Header closeButton>
-          <Modal.Title>
-            <BsPlus /> Add new environment
-          </Modal.Title>
+          <Modal.Title>Add new environment</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form>

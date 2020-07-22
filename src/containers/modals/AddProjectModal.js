@@ -7,7 +7,7 @@ import FormControl from 'react-bootstrap/FormControl';
 import FormGroup from 'react-bootstrap/FormGroup';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
-import { BsPlus, BsX, BsCheck } from 'react-icons/bs';
+import { BsX, BsCheck } from 'react-icons/bs';
 import { hideModal } from '../../actions/index';
 
 class AddProjectModal extends Component {
@@ -51,14 +51,14 @@ class AddProjectModal extends Component {
   render() {
     return (
       <Modal
+        size="lg"
+        centered={true}
         show={true}
         animation={false}
         onHide={() => this.props.hideModal()}
       >
         <Modal.Header closeButton>
-          <Modal.Title>
-            <BsPlus /> Add new project
-          </Modal.Title>
+          <Modal.Title>Add new project</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form>

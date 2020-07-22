@@ -23,7 +23,7 @@ export class AccessStrategyX509 extends Component {
 
     return (
       <tr>
-        <td>X509 Certificate</td>
+        <td>X.509 Certificate</td>
         <td className="fill">
           <Link
             to={`/projects/${this.props.strategy.projectId}/certificates/${this.props.strategy.id}`}

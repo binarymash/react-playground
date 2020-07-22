@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
-import { BsExclamationCircle, BsX, BsCheck } from 'react-icons/bs';
+import { BsX, BsCheck } from 'react-icons/bs';
 
 import { hideModal } from '../../actions/index';
 
@@ -55,18 +55,18 @@ class AddAccessStrategyModal extends Component {
   render() {
     return (
       <Modal
+        size="lg"
+        centered={true}
         show={true}
         animation={false}
         onHide={() => this.props.hideModal()}
       >
         <Modal.Header closeButton>
-          <Modal.Title>
-            <BsExclamationCircle /> Add new X509 certificate
-          </Modal.Title>
+          <Modal.Title>Add new X.509 certificate</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form>
-            This will create a new X509 certificate which you can use to
+            This will create a new X.509 certificate which you can use to
             authorize a trusted application. Do you want to continue?
           </form>
         </Modal.Body>

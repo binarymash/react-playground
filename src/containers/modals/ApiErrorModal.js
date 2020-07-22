@@ -12,6 +12,7 @@ class ApiErrorModal extends Component {
 
     return (
       <Modal
+        centered={true}
         show={true}
         animation={false}
         onHide={() => this.props.hideModal()}

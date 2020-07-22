@@ -19,6 +19,8 @@ class DeleteAccessStrategyModal extends Component {
   render() {
     return (
       <Modal
+        size="lg"
+        centered={true}
         show={true}
         animation={false}
         onHide={() => this.props.hideModal()}
