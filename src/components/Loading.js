@@ -1,8 +1,9 @@
 ﻿import React, { Component } from 'react';
-import { Glyphicon } from 'react-bootstrap';
+import { BsClock } from 'react-icons/bs';
 import { connect } from 'react-redux';
 import Fade from '../services/transitions/fade.js';
 import { motion, AnimatePresence } from 'framer-motion';
+import { IconContext } from 'react-icons';
 
 export class Loading extends Component {
   render() {
@@ -23,8 +24,12 @@ export class Loading extends Component {
       <AnimatePresence>
         <motion.div initial="initial" animate="in" exit="out" variants={Fade}>
           <div style={style}>
-            <Glyphicon style={iconStyle} glyph="time" /> Loading... please wait
-            a moment...
+            <IconContext.Provider value={{ size: '2em' }}>
+              <div>
+                <BsClock style={iconStyle} />
+              </div>
+            </IconContext.Provider>
+            Loading... please wait a moment...
           </div>
         </motion.div>
       </AnimatePresence>

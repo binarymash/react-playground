@@ -2,14 +2,16 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { actionCreators } from '../actions/index';
-import { Nav, Navbar, NavItem } from 'react-bootstrap';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import NavItem from 'react-bootstrap/NavItem';
 import { LinkContainer } from 'react-router-bootstrap';
-import './NavMenu.css';
+// import './NavMenu.css';
 
 class NavMenu extends Component {
   render() {
     return (
-      <Navbar inverse fixedTop fluid collapseOnSelect>
+      <Navbar bg="dark" variant="dark" fixed="top" collapseOnSelect>
         <Navbar.Collapse>
           <Nav>
             <LinkContainer to={`/`} exact>

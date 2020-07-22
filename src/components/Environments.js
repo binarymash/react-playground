@@ -1,6 +1,9 @@
 ﻿import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Badge, Button, Glyphicon, Table } from 'react-bootstrap';
+import Badge from 'react-bootstrap/Badge';
+import Button from 'react-bootstrap/Button';
+import Table from 'react-bootstrap/Table';
+import { BsPlus } from 'react-icons/bs';
 import Environment from './Environment';
 
 export class Environments extends Component {
@@ -22,18 +25,19 @@ export class Environments extends Component {
     return (
       <section>
         <h2>
-          Environments <Badge>{this.props.environments.length}</Badge>
+          Environments{' '}
+          <Badge variant="light">{this.props.environments.length}</Badge>
         </h2>
 
         <div>
           <div className="tableToolbar">
             <Button
-              className="pull-right"
-              bsSize="small"
-              bsStyle="success"
+              className="float-right"
+              size="sm"
+              variant="success"
               onClick={this.handleAddClick}
             >
-              <Glyphicon glyph="plus" /> Add new environment
+              <BsPlus /> Add new environment
             </Button>
           </div>
           <Table striped bordered hover>

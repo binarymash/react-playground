@@ -18,7 +18,7 @@ export class ToggleState extends Component {
           </Link>
         </td>
         <td>
-          <span className="pull-right">
+          <span className="float-right">
             <Switch
               bsSize="mini"
               onColor="success"

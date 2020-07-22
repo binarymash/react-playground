@@ -2,7 +2,7 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { actionCreators } from '../actions/index';
-import { Alert, PageHeader } from 'react-bootstrap';
+import Alert from 'react-bootstrap/Alert';
 import {
   getClientAccessStrategy,
   getIsLoading
@@ -46,14 +46,14 @@ class ClientAccessStrategyX509Page extends Component {
     return (
       <AnimatePresence>
         <motion.div initial="initial" animate="in" exit="out" variants={Fade}>
-          <PageHeader>
+          <h1>
             X509 Certificate
             <div>
               <small>{this.props.strategy.clientCertificate.id}</small>
             </div>
-          </PageHeader>
+          </h1>
           <section>
-            <Alert bsStyle="info">
+            <Alert variant="info">
               To use this certificate you need to know the private key
               associated with it. This information is only available during
               certificate creation, and cannot be retrieved later.

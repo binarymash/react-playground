@@ -2,7 +2,9 @@
 import { actionCreators } from '../../actions/index';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Glyphicon, Modal, Button } from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+import { BsExclamationTriangle } from 'react-icons/bs';
 
 class ApiErrorModal extends Component {
   render() {
@@ -16,14 +18,14 @@ class ApiErrorModal extends Component {
       >
         <Modal.Header closeButton>
           <Modal.Title>
-            <Glyphicon glyph="exclamation-sign" /> {contents.title}
+            <BsExclamationTriangle /> {contents.title}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <p>{contents.message}</p>
         </Modal.Body>
         <Modal.Footer>
-          <Button bsStyle="primary" onClick={() => this.props.hideModal()}>
+          <Button variant="primary" onClick={() => this.props.hideModal()}>
             OK
           </Button>
         </Modal.Footer>

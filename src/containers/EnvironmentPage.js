@@ -2,7 +2,6 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { actionCreators } from '../actions/index';
-import { PageHeader } from 'react-bootstrap';
 import {
   getEnvironment,
   getIsEnvironmentLoading,
@@ -50,14 +49,14 @@ class EnvironmentPage extends Component {
     return (
       <AnimatePresence>
         <motion.div initial="initial" animate="in" exit="out" variants={Fade}>
-          <PageHeader>
+          <h1>
             {this.props.environment.name}
             <div>
               <small>
                 <Key value={this.props.environment.key} />
               </small>
             </div>
-          </PageHeader>
+          </h1>
 
           <ToggleStates
             toggles={this.props.environment.toggles}

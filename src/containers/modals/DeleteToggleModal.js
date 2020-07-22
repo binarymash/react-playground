@@ -2,7 +2,9 @@
 import { actionCreators } from '../../actions/index';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Glyphicon, Modal, Button } from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+import { BsExclamationCircle, BsX, BsCheck } from 'react-icons/bs';
 
 class DeleteToggleModal extends Component {
   handleOkClick = () => {
@@ -20,7 +22,7 @@ class DeleteToggleModal extends Component {
       >
         <Modal.Header closeButton>
           <Modal.Title>
-            <Glyphicon glyph="exclamation-sign" /> Confirm toggle deletion
+            <BsExclamationCircle /> Confirm toggle deletion
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -31,10 +33,10 @@ class DeleteToggleModal extends Component {
         </Modal.Body>
         <Modal.Footer>
           <Button active={true} onClick={() => this.props.hideModal()}>
-            <Glyphicon glyph="remove" /> No, keep the toggle
+            <BsX /> No, keep the toggle
           </Button>
-          <Button bsStyle="danger" onClick={() => this.handleOkClick()}>
-            <Glyphicon glyph="ok" /> Yes, delete the toggle
+          <Button variant="danger" onClick={() => this.handleOkClick()}>
+            <BsCheck /> Yes, delete the toggle
           </Button>
         </Modal.Footer>
       </Modal>

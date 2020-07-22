@@ -6,7 +6,7 @@ import DashboardBreadcrumb from './DashboardBreadcrumb';
 import EnvironmentBreadcrumb from './EnvironmentBreadcrumb';
 import ToggleBreadcrumb from './ToggleBreadcrumb';
 import X509Breadcrumb from './X509Breadcrumb';
-import { Glyphicon } from 'react-bootstrap';
+import { BsChevronRight } from 'react-icons/bs';
 
 // define some custom breadcrumbs for certain routes (optional)
 const routes = [
@@ -37,7 +37,7 @@ const Breadcrumbs = ({ breadcrumbs }) => (
         )}
         {index < breadcrumbs.length - 1 && (
           <span className="menu-sep">
-            <Glyphicon glyph="menu-right" />
+            <BsChevronRight glyph="menu-right" />
           </span>
         )}
       </span>

@@ -2,7 +2,9 @@
 import { actionCreators } from '../../actions/index';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Glyphicon, Modal, Button } from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+import { BsExclamationCircle, BsX, BsCheck } from 'react-icons/bs';
 
 class DeleteEnvironmentModal extends Component {
   handleOkClick = () => {
@@ -23,7 +25,7 @@ class DeleteEnvironmentModal extends Component {
       >
         <Modal.Header closeButton>
           <Modal.Title>
-            <Glyphicon glyph="exclamation-sign" /> Confirm environment deletion
+            <BsExclamationCircle /> Confirm environment deletion
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -34,10 +36,10 @@ class DeleteEnvironmentModal extends Component {
         </Modal.Body>
         <Modal.Footer>
           <Button active={true} onClick={() => this.props.hideModal()}>
-            <Glyphicon glyph="remove" /> No, keep the environment
+            <BsX /> No, keep the environment
           </Button>
-          <Button bsStyle="danger" onClick={() => this.handleOkClick()}>
-            <Glyphicon glyph="ok" /> Yes, delete the environment
+          <Button variant="danger" onClick={() => this.handleOkClick()}>
+            <BsCheck /> Yes, delete the environment
           </Button>
         </Modal.Footer>
       </Modal>

@@ -1,6 +1,9 @@
 ﻿import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Badge, Button, Glyphicon, Table } from 'react-bootstrap';
+import Badge from 'react-bootstrap/Badge';
+import Button from 'react-bootstrap/Button';
+import Table from 'react-bootstrap/Table';
+import { BsPlus } from 'react-icons/bs';
 import Toggle from './Toggle';
 import Loading from './Loading';
 
@@ -37,17 +40,17 @@ export class Toggles extends Component {
     return (
       <section>
         <h2>
-          Toggles <Badge>{length}</Badge>
+          Toggles <Badge variant="light">{length}</Badge>
         </h2>
 
         <div className="tableToolbar">
           <Button
-            className="pull-right"
-            bsSize="small"
-            bsStyle="success"
+            className="float-right"
+            size="sm"
+            variant="success"
             onClick={this.handleAddClick}
           >
-            <Glyphicon glyph="plus" /> Add new toggle
+            <BsPlus /> Add new toggle
           </Button>
         </div>
         {content}

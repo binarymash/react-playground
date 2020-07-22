@@ -1,8 +1,11 @@
 ﻿import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Badge, Button, Glyphicon, Table } from 'react-bootstrap';
+import Badge from 'react-bootstrap/Badge';
+import Button from 'react-bootstrap/Button';
+import Table from 'react-bootstrap/Table';
 import AccessStrategyX509 from './AccessStrategyX509';
 import Loading from './Loading';
+import { BsPlus } from 'react-icons/bs';
 
 export class AccessStrategies extends Component {
   handleAddClick = () => {
@@ -37,17 +40,17 @@ export class AccessStrategies extends Component {
     return (
       <section>
         <h2>
-          Access <Badge>{length}</Badge>
+          Access <Badge variant="light">{length}</Badge>
         </h2>
 
         <div className="tableToolbar">
           <Button
-            className="pull-right"
-            bsSize="small"
-            bsStyle="success"
+            className="float-right"
+            size="sm"
+            variant="success"
             onClick={this.handleAddClick}
           >
-            <Glyphicon glyph="plus" /> Add new access
+            <BsPlus /> Add new access
           </Button>
         </div>
         {content}

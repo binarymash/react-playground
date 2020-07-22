@@ -1,7 +1,9 @@
 ﻿import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Glyphicon, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Tooltip from 'react-bootstrap/Tooltip';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { BsClipboard } from 'react-icons/bs';
 
 export class Key extends Component {
   render() {
@@ -24,7 +26,7 @@ export class Key extends Component {
           placement="right"
         >
           <code style={{ cursor: 'pointer' }}>
-            {this.props.value} <Glyphicon glyph="copy" />
+            {this.props.value} <BsClipboard />
           </code>
         </OverlayTrigger>
       </CopyToClipboard>

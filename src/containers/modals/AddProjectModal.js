@@ -2,14 +2,12 @@
 import { actionCreators } from '../../actions/index';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import {
-  ControlLabel,
-  FormControl,
-  FormGroup,
-  Glyphicon,
-  Modal,
-  Button
-} from 'react-bootstrap';
+import FormLabel from 'react-bootstrap/FormLabel';
+import FormControl from 'react-bootstrap/FormControl';
+import FormGroup from 'react-bootstrap/FormGroup';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
+import { BsPlus, BsX, BsCheck } from 'react-icons/bs';
 import { hideModal } from '../../actions/index';
 
 class AddProjectModal extends Component {
@@ -59,7 +57,7 @@ class AddProjectModal extends Component {
       >
         <Modal.Header closeButton>
           <Modal.Title>
-            <Glyphicon glyph="exclamation-plus" /> Add new project
+            <BsPlus /> Add new project
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -68,7 +66,7 @@ class AddProjectModal extends Component {
               controlId="projectName"
               validationState={this.getNameValidationState()}
             >
-              <ControlLabel>Project name</ControlLabel>
+              <FormLabel>Project name</FormLabel>
               <FormControl
                 autoFocus
                 type="text"
@@ -83,14 +81,14 @@ class AddProjectModal extends Component {
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={() => this.props.hideModal()}>
-            <Glyphicon glyph="remove" /> Cancel
+            <BsX /> Cancel
           </Button>
           <Button
             active={true}
-            bsStyle="success"
+            variant="success"
             onClick={() => this.handleOkClick()}
           >
-            <Glyphicon glyph="ok" /> Save
+            <BsCheck /> Save
           </Button>
         </Modal.Footer>
       </Modal>
@@ -102,7 +100,4 @@ const mapDispatchToProps = dispatch => {
   return bindActionCreators(actionCreators, dispatch);
 };
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(AddProjectModal);
+export default connect(null, mapDispatchToProps)(AddProjectModal);

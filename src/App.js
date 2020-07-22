@@ -14,6 +14,7 @@ import TogglePage from './containers/TogglePage';
 import ClientAccessStrategyX509Page from './containers/ClientAccessStrategyX509Page';
 import ModalRoot from './containers/modals/ModalRoot';
 import Loading from './components/Loading';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 class App extends Component {
   componentDidMount() {

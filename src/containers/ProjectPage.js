@@ -1,7 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { PageHeader } from 'react-bootstrap';
 import { actionCreators } from '../actions/index';
 import { getProject, getIsLoading } from '../store/Project';
 import Key from '../components/Key';
@@ -38,14 +37,14 @@ class ProjectPage extends Component {
     return (
       <AnimatePresence>
         <motion.div initial="initial" animate="in" exit="out" variants={Fade}>
-          <PageHeader>
+          <h1>
             {this.props.project.name}
             <div>
               <small>
                 <Key value={this.props.project.id} />
               </small>
             </div>
-          </PageHeader>
+          </h1>
           <Environments
             environments={this.props.project.environments}
             projectId={this.props.project.id}

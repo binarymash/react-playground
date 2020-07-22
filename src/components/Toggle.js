@@ -1,7 +1,8 @@
 ﻿import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, Glyphicon } from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
+import { BsX } from 'react-icons/bs';
 
 export class Toggle extends Component {
   handleDeleteClick = () => {
@@ -29,14 +30,14 @@ export class Toggle extends Component {
             {this.props.toggle.name}
           </Link>
         </td>
-        <td>
+        <td className="nowrap">
           <Button
-            className="pull-right"
-            bsStyle="danger"
-            bsSize="xsmall"
+            className="float-right"
+            variant="danger"
+            size="sm"
             onClick={this.handleDeleteClick}
           >
-            <Glyphicon glyph="remove" /> Delete
+            <BsX /> Delete
           </Button>
         </td>
       </tr>

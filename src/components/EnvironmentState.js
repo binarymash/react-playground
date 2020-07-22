@@ -17,8 +17,8 @@ export class EnvironmentState extends Component {
             {this.props.environment.name}
           </Link>
         </td>
-        <td>
-          <span className="pull-right">
+        <td className="nowrap">
+          <span className="float-right">
             <Switch
               bsSize="mini"
               onColor="success"

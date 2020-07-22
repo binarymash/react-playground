@@ -2,7 +2,6 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { actionCreators } from '../actions/index';
-import { PageHeader } from 'react-bootstrap';
 import {
   getToggle,
   getIsToggleLoading,
@@ -49,14 +48,14 @@ class TogglePage extends Component {
     return (
       <AnimatePresence>
         <motion.div initial="initial" animate="in" exit="out" variants={Fade}>
-          <PageHeader>
+          <h1>
             {this.props.toggle.name}
             <div>
               <small>
                 <Key value={this.props.toggle.key} />
               </small>
             </div>
-          </PageHeader>
+          </h1>
 
           <EnvironmentStates
             environments={this.props.toggle.environments}

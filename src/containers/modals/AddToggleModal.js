@@ -2,14 +2,12 @@
 import { actionCreators } from '../../actions/index';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import {
-  ControlLabel,
-  FormControl,
-  FormGroup,
-  Glyphicon,
-  Modal,
-  Button
-} from 'react-bootstrap';
+import FormLabel from 'react-bootstrap/FormLabel';
+import FormControl from 'react-bootstrap/FormControl';
+import FormGroup from 'react-bootstrap/FormGroup';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
+import { BsPlus, BsX, BsCheck } from 'react-icons/bs';
 import { hideModal } from '../../actions/index';
 import validator from 'validator';
 
@@ -114,7 +112,7 @@ class AddToggleModal extends Component {
       >
         <Modal.Header closeButton>
           <Modal.Title>
-            <Glyphicon glyph="exclamation-plus" /> Add new toggle
+            <BsPlus /> Add new toggle
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -123,7 +121,7 @@ class AddToggleModal extends Component {
               controlId="toggleName"
               validationState={this.getNameValidationState()}
             >
-              <ControlLabel>Toggle name</ControlLabel>
+              <FormLabel>Toggle name</FormLabel>
               <FormControl
                 autoFocus
                 type="text"
@@ -138,7 +136,7 @@ class AddToggleModal extends Component {
               controlId="toggleKey"
               validationState={this.getKeyValidationState()}
             >
-              <ControlLabel>Toggle key</ControlLabel>
+              <FormLabel>Toggle key</FormLabel>
               <FormControl
                 type="text"
                 name="key"
@@ -153,14 +151,14 @@ class AddToggleModal extends Component {
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={() => this.props.hideModal()}>
-            <Glyphicon glyph="remove" /> Cancel
+            <BsX /> Cancel
           </Button>
           <Button
             active={true}
-            bsStyle="success"
+            variant="success"
             onClick={() => this.handleOkClick()}
           >
-            <Glyphicon glyph="ok" /> Save
+            <BsCheck /> Save
           </Button>
         </Modal.Footer>
       </Modal>
@@ -172,7 +170,4 @@ const mapDispatchToProps = dispatch => {
   return bindActionCreators(actionCreators, dispatch);
 };
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(AddToggleModal);
+export default connect(null, mapDispatchToProps)(AddToggleModal);

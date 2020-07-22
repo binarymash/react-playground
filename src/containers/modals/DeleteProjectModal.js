@@ -2,7 +2,9 @@
 import { actionCreators } from '../../actions/index';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Glyphicon, Modal, Button } from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+import { BsExclamationCircle, BsX, BsCheck } from 'react-icons/bs';
 
 class DeleteProjectModal extends Component {
   handleOkClick = () => {
@@ -20,7 +22,7 @@ class DeleteProjectModal extends Component {
       >
         <Modal.Header closeButton>
           <Modal.Title>
-            <Glyphicon glyph="exclamation-sign" /> Confirm project deletion
+            <BsExclamationCircle /> Confirm project deletion
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -31,10 +33,10 @@ class DeleteProjectModal extends Component {
         </Modal.Body>
         <Modal.Footer>
           <Button active={true} onClick={() => this.props.hideModal()}>
-            <Glyphicon glyph="remove" /> No, keep the project
+            <BsX /> No, keep the project
           </Button>
-          <Button bsStyle="danger" onClick={() => this.handleOkClick()}>
-            <Glyphicon glyph="ok" /> Yes, delete the project
+          <Button variant="danger" onClick={() => this.handleOkClick()}>
+            <BsCheck /> Yes, delete the project
           </Button>
         </Modal.Footer>
       </Modal>

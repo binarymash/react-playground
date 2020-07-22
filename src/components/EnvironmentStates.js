@@ -1,6 +1,7 @@
 ﻿import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Badge, Table } from 'react-bootstrap';
+import Badge from 'react-bootstrap/Badge';
+import Table from 'react-bootstrap/Table';
 import EnvironmentState from './EnvironmentState';
 import Loading from './Loading';
 
@@ -32,7 +33,7 @@ export class EnvironmentStates extends Component {
     return (
       <section>
         <h2>
-          Environment States <Badge>{length}</Badge>
+          Environment States <Badge variant="light">{length}</Badge>
         </h2>
         {content}
       </section>

@@ -2,14 +2,12 @@
 import { actionCreators } from '../../actions/index';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import {
-  ControlLabel,
-  FormControl,
-  FormGroup,
-  Glyphicon,
-  Modal,
-  Button
-} from 'react-bootstrap';
+import FormLabel from 'react-bootstrap/FormLabel';
+import FormControl from 'react-bootstrap/FormControl';
+import FormGroup from 'react-bootstrap/FormGroup';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
+import { BsX, BsCheck, BsPlus } from 'react-icons/bs';
 import { hideModal } from '../../actions/index';
 import validator from 'validator';
 
@@ -114,7 +112,7 @@ class AddEnvironment extends Component {
       >
         <Modal.Header closeButton>
           <Modal.Title>
-            <Glyphicon glyph="exclamation-plus" /> Add new environment
+            <BsPlus /> Add new environment
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -123,7 +121,7 @@ class AddEnvironment extends Component {
               controlId="environmentName"
               validationState={this.getNameValidationState()}
             >
-              <ControlLabel>Environment name</ControlLabel>
+              <FormLabel>Environment name</FormLabel>
               <FormControl
                 autoFocus
                 type="text"
@@ -138,7 +136,7 @@ class AddEnvironment extends Component {
               controlId="environmentKey"
               validationState={this.getKeyValidationState()}
             >
-              <ControlLabel>Environment key</ControlLabel>
+              <FormLabel>Environment key</FormLabel>
               <FormControl
                 type="text"
                 name="key"
@@ -152,14 +150,14 @@ class AddEnvironment extends Component {
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={() => this.props.hideModal()}>
-            <Glyphicon glyph="remove" /> Cancel
+            <BsX /> Cancel
           </Button>
           <Button
             active={true}
-            bsStyle="success"
+            variant="success"
             onClick={() => this.handleOkClick()}
           >
-            <Glyphicon glyph="ok" /> Save
+            <BsCheck /> Save
           </Button>
         </Modal.Footer>
       </Modal>
@@ -171,7 +169,4 @@ const mapDispatchToProps = dispatch => {
   return bindActionCreators(actionCreators, dispatch);
 };
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(AddEnvironment);
+export default connect(null, mapDispatchToProps)(AddEnvironment);

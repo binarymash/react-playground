@@ -5,22 +5,45 @@
   }
 }
 
-section {
+code {
+  background-color: #f9f2f4;
+  border-radius: 4px;
+  padding: 2px;
+}
+
+h1 {
   padding-bottom: 15px;
   border-bottom: 1px solid #eee;
+}
+
+section {
+  padding-top: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+div.tableToolbar {
+  padding: 10px 14px;
+  overflow: auto;
 }
 
 td.fill {
   width: 100%;
 }
 
-div.tableToolbar {
-  padding: 10px;
-  overflow: auto;
+td.nowrap {
+  white-space: nowrap;
 }
+
+/*
+
 
 span.menu-sep {
   vertical-align: middle;
   padding: 0px 2px;
   color: #bbb;
 }
+
+button {
+  white-space: nowrap;
+}  */

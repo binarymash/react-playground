@@ -2,14 +2,10 @@
 import { actionCreators } from '../../actions/index';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import {
-  ControlLabel,
-  FormControl,
-  FormGroup,
-  Glyphicon,
-  Modal,
-  Button
-} from 'react-bootstrap';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
+import { BsExclamationCircle, BsX, BsCheck } from 'react-icons/bs';
+
 import { hideModal } from '../../actions/index';
 
 class AddAccessStrategyModal extends Component {
@@ -65,55 +61,25 @@ class AddAccessStrategyModal extends Component {
       >
         <Modal.Header closeButton>
           <Modal.Title>
-            <Glyphicon glyph="exclamation-plus" /> Add new X509 certificate
+            <BsExclamationCircle /> Add new X509 certificate
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form>
-            {/* <FormGroup
-              controlId="toggleName"
-              validationState={this.getNameValidationState()}
-            >
-              <ControlLabel>Toggle name</ControlLabel>
-              <FormControl
-                autoFocus
-                type="text"
-                name="name"
-                value={this.state.name}
-                placeholder="Enter text"
-                onChange={this.handleChange}
-              />
-              <FormControl.Feedback />
-            </FormGroup>
-            <FormGroup
-              controlId="toggleKey"
-              validationState={this.getKeyValidationState()}
-            >
-              <ControlLabel>Toggle key</ControlLabel>
-              <FormControl
-                type="text"
-                name="key"
-                value={this.state.key}
-                placeholder="Enter text"
-                onChange={this.handleChange}
-                onFocus={this.handleKeyFocus}
-              />
-              <FormControl.Feedback />
-            </FormGroup> */}
             This will create a new X509 certificate which you can use to
             authorize a trusted application. Do you want to continue?
           </form>
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={() => this.props.hideModal()}>
-            <Glyphicon glyph="remove" /> Cancel
+            <BsX /> Cancel
           </Button>
           <Button
             active={true}
-            bsStyle="success"
+            variant="success"
             onClick={() => this.handleOkClick()}
           >
-            <Glyphicon glyph="ok" /> OK
+            <BsCheck /> OK
           </Button>
         </Modal.Footer>
       </Modal>
