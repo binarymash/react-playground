@@ -69,6 +69,9 @@ export const reducer = produce((draft, action) => {
 
       updateAudit(draft.projection);
       break;
+
+    default:
+      break;
   }
 }, INITIAL_STATE);
 

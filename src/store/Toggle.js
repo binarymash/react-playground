@@ -139,18 +139,14 @@ export const reducer = produce((draft, action) => {
       break;
 
     case actionTypes.receiveToggle:
-      {
-        storeKey = getStoreKey(action.projectId, action.toggleKey);
-        draft.toggles[storeKey] = action.json;
-        draft.toggles[storeKey].isLoading = false;
-      }
+      storeKey = getStoreKey(action.projectId, action.toggleKey);
+      draft.toggles[storeKey] = action.json;
+      draft.toggles[storeKey].isLoading = false;
       break;
 
     case actionTypes.receiveToggleError:
-      {
-        storeKey = getStoreKey(action.projectId, action.toggleKey);
-        draft.toggles[storeKey].isLoading = false;
-      }
+      storeKey = getStoreKey(action.projectId, action.toggleKey);
+      draft.toggles[storeKey].isLoading = false;
       break;
 
     case actionTypes.requestToggleState:
@@ -190,6 +186,9 @@ export const reducer = produce((draft, action) => {
         environmentState.version = undefined;
         environmentState.value = action.value;
       }
+      break;
+
+    default:
       break;
   }
 }, INITIAL_STATE);

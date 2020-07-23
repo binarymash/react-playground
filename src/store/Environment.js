@@ -186,5 +186,8 @@ export const reducer = produce((draft, action) => {
         toggleState.value = action.value;
       }
       break;
+
+    default:
+      break;
   }
 }, INITIAL_STATE);

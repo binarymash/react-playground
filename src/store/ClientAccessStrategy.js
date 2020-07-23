@@ -82,18 +82,17 @@ export const reducer = produce((draft, action) => {
       break;
 
     case actionTypes.receiveClientAccessStrategy:
-      {
-        storeKey = getStoreKey(action.projectId, action.strategyId);
-        draft.strategies[storeKey].strategy = action.json;
-        draft.strategies[storeKey].isLoading = false;
-      }
+      storeKey = getStoreKey(action.projectId, action.strategyId);
+      draft.strategies[storeKey].strategy = action.json;
+      draft.strategies[storeKey].isLoading = false;
       break;
 
     case actionTypes.receiveClientAccessStrategyError:
-      {
-        storeKey = getStoreKey(action.projectId, action.strategyId);
-        draft.strategies[storeKey].isLoading = false;
-      }
+      storeKey = getStoreKey(action.projectId, action.strategyId);
+      draft.strategies[storeKey].isLoading = false;
+      break;
+
+    default:
       break;
   }
 }, INITIAL_STATE);

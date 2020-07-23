@@ -6,8 +6,6 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { BsX, BsCheck } from 'react-icons/bs';
 
-import { hideModal } from '../../actions/index';
-
 class AddAccessStrategyModal extends Component {
   constructor(props) {
     super(props);

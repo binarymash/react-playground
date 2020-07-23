@@ -157,16 +157,6 @@ const getStrategy = (projectId, strategy) => {
   };
 };
 
-const getAudit = project => {
-  return {
-    created: project.audit.created,
-    createdBy: project.audit.createdBy,
-    lastModified: project.audit.lastModified,
-    lastModifiedBy: project.audit.lastModifiedBy,
-    version: project.audit.version
-  };
-};
-
 // Write
 
 const INITIAL_STATE = {
@@ -243,6 +233,9 @@ export const reducer = produce((draft, action) => {
 
     case actionTypes.projectDeleteSucceeded:
       draft.projects[action.projectId] = undefined;
+      break;
+
+    default:
       break;
   }
 }, INITIAL_STATE);

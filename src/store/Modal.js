@@ -21,5 +21,8 @@ export const reducer = produce((draft, action) => {
       draft.modalType = INITIAL_STATE.modalType;
       draft.modalProps = INITIAL_STATE.modalProps;
       break;
+
+    default:
+      break;
   }
 }, INITIAL_STATE);
