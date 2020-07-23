@@ -2,13 +2,10 @@
 import { actionCreators } from '../../actions/index';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import FormLabel from 'react-bootstrap/FormLabel';
-import FormControl from 'react-bootstrap/FormControl';
-import FormGroup from 'react-bootstrap/FormGroup';
+import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { BsX, BsCheck } from 'react-icons/bs';
-import { hideModal } from '../../actions/index';
 import validator from 'validator';
 
 const KEY_WHITELIST = 'a-z0-9_.-';
@@ -78,29 +75,19 @@ class AddEnvironment extends Component {
   };
 
   isValid = () => {
-    return (
-      this.getNameValidationState() === 'success' &&
-      this.getKeyValidationState() === 'success'
-    );
+    return this.isNameValid() && this.isKeyValid();
   };
 
-  getNameValidationState = () => {
-    if (this.state.name.length === 0 || this.state.name.length > 128) {
-      return 'error';
-    }
-    return 'success';
+  isNameValid = () => {
+    return this.state.name.length > 0 && this.state.name.length <= 128;
   };
 
-  getKeyValidationState = () => {
-    if (this.state.key.length === 0 || this.state.key.length > 128) {
-      return 'error';
-    }
-
+  isKeyValid = () => {
     if (!validator.matches(this.state.key, `^[${KEY_WHITELIST}]*$`)) {
-      return 'error';
+      return false;
     }
 
-    return 'success';
+    return this.state.key.length > 0 && this.state.key.length <= 128;
   };
 
   render() {
@@ -115,37 +102,35 @@ class AddEnvironment extends Component {
           <Modal.Title>Add new environment</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form>
-            <FormGroup
-              controlId="environmentName"
-              validationState={this.getNameValidationState()}
-            >
-              <FormLabel>Environment name</FormLabel>
-              <FormControl
+          <Form>
+            <Form.Group controlId="environmentName">
+              <Form.Label>Environment name</Form.Label>
+              <Form.Control
                 autoFocus
                 type="text"
                 name="name"
                 value={this.state.name}
                 placeholder="Enter text"
                 onChange={this.handleChange}
+                isValid={this.isNameValid()}
+                isInvalid={!this.isNameValid()}
               />
-              <FormControl.Feedback />
-            </FormGroup>
-            <FormGroup
-              controlId="environmentKey"
-              validationState={this.getKeyValidationState()}
-            >
-              <FormLabel>Environment key</FormLabel>
-              <FormControl
+              <Form.Control.Feedback />
+            </Form.Group>
+            <Form.Group controlId="environmentKey">
+              <Form.Label>Environment key</Form.Label>
+              <Form.Control
                 type="text"
                 name="key"
                 value={this.state.key}
                 placeholder="Enter text"
                 onChange={this.handleChange}
+                isValid={this.isKeyValid()}
+                isInvalid={!this.isKeyValid()}
               />
-              <FormControl.Feedback />
-            </FormGroup>
-          </form>
+              <Form.Control.Feedback />
+            </Form.Group>
+          </Form>
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={() => this.props.hideModal()}>

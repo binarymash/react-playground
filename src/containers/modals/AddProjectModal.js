@@ -2,13 +2,10 @@
 import { actionCreators } from '../../actions/index';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import FormLabel from 'react-bootstrap/FormLabel';
-import FormControl from 'react-bootstrap/FormControl';
-import FormGroup from 'react-bootstrap/FormGroup';
+import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { BsX, BsCheck } from 'react-icons/bs';
-import { hideModal } from '../../actions/index';
 
 class AddProjectModal extends Component {
   constructor(props) {
@@ -38,14 +35,11 @@ class AddProjectModal extends Component {
   };
 
   isValid = () => {
-    return this.getNameValidationState() === 'success';
+    return this.isNameValid();
   };
 
-  getNameValidationState = () => {
-    if (this.state.name.length === 0 || this.state.name.length > 128) {
-      return 'error';
-    }
-    return 'success';
+  isNameValid = () => {
+    return this.state.name.length > 0 && this.state.name.length <= 128;
   };
 
   render() {
@@ -60,23 +54,22 @@ class AddProjectModal extends Component {
           <Modal.Title>Add new project</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form>
-            <FormGroup
-              controlId="projectName"
-              validationState={this.getNameValidationState()}
-            >
-              <FormLabel>Project name</FormLabel>
-              <FormControl
+          <Form>
+            <Form.Group controlId="projectName">
+              <Form.Label>Project name</Form.Label>
+              <Form.Control
                 autoFocus
                 type="text"
                 name="name"
                 value={this.state.name}
                 placeholder="Enter text"
                 onChange={this.handleChange}
+                isValid={this.isNameValid()}
+                isInvalid={!this.isNameValid()}
               />
-              <FormControl.Feedback />
-            </FormGroup>
-          </form>
+              <Form.Control.Feedback />
+            </Form.Group>
+          </Form>
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={() => this.props.hideModal()}>

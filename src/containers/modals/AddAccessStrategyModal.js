@@ -64,20 +64,14 @@ class AddAccessStrategyModal extends Component {
           <Modal.Title>Add new X.509 certificate</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form>
-            This will create a new X.509 certificate which you can use to
-            authorize a trusted application. Do you want to continue?
-          </form>
+          This will create a new X.509 certificate which you can use to
+          authorize a trusted application. Do you want to continue?
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={() => this.props.hideModal()}>
             <BsX /> Cancel
           </Button>
-          <Button
-            active={true}
-            variant="success"
-            onClick={() => this.handleOkClick()}
-          >
+          <Button variant="success" onClick={() => this.handleOkClick()}>
             <BsCheck /> OK
           </Button>
         </Modal.Footer>
