@@ -6,7 +6,8 @@ import DashboardBreadcrumb from './DashboardBreadcrumb';
 import EnvironmentBreadcrumb from './EnvironmentBreadcrumb';
 import ToggleBreadcrumb from './ToggleBreadcrumb';
 import X509Breadcrumb from './X509Breadcrumb';
-import { BsChevronRight } from 'react-icons/bs';
+import { AiOutlineRight } from 'react-icons/ai';
+import { IconContext } from 'react-icons';
 
 // define some custom breadcrumbs for certain routes (optional)
 const routes = [
@@ -37,7 +38,15 @@ const Breadcrumbs = ({ breadcrumbs }) => (
         )}
         {index < breadcrumbs.length - 1 && (
           <span className="menu-sep">
-            <BsChevronRight glyph="menu-right" />
+            <IconContext.Provider
+              value={{
+                style: { verticalAlign: 'text-bottom' },
+                size: '1.1em',
+                color: '#abc'
+              }}
+            >
+              <AiOutlineRight />
+            </IconContext.Provider>
           </span>
         )}
       </span>
