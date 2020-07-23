@@ -27,7 +27,7 @@ export class Project extends Component {
             {this.props.project.name}
           </Link>
         </td>
-        <td class="nowrap">
+        <td className="nowrap">
           <Button
             className="float-right"
             variant="danger"

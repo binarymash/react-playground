@@ -2,21 +2,24 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { actionCreators } from '../actions/index';
-import Nav from 'react-bootstrap/Nav';
+import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
-import NavItem from 'react-bootstrap/NavItem';
+import Nav from 'react-bootstrap/Nav';
 import { LinkContainer } from 'react-router-bootstrap';
-// import './NavMenu.css';
+import './NavMenu.css';
 
 class NavMenu extends Component {
   render() {
     return (
-      <Navbar bg="dark" variant="dark" fixed="top" collapseOnSelect>
+      <Navbar bg="dark" variant="dark" fixed="top" expand="md" collapseOnSelect>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse>
           <Nav>
-            <LinkContainer to={`/`} exact>
-              <NavItem>Dashboard</NavItem>
-            </LinkContainer>
+            <Nav.Item>
+              <LinkContainer to={`/`} exact>
+                <Nav.Link active={false}>Dashboard</Nav.Link>
+              </LinkContainer>
+            </Nav.Item>
           </Nav>
         </Navbar.Collapse>
       </Navbar>

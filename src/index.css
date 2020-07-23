@@ -5,13 +5,22 @@
   }
 }
 
-code {
+html {
+  font-size: 90%;
+}
+
+.table td {
+  vertical-align: middle;
+}
+
+code.key {
   background-color: #f9f2f4;
   border-radius: 4px;
   padding: 2px;
 }
 
 h1 {
+  padding-top: 20px;
   padding-bottom: 15px;
   border-bottom: 1px solid #eee;
 }

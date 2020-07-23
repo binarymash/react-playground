@@ -1,55 +1,73 @@
-﻿.navbar li .glyphicon {
+﻿/* .navbar li .glyphicon {
   margin-right: 10px;
-}
+} */
 
 /* Highlighting rules for nav menu items */
-.navbar .navbar-nav .active a,
-.navbar .navbar-nav .active a:hover,
-.navbar .navbar-nav .active a:focus {
+.navbar .navbar-nav .nav-item .active,
+.navbar .navbar-nav .nav-item .active :hover,
+.navbar .navbar-nav .nav-item .active :focus {
   background-image: none;
   background-color: #4189c7;
   color: white;
 }
 
+@media (max-width: 767px) {
+  .navbar .navbar-nav {
+    padding: 10px 0px;
+  }
+
+  .nav-item a {
+    padding: 0.5em 0.5em !important;
+    border-radius: 4px;
+  }
+}
+
+/* On large screens, convert the nav menu to a vertical sidebar */
 @media (min-width: 768px) {
-  /* On large screens, convert the nav menu to a vertical sidebar */
   .navbar {
     height: 100%;
     width: calc(25% - 20px);
+    align-items: flex-start !important;
   }
+
   .navbar {
     border-radius: 0;
     border-width: 0;
     height: 100%;
   }
-  .navbar-header {
-    float: none;
-  }
+
   .navbar .navbar-collapse {
-    border-top: 1px solid #444;
     padding: 0;
   }
-  .navbar .container-fluid {
+
+  .navbar .navbar-collapse {
+    flex: 0 0 100% !important;
+  }
+
+  .navbar {
     padding: 0;
     margin: 0;
   }
-  .navbar .container-fluid .navbar-brand {
+
+  /* .navbar  .container-fluid  .navbar-brand {
     margin: 0;
+  } */
+
+  .navbar div {
+    flex: 0 0 100%;
   }
-  .navbar ul {
-    float: none;
-  }
-  .navbar li {
-    float: none;
+
+  .nav-item div {
+    flex: 0 0 100%;
     font-size: 15px;
     margin: 6px;
   }
-  .navbar li a {
+
+  .nav-item a {
     padding: 10px 16px;
     border-radius: 4px;
   }
-  .navbar a {
-    /* If a menu item's text is too long, truncate it */
+  .nav-item a {
     width: 100%;
     white-space: nowrap;
     overflow: hidden;

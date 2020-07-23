@@ -106,7 +106,6 @@ class AddEnvironment extends Component {
   render() {
     return (
       <Modal
-        size="lg"
         centered={true}
         show={true}
         animation={false}
