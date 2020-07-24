@@ -61,7 +61,7 @@ export const getEnvironment = (state, projectId, environmentKey) => {
     key: environment.key,
     name: environment.name,
     toggles: getToggleStates(project, environmentState),
-    audit: getAudit(environment, environmentState)
+    audit: getAudit(environment, environmentState),
   };
 };
 
@@ -70,7 +70,7 @@ const getToggleStates = (project, environmentState) => {
     return [];
   }
 
-  return environmentState.toggleStates.map(toggleState =>
+  return environmentState.toggleStates.map((toggleState) =>
     getToggleState(project, toggleState)
   );
 };
@@ -78,7 +78,9 @@ const getToggleStates = (project, environmentState) => {
 const getToggleState = (project, toggleState) => {
   let name = toggleState.key;
   if (project) {
-    let toggle = project.toggles.find(toggle => toggle.key === toggleState.key);
+    let toggle = project.toggles.find(
+      (toggle) => toggle.key === toggleState.key
+    );
     if (toggle) {
       name = toggle.name;
     }
@@ -88,11 +90,12 @@ const getToggleState = (project, toggleState) => {
     key: toggleState.key,
     name: name,
     value: getStateValue(toggleState.value),
-    version: toggleState.version
+    updating: toggleState.updating,
+    version: toggleState.version,
   };
 };
 
-const getStateValue = value => {
+const getStateValue = (value) => {
   if (value === 'True') {
     return true;
   }
@@ -113,7 +116,7 @@ const getAudit = (environment, environmentState) => {
     created: environment.audit.created,
     createdBy: environment.audit.createdBy,
     lastModified: environment.audit.lastModified,
-    lastModifiedBy: environment.audit.lastModifiedBy
+    lastModifiedBy: environment.audit.lastModifiedBy,
   };
 };
 
@@ -121,7 +124,7 @@ const getAudit = (environment, environmentState) => {
 
 const INITIAL_STATE = {
   environments: {},
-  environmentStates: {}
+  environmentStates: {},
 };
 
 export const reducer = produce((draft, action) => {
@@ -171,6 +174,21 @@ export const reducer = produce((draft, action) => {
       draft.environmentStates[storeKey].isLoading = false;
       break;
 
+    case actionTypes.toggleEnvironmentStateUpdateRequested:
+      storeKey = getStoreKey(action.projectId, action.environmentKey);
+
+      projection = draft.environmentStates[storeKey];
+      if (projection) {
+        let toggleState = projection.environmentState.toggleStates.find(
+          (ts) => {
+            return ts.key === action.toggleKey;
+          }
+        );
+
+        toggleState.updating = true;
+      }
+      break;
+
     case actionTypes.toggleEnvironmentStateUpdateSucceeded:
       storeKey = getStoreKey(action.projectId, action.environmentKey);
 
@@ -178,12 +196,30 @@ export const reducer = produce((draft, action) => {
       if (projection) {
         projection.audit = undefined;
 
-        let toggleState = projection.environmentState.toggleStates.find(ts => {
-          return ts.key === action.toggleKey;
-        });
+        let toggleState = projection.environmentState.toggleStates.find(
+          (ts) => {
+            return ts.key === action.toggleKey;
+          }
+        );
 
+        toggleState.updating = false;
         toggleState.version = undefined;
         toggleState.value = action.value;
+      }
+      break;
+
+    case actionTypes.toggleEnvironmentStateUpdateRequested:
+      storeKey = getStoreKey(action.projectId, action.environmentKey);
+
+      projection = draft.environmentStates[storeKey];
+      if (projection) {
+        let toggleState = projection.environmentState.toggleStates.find(
+          (ts) => {
+            return ts.key === action.toggleKey;
+          }
+        );
+
+        toggleState.updating = false;
       }
       break;
 

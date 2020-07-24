@@ -9,7 +9,9 @@ import Form from 'react-bootstrap/Form';
 export class EnvironmentState extends Component {
   render() {
     return (
-      <tr>
+      <tr
+        className={`${this.props.environment.updating ? 'state-updating' : ''}`}
+      >
         <td className="fill">
           <Link
             to={`/projects/${this.props.projectId}/environments/${this.props.environment.key}`}
@@ -21,6 +23,7 @@ export class EnvironmentState extends Component {
           <span className="float-right">
             <Form id={`form-${this.props.environment.key}`}>
               <Form.Check
+                disabled={this.props.environment.updating}
                 custom
                 id={`toggle-${this.props.environment.key}`}
                 label=""
@@ -45,7 +48,7 @@ export class EnvironmentState extends Component {
   };
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return bindActionCreators(actionCreators, dispatch);
 };
 

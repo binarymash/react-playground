@@ -6,14 +6,14 @@ const getAccount = (dispatch, getState) => {
   dispatch({ type: actionTypes.requestAccount });
 
   return Api.getProjects()
-    .then(function(json) {
+    .then(function (json) {
       dispatch({ type: actionTypes.receiveAccount, json });
     })
-    .catch(function(error) {
+    .catch(function (error) {
       dispatch({
         type: actionTypes.showModal,
         modalType: 'API_ERROR',
-        modalProps: { error: error.message }
+        modalProps: { error: error.message },
       });
       dispatch({ type: actionTypes.receiveAccountError, error });
     });
@@ -23,14 +23,14 @@ const getLatestProject = (projectId, dispatch, getState) => {
   dispatch({ type: actionTypes.requestProject, projectId });
 
   return Api.getProject(projectId)
-    .then(function(json) {
+    .then(function (json) {
       dispatch({ type: actionTypes.receiveProject, projectId, json });
     })
-    .catch(error => {
+    .catch((error) => {
       dispatch({
         type: actionTypes.showModal,
         modalType: 'API_ERROR',
-        modalProps: { error: error.message }
+        modalProps: { error: error.message },
       });
       dispatch({ type: actionTypes.receiveProjectError, projectId, error });
     });
@@ -45,25 +45,25 @@ const getLatestEnvironment = (
   dispatch({ type: actionTypes.requestEnvironment, projectId, environmentKey });
 
   return Api.getEnvironment(projectId, environmentKey)
-    .then(json => {
+    .then((json) => {
       dispatch({
         type: actionTypes.receiveEnvironment,
         projectId,
         environmentKey,
-        json
+        json,
       });
     })
-    .catch(error => {
+    .catch((error) => {
       dispatch({
         type: actionTypes.showModal,
         modalType: 'API_ERROR',
-        modalProps: { error: error.message }
+        modalProps: { error: error.message },
       });
       dispatch({
         type: actionTypes.receiveEnvironmentError,
         projectId,
         environmentKey,
-        error
+        error,
       });
     });
 };
@@ -77,29 +77,29 @@ const getLatestEnvironmentState = (
   dispatch({
     type: actionTypes.requestEnvironmentState,
     projectId,
-    environmentKey
+    environmentKey,
   });
 
   return Api.getEnvironmentState(projectId, environmentKey)
-    .then(json => {
+    .then((json) => {
       dispatch({
         type: actionTypes.receiveEnvironmentState,
         projectId,
         environmentKey,
-        json
+        json,
       });
     })
-    .catch(error => {
+    .catch((error) => {
       dispatch({
         type: actionTypes.showModal,
         modalType: 'API_ERROR',
-        modalProps: { error: error.message }
+        modalProps: { error: error.message },
       });
       dispatch({
         type: actionTypes.receiveEnvironmentStateError,
         projectId,
         environmentKey,
-        error
+        error,
       });
     });
 };
@@ -108,20 +108,20 @@ const getLatestToggle = (projectId, toggleKey, dispatch, getState) => {
   dispatch({ type: actionTypes.requestToggle, projectId, toggleKey });
 
   return Api.getToggle(projectId, toggleKey)
-    .then(json => {
+    .then((json) => {
       dispatch({ type: actionTypes.receiveToggle, projectId, toggleKey, json });
     })
-    .catch(error => {
+    .catch((error) => {
       dispatch({
         type: actionTypes.showModal,
         modalType: 'API_ERROR',
-        modalProps: { error: error.message }
+        modalProps: { error: error.message },
       });
       dispatch({
         type: actionTypes.receiveToggleError,
         projectId,
         toggleKey,
-        error
+        error,
       });
     });
 };
@@ -130,29 +130,29 @@ const getLatestToggleState = (projectId, toggleKey, dispatch, getState) => {
   dispatch({
     type: actionTypes.requestToggleState,
     projectId,
-    toggleKey
+    toggleKey,
   });
 
   return Api.getToggleState(projectId, toggleKey)
-    .then(json => {
+    .then((json) => {
       dispatch({
         type: actionTypes.receiveToggleState,
         projectId,
         toggleKey,
-        json
+        json,
       });
     })
-    .catch(error => {
+    .catch((error) => {
       dispatch({
         type: actionTypes.showModal,
         modalType: 'API_ERROR',
-        modalProps: { error: error.message }
+        modalProps: { error: error.message },
       });
       dispatch({
         type: actionTypes.receiveToggleStateError,
         projectId,
         toggleKey,
-        error
+        error,
       });
     });
 };
@@ -166,29 +166,29 @@ const getLatestX509Certificate = (
   dispatch({
     type: actionTypes.requestClientAccessStrategy,
     projectId,
-    strategyId
+    strategyId,
   });
 
   return Api.getX509Certificate(projectId, strategyId)
-    .then(json => {
+    .then((json) => {
       dispatch({
         type: actionTypes.receiveClientAccessStrategy,
         projectId,
         strategyId,
-        json
+        json,
       });
     })
-    .catch(error => {
+    .catch((error) => {
       dispatch({
         type: actionTypes.showModal,
         modalType: 'API_ERROR',
-        modalProps: { error: error.message }
+        modalProps: { error: error.message },
       });
       dispatch({
         type: actionTypes.receiveClientAccessStrategyError,
         projectId,
         strategyId,
-        error
+        error,
       });
     });
 };
@@ -211,7 +211,7 @@ export const actionCreators = {
     await getAccount(dispatch, getState);
   },
 
-  selectProject: projectId => async (dispatch, getState) => {
+  selectProject: (projectId) => async (dispatch, getState) => {
     await getLatestProject(projectId, dispatch, getState);
   },
 
@@ -250,7 +250,12 @@ export const actionCreators = {
     toggleKey,
     value
   ) => async (dispatch, getState) => {
-    dispatch({ type: actionTypes.toggleEnvironmentStateUpdateRequested });
+    dispatch({
+      type: actionTypes.toggleEnvironmentStateUpdateRequested,
+      projectId,
+      environmentKey,
+      toggleKey,
+    });
 
     let newValue = value ? 'True' : 'False';
 
@@ -266,21 +271,21 @@ export const actionCreators = {
           projectId,
           environmentKey,
           toggleKey,
-          value: newValue
+          value: newValue,
         });
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch({
           type: actionTypes.showModal,
           modalType: 'API_ERROR',
-          modalProps: { error: error.message }
+          modalProps: { error: error.message },
         });
         dispatch({
           type: actionTypes.toggleEnvironmentStateUpdateFailed,
           projectId,
           environmentKey,
           toggleKey,
-          error
+          error,
         });
       });
   },
@@ -289,7 +294,7 @@ export const actionCreators = {
     dispatch({ type: actionTypes.hideModal });
   },
 
-  addProject: name => async (dispatch, getState) => {
+  addProject: (name) => async (dispatch, getState) => {
     let id = uuidv1();
     dispatch({ type: actionTypes.projectAddRequested });
 
@@ -298,39 +303,39 @@ export const actionCreators = {
         dispatch({
           type: actionTypes.projectAddSucceeded,
           id: id,
-          name: name
+          name: name,
         });
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch({
           type: actionTypes.showModal,
           modalType: 'API_ERROR',
-          modalProps: { error: error.message }
+          modalProps: { error: error.message },
         });
         dispatch({ type: actionTypes.projectAddFailed, error });
       });
   },
 
-  deleteProject: projectId => async (dispatch, getState) => {
+  deleteProject: (projectId) => async (dispatch, getState) => {
     dispatch({ type: actionTypes.projectDeleteRequested });
 
     await Api.deleteProject(projectId)
       .then(() => {
         dispatch({
           type: actionTypes.projectDeleteSucceeded,
-          projectId: projectId
+          projectId: projectId,
         });
       })
-      .catch(function(error) {
+      .catch(function (error) {
         dispatch({
           type: actionTypes.showModal,
           modalType: 'API_ERROR',
-          modalProps: { error: error.message }
+          modalProps: { error: error.message },
         });
         dispatch({
           type: actionTypes.projectDeleteFailed,
           projectId,
-          error
+          error,
         });
       });
   },
@@ -347,20 +352,20 @@ export const actionCreators = {
           type: actionTypes.toggleAddSucceeded,
           projectId,
           toggleKey,
-          toggleName
+          toggleName,
         });
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch({
           type: actionTypes.showModal,
           modalType: 'API_ERROR',
-          modalProps: { error: error.message }
+          modalProps: { error: error.message },
         });
         dispatch({
           type: actionTypes.toggleAddFailed,
           projectId,
           toggleKey,
-          error
+          error,
         });
       });
   },
@@ -373,20 +378,20 @@ export const actionCreators = {
         dispatch({
           type: actionTypes.toggleDeleteSucceeded,
           projectId,
-          toggleKey
+          toggleKey,
         });
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch({
           type: actionTypes.showModal,
           modalType: 'API_ERROR',
-          modalProps: { error: error.message }
+          modalProps: { error: error.message },
         });
         dispatch({
           type: actionTypes.toggleDeleteFailed,
           projectId,
           toggleKey,
-          error
+          error,
         });
       });
   },
@@ -403,20 +408,20 @@ export const actionCreators = {
           type: actionTypes.environmentAddSucceeded,
           projectId,
           environmentKey,
-          environmentName
+          environmentName,
         });
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch({
           type: actionTypes.showModal,
           modalType: 'API_ERROR',
-          modalProps: { error: error.message }
+          modalProps: { error: error.message },
         });
         dispatch({
           type: actionTypes.environmentAddFailed,
           projectId,
           environmentKey,
-          error
+          error,
         });
       });
   },
@@ -432,25 +437,25 @@ export const actionCreators = {
         dispatch({
           type: actionTypes.environmentDeleteSucceeded,
           projectId: projectId,
-          environmentKey: environmentKey
+          environmentKey: environmentKey,
         });
       })
-      .catch(function(error) {
+      .catch(function (error) {
         dispatch({
           type: actionTypes.showModal,
           modalType: 'API_ERROR',
-          modalProps: { error: error.message }
+          modalProps: { error: error.message },
         });
         dispatch({
           type: actionTypes.environmentDeleteFailed,
           projectId,
           environmentKey,
-          error
+          error,
         });
       });
   },
 
-  addClientAccessStrategyX509: projectId => async (dispatch, getState) => {
+  addClientAccessStrategyX509: (projectId) => async (dispatch, getState) => {
     let strategyId = uuidv1();
 
     dispatch({ type: actionTypes.clientAccessStrategyX509AddRequested });
@@ -460,21 +465,21 @@ export const actionCreators = {
         dispatch({
           type: actionTypes.clientAccessStrategyX509AddSucceeded,
           projectId,
-          strategyId
+          strategyId,
         });
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch({
           type: actionTypes.showModal,
           modalType: 'API_ERROR',
-          modalProps: { error: error.message }
+          modalProps: { error: error.message },
         });
         dispatch({
           type: actionTypes.clientAccessStrategyX509AddFailed,
           projectId,
           strategyId,
-          error
+          error,
         });
       });
-  }
+  },
 };

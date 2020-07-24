@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 export class ToggleState extends Component {
   render() {
     return (
-      <tr>
+      <tr className={`${this.props.toggle.updating ? 'state-updating' : ''}`}>
         <td className="fill">
           <Link
             to={`/projects/${this.props.projectId}/toggles/${this.props.toggle.key}`}
@@ -22,6 +22,7 @@ export class ToggleState extends Component {
             <Form id={`form-${this.props.toggle.key}`}>
               <Form.Check
                 custom
+                disabled={this.props.toggle.updating}
                 id={`toggle-${this.props.toggle.key}`}
                 label=""
                 type="switch"
@@ -45,7 +46,7 @@ export class ToggleState extends Component {
   };
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return bindActionCreators(actionCreators, dispatch);
 };
 

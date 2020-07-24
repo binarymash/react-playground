@@ -103,3 +103,8 @@ button {
   -webkit-transform: translateX(1.5rem);
   transform: translateX(1.5rem);
 }
+
+.state-updating {
+  background-color: #f9f2f4 !important;
+  opacity: 0.5;
+}

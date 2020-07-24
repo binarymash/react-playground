@@ -39,7 +39,7 @@ export const getToggle = (state, projectId, toggleKey) => {
     key: toggle.key,
     name: toggle.name,
     environments: getEnvironmentStates(project, toggleState),
-    audit: getAudit(toggle)
+    audit: getAudit(toggle),
   };
 };
 
@@ -48,7 +48,7 @@ const getEnvironmentStates = (project, toggleState) => {
     return [];
   }
 
-  return toggleState.environmentStates.map(environmentState =>
+  return toggleState.environmentStates.map((environmentState) =>
     getEnvironmentState(project, environmentState)
   );
 };
@@ -57,7 +57,7 @@ const getEnvironmentState = (project, environmentState) => {
   let name = environmentState.key;
   if (project) {
     let environment = project.environments.find(
-      environment => environment.key === environmentState.key
+      (environment) => environment.key === environmentState.key
     );
     if (environment) {
       name = environment.name;
@@ -68,11 +68,12 @@ const getEnvironmentState = (project, environmentState) => {
     key: environmentState.key,
     name: name,
     value: getStateValue(environmentState.value),
-    version: environmentState.version
+    updating: environmentState.updating,
+    version: environmentState.version,
   };
 };
 
-const getStateValue = value => {
+const getStateValue = (value) => {
   if (value === 'True') {
     return true;
   }
@@ -100,7 +101,7 @@ export const getIsToggleStateLoading = (state, projectId, toggleKey) => {
   return false;
 };
 
-const getAudit = toggle => {
+const getAudit = (toggle) => {
   if (!toggle) {
     return null;
   }
@@ -110,7 +111,7 @@ const getAudit = toggle => {
     createdBy: toggle.audit.createdBy,
     lastModified: toggle.audit.lastModified,
     lastModifiedBy: toggle.audit.lastModifiedBy,
-    version: toggle.audit.version
+    version: toggle.audit.version,
   };
 };
 
@@ -118,7 +119,7 @@ const getAudit = toggle => {
 
 const INITIAL_STATE = {
   toggles: {},
-  toggleStates: {}
+  toggleStates: {},
 };
 
 export const reducer = produce((draft, action) => {
@@ -170,6 +171,21 @@ export const reducer = produce((draft, action) => {
       draft.toggleStates[storeKey].isLoading = false;
       break;
 
+    case actionTypes.toggleEnvironmentStateUpdateRequested:
+      storeKey = getStoreKey(action.projectId, action.toggleKey);
+
+      projection = draft.toggleStates[storeKey];
+      if (projection) {
+        let environmentState = projection.toggleState.environmentStates.find(
+          (es) => {
+            return es.key === action.environmentKey;
+          }
+        );
+
+        environmentState.updating = true;
+      }
+      break;
+
     case actionTypes.toggleEnvironmentStateUpdateSucceeded:
       storeKey = getStoreKey(action.projectId, action.toggleKey);
 
@@ -178,13 +194,29 @@ export const reducer = produce((draft, action) => {
         projection.audit = undefined;
 
         let environmentState = projection.toggleState.environmentStates.find(
-          es => {
+          (es) => {
             return es.key === action.environmentKey;
           }
         );
 
+        environmentState.updating = false;
         environmentState.version = undefined;
         environmentState.value = action.value;
+      }
+      break;
+
+    case actionTypes.toggleEnvironmentStateUpdateFailed:
+      storeKey = getStoreKey(action.projectId, action.toggleKey);
+
+      projection = draft.toggleStates[storeKey];
+      if (projection) {
+        let environmentState = projection.toggleState.environmentStates.find(
+          (es) => {
+            return es.key === action.environmentKey;
+          }
+        );
+
+        environmentState.updating = false;
       }
       break;
 
