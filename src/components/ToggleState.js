@@ -2,7 +2,7 @@
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../actions/index';
 import { connect } from 'react-redux';
-import Switch from 'react-bootstrap-switch';
+import Form from 'react-bootstrap/Form';
 import '../components/react-bootstrap-switch.css';
 import { Link } from 'react-router-dom';
 
@@ -19,27 +19,28 @@ export class ToggleState extends Component {
         </td>
         <td>
           <span className="float-right">
-            <Switch
-              bsSize="mini"
-              onColor="success"
-              offColor="danger"
-              animate={false}
-              value={this.props.toggle.value}
-              onChange={(el, newState) => this.handleSwitch(el, newState)}
-            />
+            <Form id={`form-${this.props.toggle.key}`}>
+              <Form.Check
+                custom
+                id={`toggle-${this.props.toggle.key}`}
+                label=""
+                type="switch"
+                checked={this.props.toggle.value}
+                onChange={this.handleChange}
+              />
+            </Form>
           </span>
         </td>
       </tr>
     );
   }
 
-  handleSwitch = (elem, newState) => {
+  handleChange = () => {
     this.props.setToggleEnvironmentState(
       this.props.projectId,
       this.props.environmentKey,
       this.props.toggle.key,
-      this.props.toggle.version,
-      newState
+      !this.props.toggle.value
     );
   };
 }
