@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { routerReducer } from 'react-router-redux';
+import { connectRouter } from 'connected-react-router';
 
 import * as Account from './Account';
 import * as Project from './Project';
@@ -8,9 +8,10 @@ import * as Toggle from './Toggle';
 import * as Strategy from './ClientAccessStrategy';
 import * as Modal from './Modal';
 
-const createRootReducer = () =>
+const createRootReducer = history =>
   combineReducers({
-    routing: routerReducer,
+    router: connectRouter(history),
+
     account: Account.reducer,
     project: Project.reducer,
     environment: Environment.reducer,
