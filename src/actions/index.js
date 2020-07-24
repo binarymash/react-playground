@@ -1,5 +1,5 @@
 import { Api } from '../services/api/api.js';
-import uuidv1 from 'uuid/v1';
+import { v1 as uuidv1 } from 'uuid';
 import * as actionTypes from './types';
 
 const getAccount = (dispatch, getState) => {
