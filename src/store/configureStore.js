@@ -15,9 +15,9 @@ export default function configureStore(initialState) {
   if (
     isDevelopment &&
     typeof window !== 'undefined' &&
-    window.devToolsExtension
+    window.__REDUX_DEVTOOLS_EXTENSION__
   ) {
-    enhancers.push(window.devToolsExtension());
+    enhancers.push(window.__REDUX_DEVTOOLS_EXTENSION__());
   }
 
   return createStore(
