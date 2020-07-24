@@ -25,14 +25,12 @@ const style = {
   paddingTop: '17px'
 };
 
-// map & render your breadcrumb components however you want.
-// each `breadcrumb` has the props `key`, `location`, and `match` included!
 const Breadcrumbs = ({ breadcrumbs }) => (
   <div style={style}>
-    {breadcrumbs.map((breadcrumb, index) => (
-      <span key={breadcrumb.key}>
+    {breadcrumbs.map(({ match, breadcrumb }, index) => (
+      <span key={match.url}>
         {index < breadcrumbs.length - 1 ? (
-          <NavLink to={breadcrumb.props.match.url}>{breadcrumb}</NavLink>
+          <NavLink to={match.url}>{breadcrumb}</NavLink>
         ) : (
           <span>{breadcrumb}</span>
         )}
