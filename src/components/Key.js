@@ -19,22 +19,25 @@ export class Key extends Component {
     );
 
     return (
-      <CopyToClipboard text={this.props.value}>
-        <OverlayTrigger
+      <CopyToClipboard
+        text={this.props.value}
+        onCopy={() => console.info('copied!')}
+      >
+        {/* <OverlayTrigger
           rootClose={true}
           trigger="click"
           overlay={tooltip}
           placement="right"
-        >
-          <span style={{ cursor: 'pointer' }}>
-            <code className="key">{this.props.value}</code>
-            <IconContext.Provider
-              value={{ style: { paddingLeft: '10px' }, size: '1.5em' }}
-            >
-              <AiOutlineCopy />
-            </IconContext.Provider>
-          </span>
-        </OverlayTrigger>
+        > */}
+        <span style={{ cursor: 'pointer' }}>
+          <code className="key">{this.props.value}</code>
+          <IconContext.Provider
+            value={{ style: { paddingLeft: '10px' }, size: '1.5em' }}
+          >
+            <AiOutlineCopy />
+          </IconContext.Provider>
+        </span>
+        {/* </OverlayTrigger> */}
       </CopyToClipboard>
     );
   }

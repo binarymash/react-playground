@@ -2,22 +2,55 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { actionCreators } from '../actions/index';
-import Alert from 'react-bootstrap/Alert';
 import {
   getClientAccessStrategy,
-  getIsLoading
+  getIsLoading,
+  getIsCreating,
 } from '../store/ClientAccessStrategy';
 import Audit from '../components/Audit';
+import PageCreating from '../components/PageCreating';
 import PageLoading from '../components/PageLoading';
 import Fade from '../services/transitions/fade.js';
+import Keys from '../components/AccessStrategyX509Keys';
 import { motion, AnimatePresence } from 'framer-motion';
 
 class ClientAccessStrategyX509Page extends Component {
-  componentDidMount() {
+  state = {};
+
+  doCreate = () => {
+    this.props
+      .addClientAccessStrategyX509(
+        this.props.match.params.projectId,
+        this.props.match.params.strategyId
+      )
+      .then((response) => {
+        if (response) {
+          this.setState({
+            privateKey: response.PrivateKey,
+            publicKey: response.PublicKey,
+            keysAvailable: true,
+          });
+        }
+      })
+      .then(() => {
+        this.doLoad();
+      });
+  };
+
+  doLoad = () => {
     this.props.selectClientAccessStrategy(
       this.props.match.params.projectId,
       this.props.match.params.strategyId
     );
+  };
+
+  componentDidMount() {
+    window.scrollTo(0, 0);
+    if (this.props.isCreating) {
+      this.doCreate();
+    } else {
+      this.doLoad();
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -28,13 +61,14 @@ class ClientAccessStrategyX509Page extends Component {
       return;
     }
 
-    this.props.selectClientAccessStrategy(
-      this.props.match.params.projectId,
-      this.props.match.params.strategyId
-    );
+    this.doLoad();
   }
 
   render() {
+    if (this.props.isCreating) {
+      return <PageCreating />;
+    }
+
     if (this.props.isLoading) {
       return <PageLoading />;
     }
@@ -53,15 +87,14 @@ class ClientAccessStrategyX509Page extends Component {
             </div>
           </h1>
           <section>
-            <Alert variant="info">
-              To use this certificate you need to know the private key
-              associated with it. This information is only available during
-              certificate creation, and cannot be retrieved later.
-            </Alert>
+            <Keys
+              privateKey={this.state.privateKey}
+              publicKey={this.state.publicKey}
+              available={this.state.keysAvailable}
+            ></Keys>
           </section>
           <section>
             <h3>Client Certificate Details</h3>
-
             <pre>
               <code>{this.props.strategy.clientCertificate.pem}</code>
             </pre>
@@ -99,15 +132,20 @@ const mapStateToProps = (state, ownProps) => {
       ownProps.match.params.projectId,
       ownProps.match.params.strategyId
     ),
+    isCreating: getIsCreating(
+      state,
+      ownProps.match.params.projectId,
+      ownProps.match.params.strategyId
+    ),
     isLoading: getIsLoading(
       state,
       ownProps.match.params.projectId,
       ownProps.match.params.strategyId
-    )
+    ),
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return bindActionCreators(actionCreators, dispatch);
 };
 

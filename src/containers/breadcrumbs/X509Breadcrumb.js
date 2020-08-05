@@ -12,9 +12,9 @@ class X509Breadcrumb extends Component {
 const mapStateToProps = (state, props) => ({
   name: getClientAccessStrategyName(
     state,
-    props.match.params.id,
+    props.match.params.projectId,
     props.match.params.strategyId
-  )
+  ),
 });
 
 export default connect(mapStateToProps)(X509Breadcrumb);

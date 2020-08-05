@@ -15,14 +15,17 @@ const routes = [
   { path: '/projects/:id', breadcrumb: ProjectBreadcrumb },
   {
     path: '/projects/:id/environments/:environmentKey',
-    breadcrumb: EnvironmentBreadcrumb
+    breadcrumb: EnvironmentBreadcrumb,
   },
   { path: '/projects/:id/toggles/:toggleKey', breadcrumb: ToggleBreadcrumb },
-  { path: '/projects/:id/certificates/:strategyId', breadcrumb: X509Breadcrumb }
+  {
+    path: '/projects/:projectId/certificates/:strategyId',
+    breadcrumb: X509Breadcrumb,
+  },
 ];
 
 const style = {
-  paddingTop: '17px'
+  paddingTop: '17px',
 };
 
 const Breadcrumbs = ({ breadcrumbs }) => (
@@ -40,7 +43,7 @@ const Breadcrumbs = ({ breadcrumbs }) => (
               value={{
                 style: { verticalAlign: 'text-bottom' },
                 size: '1.1em',
-                color: '#abc'
+                color: '#abc',
               }}
             >
               <AiOutlineRight />

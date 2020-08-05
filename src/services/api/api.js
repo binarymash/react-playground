@@ -5,7 +5,7 @@ export const Api = {
 
   getProjects: () => {
     const url = `${Config.query.baseUrl}/projects`;
-    return fetch(url).then(function(response) {
+    return fetch(url).then(function (response) {
       if (response.ok) {
         return response.json();
       }
@@ -13,10 +13,10 @@ export const Api = {
     });
   },
 
-  getProject: projectId => {
+  getProject: (projectId) => {
     const url = `${Config.query.baseUrl}/projects/${projectId}`;
 
-    return fetch(url).then(function(response) {
+    return fetch(url).then(function (response) {
       if (response.ok) {
         return response.json();
       }
@@ -27,7 +27,7 @@ export const Api = {
   getEnvironment: (projectId, environmentKey) => {
     const url = `${Config.query.baseUrl}/projects/${projectId}/environments/${environmentKey}`;
 
-    return fetch(url).then(function(response) {
+    return fetch(url).then(function (response) {
       if (response.ok) {
         return response.json();
       }
@@ -38,7 +38,7 @@ export const Api = {
   getEnvironmentState: (projectId, environmentKey) => {
     const url = `${Config.query.baseUrl}/projects/${projectId}/environments/${environmentKey}/state`;
 
-    return fetch(url).then(function(response) {
+    return fetch(url).then(function (response) {
       if (response.ok) {
         return response.json();
       }
@@ -49,7 +49,7 @@ export const Api = {
   getToggle: (projectId, toggleKey) => {
     const url = `${Config.query.baseUrl}/projects/${projectId}/toggles/${toggleKey}`;
 
-    return fetch(url).then(function(response) {
+    return fetch(url).then(function (response) {
       if (response.ok) {
         return response.json();
       }
@@ -60,7 +60,7 @@ export const Api = {
   getToggleState: (projectId, toggleKey) => {
     const url = `${Config.query.baseUrl}/projects/${projectId}/toggles/${toggleKey}/state`;
 
-    return fetch(url).then(function(response) {
+    return fetch(url).then(function (response) {
       if (response.ok) {
         return response.json();
       }
@@ -77,34 +77,34 @@ export const Api = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Accept: 'application/json'
+        Accept: 'application/json',
       },
       body: JSON.stringify({
         projectId: id,
-        name: name
-      })
+        name: name,
+      }),
     };
 
-    return fetch(url, request).then(function(response) {
+    return fetch(url, request).then(function (response) {
       if (!response.ok) {
         throw new Error(response.status);
       }
     });
   },
 
-  deleteProject: projectId => {
+  deleteProject: (projectId) => {
     const url = `${Config.command.baseUrl}/projects/${projectId}/delete`;
 
     let request = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Accept: 'application/json'
+        Accept: 'application/json',
       },
-      body: JSON.stringify({})
+      body: JSON.stringify({}),
     };
 
-    return fetch(url, request).then(function(response) {
+    return fetch(url, request).then(function (response) {
       if (!response.ok) {
         throw new Error(response.status);
       }
@@ -118,15 +118,15 @@ export const Api = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Accept: 'application/json'
+        Accept: 'application/json',
       },
       body: JSON.stringify({
         key: toggleKey,
-        name: toggleName
-      })
+        name: toggleName,
+      }),
     };
 
-    return fetch(url, request).then(function(response) {
+    return fetch(url, request).then(function (response) {
       if (!response.ok) {
         throw new Error(response.status);
       }
@@ -140,12 +140,12 @@ export const Api = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Accept: 'application/json'
+        Accept: 'application/json',
       },
-      body: JSON.stringify({})
+      body: JSON.stringify({}),
     };
 
-    return fetch(url, request).then(function(response) {
+    return fetch(url, request).then(function (response) {
       if (!response.ok) {
         throw new Error(response.status);
       }
@@ -159,15 +159,15 @@ export const Api = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Accept: 'application/json'
+        Accept: 'application/json',
       },
       body: JSON.stringify({
         key: environmentKey,
-        name: environmentName
-      })
+        name: environmentName,
+      }),
     };
 
-    return fetch(url, request).then(function(response) {
+    return fetch(url, request).then(function (response) {
       if (!response.ok) {
         throw new Error(response.status);
       }
@@ -181,12 +181,12 @@ export const Api = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Accept: 'application/json'
+        Accept: 'application/json',
       },
-      body: JSON.stringify({})
+      body: JSON.stringify({}),
     };
 
-    return fetch(url, request).then(function(response) {
+    return fetch(url, request).then(function (response) {
       if (!response.ok) {
         throw new Error(response.status);
       }
@@ -200,14 +200,14 @@ export const Api = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Accept: 'application/json'
+        Accept: 'application/json',
       },
       body: JSON.stringify({
-        state: value
-      })
+        state: value,
+      }),
     };
 
-    return fetch(url, request).then(function(response) {
+    return fetch(url, request).then(function (response) {
       if (!response.ok) {
         throw new Error(response.status);
       }
@@ -217,7 +217,7 @@ export const Api = {
   getX509Certificate: (projectId, strategyId) => {
     const url = `${Config.query.baseUrl}/projects/${projectId}/certificates/${strategyId}`;
 
-    return fetch(url).then(function(response) {
+    return fetch(url).then(function (response) {
       if (response.ok) {
         return response.json();
       }
@@ -232,17 +232,18 @@ export const Api = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Accept: 'application/json'
+        Accept: 'application/json',
       },
       body: JSON.stringify({
-        clientAccessStrategyId: strategyId
-      })
+        clientAccessStrategyId: strategyId,
+      }),
     };
 
-    return fetch(url, request).then(function(response) {
-      if (!response.ok) {
-        throw new Error(response.status);
+    return fetch(url, request).then(function (response) {
+      if (response.ok) {
+        return response.json();
       }
+      throw new Error(response.status);
     });
-  }
+  },
 };

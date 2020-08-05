@@ -208,7 +208,7 @@ export const reducer = produce((draft, action) => {
       }
       break;
 
-    case actionTypes.toggleEnvironmentStateUpdateRequested:
+    case actionTypes.toggleEnvironmentStateUpdateFailed:
       storeKey = getStoreKey(action.projectId, action.environmentKey);
 
       projection = draft.environmentStates[storeKey];

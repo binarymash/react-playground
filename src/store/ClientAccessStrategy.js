@@ -29,10 +29,10 @@ export const getClientAccessStrategy = (state, projectId, strategyId) => {
       pem: strategy.clientCertificate.pem,
       created: strategy.clientCertificate.created,
       notAfter: strategy.clientCertificate.notAfter,
-      status: strategy.clientCertificate.status
+      status: strategy.clientCertificate.status,
     },
     rootCertificatePem: strategy.rootCertificatePem,
-    audit: getAudit(strategy)
+    audit: getAudit(strategy),
   };
 };
 
@@ -45,7 +45,16 @@ export const getIsLoading = (state, projectId, strategyId) => {
   return false;
 };
 
-const getAudit = strategy => {
+export const getIsCreating = (state, projectId, strategyId) => {
+  let projection =
+    state.strategy.strategies[getStoreKey(projectId, strategyId)];
+  if (projection) {
+    return projection.isCreating === true;
+  }
+  return false;
+};
+
+const getAudit = (strategy) => {
   if (!strategy) {
     return null;
   }
@@ -55,20 +64,56 @@ const getAudit = strategy => {
     createdBy: strategy.clientCertificate.audit.createdBy,
     lastModified: strategy.clientCertificate.audit.lastModified,
     lastModifiedBy: strategy.clientCertificate.audit.lastModifiedBy,
-    version: strategy.clientCertificate.audit.version
+    version: strategy.clientCertificate.audit.version,
   };
 };
 
 // Write
 
 const INITIAL_STATE = {
-  strategies: {}
+  strategies: {},
 };
 
 export const reducer = produce((draft, action) => {
   let storeKey = undefined;
 
   switch (action.type) {
+    case actionTypes.clientAccessStrategyX509AddRequested:
+      {
+        storeKey = getStoreKey(action.projectId, action.strategyId);
+        let projection = draft.strategies[storeKey];
+        if (!projection) {
+          projection = {};
+          draft.strategies[storeKey] = projection;
+        }
+        projection.isCreating = true;
+      }
+      break;
+
+    case actionTypes.clientAccessStrategyX509AddSucceeded:
+      {
+        storeKey = getStoreKey(action.projectId, action.strategyId);
+        let projection = draft.strategies[storeKey];
+        if (!projection) {
+          projection = {};
+          draft.strategies[storeKey] = projection;
+        }
+        projection.isCreating = false;
+      }
+      break;
+
+    case actionTypes.clientAccessStrategyX509AddFailed:
+      {
+        storeKey = getStoreKey(action.projectId, action.strategyId);
+        let projection = draft.strategies[storeKey];
+        if (!projection) {
+          projection = {};
+          draft.strategies[storeKey] = projection;
+        }
+        projection.isCreating = false;
+      }
+      break;
+
     case actionTypes.requestClientAccessStrategy:
       {
         storeKey = getStoreKey(action.projectId, action.strategyId);

@@ -13,8 +13,9 @@ export class AccessStrategies extends Component {
       type: 'SHOW_MODAL',
       modalType: 'ADD_ACCESS_STRATEGY',
       modalProps: {
-        projectId: this.props.projectId
-      }
+        projectId: this.props.projectId,
+        history: this.props.history,
+      },
     });
   };
 
@@ -28,7 +29,7 @@ export class AccessStrategies extends Component {
       content = (
         <Table striped bordered hover>
           <tbody>
-            {this.props.strategies.map(strategy => (
+            {this.props.strategies.map((strategy) => (
               <AccessStrategyX509 key={strategy.id} strategy={strategy} />
             ))}
           </tbody>

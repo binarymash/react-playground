@@ -1,6 +1,7 @@
 import { Api } from '../services/api/api.js';
 import { v1 as uuidv1 } from 'uuid';
 import * as actionTypes from './types';
+import { push } from 'connected-react-router';
 
 const getAccount = (dispatch, getState) => {
   dispatch({ type: actionTypes.requestAccount });
@@ -233,6 +234,9 @@ export const actionCreators = {
   },
 
   selectToggle: (projectId, toggleKey) => async (dispatch, getState) => {
+    if (!getState().project.projects[projectId]) {
+      await getLatestProject(projectId, dispatch, getState);
+    }
     await getLatestToggle(projectId, toggleKey, dispatch, getState);
     await getLatestToggleState(projectId, toggleKey, dispatch, getState);
   },
@@ -241,6 +245,10 @@ export const actionCreators = {
     dispatch,
     getState
   ) => {
+    if (!getState().project.projects[projectId]) {
+      await getLatestProject(projectId, dispatch, getState);
+    }
+
     await getLatestX509Certificate(projectId, strategyId, dispatch);
   },
 
@@ -455,18 +463,31 @@ export const actionCreators = {
       });
   },
 
-  addClientAccessStrategyX509: (projectId) => async (dispatch, getState) => {
-    let strategyId = uuidv1();
+  createClientAccesStrategyX509: (projectId, strategyId) => async (
+    dispatch,
+    getState
+  ) => {
+    dispatch({
+      type: actionTypes.clientAccessStrategyX509AddRequested,
+      projectId,
+      strategyId,
+    });
+    dispatch(push(`/projects/${projectId}/certificates/${strategyId}`));
+  },
 
-    dispatch({ type: actionTypes.clientAccessStrategyX509AddRequested });
-
-    await Api.addClientAccessStrategyX509(projectId, strategyId)
-      .then(() => {
+  addClientAccessStrategyX509: (projectId, strategyId) => async (
+    dispatch,
+    getState
+  ) => {
+    return await Api.clientAccessStrategyAddX509(projectId, strategyId)
+      .then((response) => {
         dispatch({
           type: actionTypes.clientAccessStrategyX509AddSucceeded,
           projectId,
           strategyId,
         });
+
+        return response;
       })
       .catch((error) => {
         dispatch({

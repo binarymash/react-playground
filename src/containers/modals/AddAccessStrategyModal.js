@@ -5,6 +5,9 @@ import { connect } from 'react-redux';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { BsX, BsCheck } from 'react-icons/bs';
+import { useHistory } from 'react-router-dom';
+import { v1 as uuidv1 } from 'uuid';
+import { push } from 'connected-react-router';
 
 class AddAccessStrategyModal extends Component {
   constructor(props) {
@@ -12,19 +15,22 @@ class AddAccessStrategyModal extends Component {
 
     this.state = {
       name: '',
-      key: ''
+      key: '',
     };
   }
 
-  handleOkClick = event => {
+  handleOkClick = (event) => {
     if (this.isValid()) {
       this.props.hideModal().then(() => {
-        this.props.addClientAccessStrategyX509(this.props.projectId);
+        this.props.createClientAccesStrategyX509(
+          this.props.projectId,
+          uuidv1()
+        );
       });
     }
   };
 
-  handleChange = event => {
+  handleChange = (event) => {
     const target = event.target;
     const name = target.name;
     let value = target.type === 'checkbox' ? target.checked : target.value;
@@ -34,7 +40,7 @@ class AddAccessStrategyModal extends Component {
     }
 
     this.setState({
-      [name]: value
+      [name]: value,
     });
 
     if (name === 'name') {
@@ -42,7 +48,7 @@ class AddAccessStrategyModal extends Component {
     }
   };
 
-  handleKeyFocus = event => {
+  handleKeyFocus = (event) => {
     this.setState({ ['keyFocussed']: true });
   };
 
@@ -78,7 +84,7 @@ class AddAccessStrategyModal extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return bindActionCreators(actionCreators, dispatch);
 };
 
