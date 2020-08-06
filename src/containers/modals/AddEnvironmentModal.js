@@ -16,11 +16,11 @@ class AddEnvironment extends Component {
 
     this.state = {
       name: '',
-      key: ''
+      key: '',
     };
   }
 
-  handleOkClick = event => {
+  handleOkClick = (event) => {
     if (this.isValid()) {
       this.props.hideModal().then(() => {
         this.props.addEnvironment(
@@ -32,7 +32,7 @@ class AddEnvironment extends Component {
     }
   };
 
-  handleChange = event => {
+  handleChange = (event) => {
     const target = event.target;
     const name = target.name;
     let value = target.type === 'checkbox' ? target.checked : target.value;
@@ -42,7 +42,7 @@ class AddEnvironment extends Component {
     }
 
     this.setState({
-      [name]: value
+      [name]: value,
     });
 
     if (name === 'name') {
@@ -50,11 +50,11 @@ class AddEnvironment extends Component {
     }
   };
 
-  handleKeyFocus = event => {
+  handleKeyFocus = (event) => {
     this.setState({ ['keyFocussed']: true });
   };
 
-  syncKey = value => {
+  syncKey = (value) => {
     if (this.state.key.length === 0 && this.state.keyFocussed) {
       this.setState({ ['keyFocussed']: false });
     }
@@ -64,12 +64,9 @@ class AddEnvironment extends Component {
     }
   };
 
-  sanitizeKey = value => {
+  sanitizeKey = (value) => {
     return validator.whitelist(
-      value
-        .normalize('NFKD')
-        .replace(/\s+/g, '-')
-        .toLowerCase(),
+      value.normalize('NFKD').replace(/\s+/g, '-').toLowerCase(),
       KEY_WHITELIST
     );
   };
@@ -133,7 +130,10 @@ class AddEnvironment extends Component {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={() => this.props.hideModal()}>
+          <Button
+            variant="outline-secondary"
+            onClick={() => this.props.hideModal()}
+          >
             <BsX /> Cancel
           </Button>
           <Button
@@ -149,7 +149,7 @@ class AddEnvironment extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return bindActionCreators(actionCreators, dispatch);
 };
 

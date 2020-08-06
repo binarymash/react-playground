@@ -37,7 +37,10 @@ class DeleteAccessStrategyModal extends Component {
           </p>
         </Modal.Body>
         <Modal.Footer>
-          <Button active={true} onClick={() => this.props.hideModal()}>
+          <Button
+            variant="outline-secondary"
+            onClick={() => this.props.hideModal()}
+          >
             <BsX /> No, keep the certificate
           </Button>
           <Button variant="danger" onClick={() => this.handleOkClick()}>

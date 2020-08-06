@@ -34,7 +34,10 @@ class DeleteToggleModal extends Component {
           </p>
         </Modal.Body>
         <Modal.Footer>
-          <Button active={true} onClick={() => this.props.hideModal()}>
+          <Button
+            variant="outline-secondary"
+            onClick={() => this.props.hideModal()}
+          >
             <BsX /> No, keep the toggle
           </Button>
           <Button variant="danger" onClick={() => this.handleOkClick()}>
@@ -46,7 +49,7 @@ class DeleteToggleModal extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return bindActionCreators(actionCreators, dispatch);
 };
 

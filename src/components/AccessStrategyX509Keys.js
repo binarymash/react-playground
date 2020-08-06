@@ -2,6 +2,7 @@
 import { connect } from 'react-redux';
 import Alert from 'react-bootstrap/Alert';
 import Accordion from 'react-bootstrap/Accordion';
+import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { BsEyeFill } from 'react-icons/bs';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
@@ -45,15 +46,17 @@ export class AccessStrategyX509Keys extends Component {
           These are needed when using the certificate.
         </p>
         <Alert variant="warning">
-          <p>
-            Take a copy of these keys now and securely store them! You cannot
-            access them again after you navigate away from this page.
-          </p>
+          Take a copy of these keys now and securely store them! You cannot
+          access them again after you navigate away from this page.
         </Alert>
         <Accordion style={accordianStyle}>
           <Card>
             <Card.Header>
-              <Accordion.Toggle eventKey="0">
+              <Accordion.Toggle
+                as={Button}
+                variant="outline-primary"
+                eventKey="0"
+              >
                 Show/hide private key
               </Accordion.Toggle>
               <CopyToClipboard text={this.props.privateKey}>
@@ -82,7 +85,11 @@ export class AccessStrategyX509Keys extends Component {
         <Accordion>
           <Card>
             <Card.Header>
-              <Accordion.Toggle eventKey="0">
+              <Accordion.Toggle
+                as={Button}
+                variant="outline-primary"
+                eventKey="0"
+              >
                 Show/hide public key
               </Accordion.Toggle>
               <CopyToClipboard text={this.props.publicKey}>

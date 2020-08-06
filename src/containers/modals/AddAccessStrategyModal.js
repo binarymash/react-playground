@@ -30,7 +30,10 @@ class AddAccessStrategyModal extends Component {
           authorize a trusted application. Do you want to continue?
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={() => this.props.hideModal()}>
+          <Button
+            variant="outline-secondary"
+            onClick={() => this.props.hideModal()}
+          >
             <BsX /> Cancel
           </Button>
           <Button variant="success" onClick={() => this.handleOkClick()}>

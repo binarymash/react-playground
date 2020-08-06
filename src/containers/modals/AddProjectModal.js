@@ -12,11 +12,11 @@ class AddProjectModal extends Component {
     super(props);
 
     this.state = {
-      name: ''
+      name: '',
     };
   }
 
-  handleOkClick = event => {
+  handleOkClick = (event) => {
     if (this.isValid()) {
       this.props.hideModal().then(() => {
         this.props.addProject(this.state.name);
@@ -24,13 +24,13 @@ class AddProjectModal extends Component {
     }
   };
 
-  handleChange = event => {
+  handleChange = (event) => {
     const target = event.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;
 
     this.setState({
-      [name]: value
+      [name]: value,
     });
   };
 
@@ -72,7 +72,10 @@ class AddProjectModal extends Component {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={() => this.props.hideModal()}>
+          <Button
+            variant="outline-secondary"
+            onClick={() => this.props.hideModal()}
+          >
             <BsX /> Cancel
           </Button>
           <Button
@@ -88,7 +91,7 @@ class AddProjectModal extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return bindActionCreators(actionCreators, dispatch);
 };
 
