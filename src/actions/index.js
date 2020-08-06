@@ -479,7 +479,7 @@ export const actionCreators = {
     dispatch,
     getState
   ) => {
-    return await Api.clientAccessStrategyAddX509(projectId, strategyId)
+    return await Api.addClientAccessStrategyX509(projectId, strategyId)
       .then((response) => {
         dispatch({
           type: actionTypes.clientAccessStrategyX509AddSucceeded,
@@ -497,6 +497,35 @@ export const actionCreators = {
         });
         dispatch({
           type: actionTypes.clientAccessStrategyX509AddFailed,
+          projectId,
+          strategyId,
+          error,
+        });
+      });
+  },
+
+  deleteClientAccesStrategyX509: (projectId, strategyId) => async (
+    dispatch,
+    getState
+  ) => {
+    dispatch({ type: actionTypes.clientAccessStrategyX509DeleteRequested });
+
+    await Api.deleteClientAccessStrategyX509(projectId, strategyId)
+      .then(() => {
+        dispatch({
+          type: actionTypes.clientAccessStrategyX509DeleteSucceeded,
+          projectId: projectId,
+          strategyId: strategyId,
+        });
+      })
+      .catch(function (error) {
+        dispatch({
+          type: actionTypes.showModal,
+          modalType: 'API_ERROR',
+          modalProps: { error: error.message },
+        });
+        dispatch({
+          type: actionTypes.clientAccessStrategyX509DeleteFailed,
           projectId,
           strategyId,
           error,

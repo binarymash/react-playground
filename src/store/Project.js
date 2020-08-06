@@ -29,7 +29,7 @@ export const getProject = (state, projectId) => {
     environments: getEnvironments(project),
     toggles: getToggles(project),
     clientAccessStrategies: getClientAccessStrategies(project),
-    audit: project.audit
+    audit: project.audit,
   };
 };
 
@@ -57,7 +57,9 @@ export const getEnvironmentName = (state, projectId, environmentKey) => {
   }
 
   if (project) {
-    let environment = project.environments.find(e => e.key === environmentKey);
+    let environment = project.environments.find(
+      (e) => e.key === environmentKey
+    );
     if (environment) {
       return environment.name;
     }
@@ -75,7 +77,7 @@ export const getToggleName = (state, projectId, toggleKey) => {
   }
 
   if (project) {
-    let toggle = project.toggles.find(t => t.key === toggleKey);
+    let toggle = project.toggles.find((t) => t.key === toggleKey);
     if (toggle) {
       return toggle.name;
     }
@@ -94,7 +96,7 @@ export const getClientAccessStrategyName = (state, projectId, strategyId) => {
 
   if (project) {
     let strategy = project.clientAccessStrategies.find(
-      t => t.id === strategyId
+      (t) => t.id === strategyId
     );
     if (strategy) {
       return strategy.id;
@@ -104,12 +106,12 @@ export const getClientAccessStrategyName = (state, projectId, strategyId) => {
   return null;
 };
 
-const getEnvironments = project => {
+const getEnvironments = (project) => {
   if (!project.environments) {
     return [];
   }
 
-  return project.environments.map(environment =>
+  return project.environments.map((environment) =>
     getEnvironment(project.id, environment)
   );
 };
@@ -118,32 +120,32 @@ const getEnvironment = (projectId, environment) => {
   return {
     projectId: projectId,
     key: environment.key,
-    name: environment.name
+    name: environment.name,
   };
 };
 
-const getToggles = project => {
+const getToggles = (project) => {
   if (!project.toggles) {
     return [];
   }
 
-  return project.toggles.map(toggle => getToggle(project.id, toggle));
+  return project.toggles.map((toggle) => getToggle(project.id, toggle));
 };
 
 const getToggle = (projectId, toggle) => {
   return {
     projectId: projectId,
     key: toggle.key,
-    name: toggle.name
+    name: toggle.name,
   };
 };
 
-const getClientAccessStrategies = project => {
+const getClientAccessStrategies = (project) => {
   if (!project.clientAccessStrategies) {
     return [];
   }
 
-  return project.clientAccessStrategies.map(strategy =>
+  return project.clientAccessStrategies.map((strategy) =>
     getStrategy(project.id, strategy)
   );
 };
@@ -153,17 +155,17 @@ const getStrategy = (projectId, strategy) => {
     projectId: projectId,
     id: strategy.id,
     key: strategy.key,
-    value: strategy.value
+    value: strategy.value,
   };
 };
 
 // Write
 
 const INITIAL_STATE = {
-  projects: {}
+  projects: {},
 };
 
-const updateAudit = projection => {
+const updateAudit = (projection) => {
   projection.audit = undefined;
   projection.project.audit.lastModified = undefined;
   projection.project.audit.lastModifiedBy = undefined;
@@ -194,7 +196,7 @@ export const reducer = produce((draft, action) => {
     case actionTypes.toggleAddSucceeded:
       projection.project.toggles.push({
         key: action.toggleKey,
-        name: action.toggleName
+        name: action.toggleName,
       });
 
       updateAudit(projection);
@@ -203,7 +205,7 @@ export const reducer = produce((draft, action) => {
     case actionTypes.toggleDeleteSucceeded:
       projection.project.toggles.splice(
         projection.project.toggles.findIndex(
-          toggle => toggle.key === action.toggleKey
+          (toggle) => toggle.key === action.toggleKey
         ),
         1
       );
@@ -214,7 +216,7 @@ export const reducer = produce((draft, action) => {
     case actionTypes.environmentAddSucceeded:
       projection.project.environments.push({
         key: action.environmentKey,
-        name: action.environmentName
+        name: action.environmentName,
       });
 
       updateAudit(projection);
@@ -223,7 +225,7 @@ export const reducer = produce((draft, action) => {
     case actionTypes.environmentDeleteSucceeded:
       projection.project.environments.splice(
         projection.project.environments.findIndex(
-          environment => environment.key === action.environmentKey
+          (environment) => environment.key === action.environmentKey
         ),
         1
       );
@@ -233,6 +235,17 @@ export const reducer = produce((draft, action) => {
 
     case actionTypes.projectDeleteSucceeded:
       draft.projects[action.projectId] = undefined;
+      break;
+
+    case actionTypes.clientAccessStrategyX509DeleteSucceeded:
+      projection.project.clientAccessStrategies.splice(
+        projection.project.clientAccessStrategies.findIndex(
+          (strategy) => strategy.id === action.strategyId
+        ),
+        1
+      );
+
+      updateAudit(projection);
       break;
 
     default:

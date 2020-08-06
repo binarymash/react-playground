@@ -8,11 +8,11 @@ export class AccessStrategyX509 extends Component {
   handleDeleteClick = () => {
     this.props.dispatch({
       type: 'SHOW_MODAL',
-      modalType: 'DELETE_ACCESS_STRATEGY_X509',
+      modalType: 'DELETE_ACCESS_STRATEGY',
       modalProps: {
-        projectId: this.props.projectId,
-        strategyId: this.props.strategy.id
-      }
+        projectId: this.props.strategy.projectId,
+        strategyId: this.props.strategy.id,
+      },
     });
   };
 

@@ -137,6 +137,13 @@ export const reducer = produce((draft, action) => {
       draft.strategies[storeKey].isLoading = false;
       break;
 
+    case actionTypes.clientAccessStrategyX509DeleteSucceeded:
+      {
+        storeKey = getStoreKey(action.projectId, action.strategyId);
+        draft.strategies[storeKey] = undefined;
+      }
+      break;
+
     default:
       break;
   }

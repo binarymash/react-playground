@@ -67,5 +67,12 @@ export const clientAccessStrategyX509AddSucceeded =
 export const clientAccessStrategyX509AddFailed =
   'CLIENT_ACCESS_STRATEGY_X509_ADD_FAILED';
 
+export const clientAccessStrategyX509DeleteRequested =
+  'CLIENT_ACCESS_STRATEGY_X509_DELETE_REQUESTED';
+export const clientAccessStrategyX509DeleteSucceeded =
+  'CLIENT_ACCESS_STRATEGY_X509_DELETE_SUCCEEDED';
+export const clientAccessStrategyX509DeleteFailed =
+  'CLIENT_ACCESS_STRATEGY_X509_DELETE_FAILED';
+
 export const showModal = 'SHOW_MODAL';
 export const hideModal = 'HIDE_MODAL';

@@ -5,55 +5,13 @@ import { connect } from 'react-redux';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { BsX, BsCheck } from 'react-icons/bs';
-import { useHistory } from 'react-router-dom';
 import { v1 as uuidv1 } from 'uuid';
-import { push } from 'connected-react-router';
 
 class AddAccessStrategyModal extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      name: '',
-      key: '',
-    };
-  }
-
   handleOkClick = (event) => {
-    if (this.isValid()) {
-      this.props.hideModal().then(() => {
-        this.props.createClientAccesStrategyX509(
-          this.props.projectId,
-          uuidv1()
-        );
-      });
-    }
-  };
-
-  handleChange = (event) => {
-    const target = event.target;
-    const name = target.name;
-    let value = target.type === 'checkbox' ? target.checked : target.value;
-
-    if (name === 'key') {
-      value = this.sanitizeKey(value);
-    }
-
-    this.setState({
-      [name]: value,
+    this.props.hideModal().then(() => {
+      this.props.createClientAccesStrategyX509(this.props.projectId, uuidv1());
     });
-
-    if (name === 'name') {
-      this.syncKey(value);
-    }
-  };
-
-  handleKeyFocus = (event) => {
-    this.setState({ ['keyFocussed']: true });
-  };
-
-  isValid = () => {
-    return true;
   };
 
   render() {

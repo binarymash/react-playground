@@ -9,9 +9,9 @@ import { BsExclamationCircle, BsX, BsCheck } from 'react-icons/bs';
 class DeleteAccessStrategyModal extends Component {
   handleOkClick = () => {
     this.props.hideModal().then(() => {
-      this.props.deleteEnvironment(
+      this.props.deleteClientAccesStrategyX509(
         this.props.projectId,
-        this.props.environmentKey
+        this.props.strategyId
       );
     });
   };
@@ -27,21 +27,21 @@ class DeleteAccessStrategyModal extends Component {
       >
         <Modal.Header closeButton>
           <Modal.Title>
-            <BsExclamationCircle /> Confirm environment deletion
+            <BsExclamationCircle /> Confirm X.509 certificate deletion
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <p>
-            This will remove the environment from this project. Do you want to
-            continue?
+            This will remove the X.509 from this project. Any clients using this
+            certificate will lose access. Do you want to continue?
           </p>
         </Modal.Body>
         <Modal.Footer>
           <Button active={true} onClick={() => this.props.hideModal()}>
-            <BsX /> No, keep the environment
+            <BsX /> No, keep the certificate
           </Button>
           <Button variant="danger" onClick={() => this.handleOkClick()}>
-            <BsCheck /> Yes, delete the environment
+            <BsCheck /> Yes, delete the certificate
           </Button>
         </Modal.Footer>
       </Modal>
@@ -49,7 +49,7 @@ class DeleteAccessStrategyModal extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return bindActionCreators(actionCreators, dispatch);
 };
 

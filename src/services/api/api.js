@@ -225,7 +225,7 @@ export const Api = {
     });
   },
 
-  clientAccessStrategyAddX509: (projectId, strategyId) => {
+  addClientAccessStrategyX509: (projectId, strategyId) => {
     const url = `${Config.command.baseUrl}/projects/${projectId}/certificates/add`;
 
     let request = {
@@ -244,6 +244,25 @@ export const Api = {
         return response.json();
       }
       throw new Error(response.status);
+    });
+  },
+
+  deleteClientAccessStrategyX509: (projectId, strategyId) => {
+    const url = `${Config.command.baseUrl}/projects/${projectId}/certificates/${strategyId}/delete`;
+
+    let request = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify({}),
+    };
+
+    return fetch(url, request).then(function (response) {
+      if (!response.ok) {
+        throw new Error(response.status);
+      }
     });
   },
 };

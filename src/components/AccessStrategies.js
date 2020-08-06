@@ -14,7 +14,6 @@ export class AccessStrategies extends Component {
       modalType: 'ADD_ACCESS_STRATEGY',
       modalProps: {
         projectId: this.props.projectId,
-        history: this.props.history,
       },
     });
   };
@@ -51,7 +50,7 @@ export class AccessStrategies extends Component {
             variant="success"
             onClick={this.handleAddClick}
           >
-            <BsPlus /> Add new access
+            <BsPlus /> Add new X.509 certificate
           </Button>
         </div>
         {content}
