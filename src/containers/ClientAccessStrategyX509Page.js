@@ -82,7 +82,7 @@ class ClientAccessStrategyX509Page extends Component {
         <motion.div initial="initial" animate="in" exit="out" variants={Fade}>
           <h1>
             X.509 Certificate
-            <div>
+            <div style={{ overflowWrap: 'break-word' }}>
               <small>{this.props.strategy.clientCertificate.id}</small>
             </div>
           </h1>

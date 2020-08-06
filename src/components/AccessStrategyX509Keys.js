@@ -54,7 +54,7 @@ export class AccessStrategyX509Keys extends Component {
             <Card.Header>
               <Accordion.Toggle
                 as={Button}
-                variant="outline-primary"
+                variant="outline-secondary"
                 eventKey="0"
               >
                 Show/hide private key
@@ -87,7 +87,7 @@ export class AccessStrategyX509Keys extends Component {
             <Card.Header>
               <Accordion.Toggle
                 as={Button}
-                variant="outline-primary"
+                variant="outline-secondary"
                 eventKey="0"
               >
                 Show/hide public key
