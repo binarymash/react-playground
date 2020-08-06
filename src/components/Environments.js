@@ -12,8 +12,8 @@ export class Environments extends Component {
       type: 'SHOW_MODAL',
       modalType: 'ADD_ENVIRONMENT',
       modalProps: {
-        projectId: this.props.projectId
-      }
+        projectId: this.props.projectId,
+      },
     });
   };
 
@@ -33,8 +33,7 @@ export class Environments extends Component {
           <div className="tableToolbar">
             <Button
               className="float-right"
-              size="sm"
-              variant="success"
+              variant="primary"
               onClick={this.handleAddClick}
             >
               <BsPlus /> Add new environment
@@ -42,7 +41,7 @@ export class Environments extends Component {
           </div>
           <Table striped bordered hover>
             <tbody>
-              {this.props.environments.map(environment => (
+              {this.props.environments.map((environment) => (
                 <Environment key={environment.key} environment={environment} />
               ))}
             </tbody>

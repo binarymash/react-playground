@@ -46,8 +46,7 @@ export class AccessStrategies extends Component {
         <div className="tableToolbar">
           <Button
             className="float-right"
-            size="sm"
-            variant="success"
+            variant="primary"
             onClick={this.handleAddClick}
           >
             <BsPlus /> Add new X.509 certificate

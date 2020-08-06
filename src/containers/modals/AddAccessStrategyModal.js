@@ -36,7 +36,7 @@ class AddAccessStrategyModal extends Component {
           >
             <BsX /> Cancel
           </Button>
-          <Button variant="success" onClick={() => this.handleOkClick()}>
+          <Button variant="primary" onClick={() => this.handleOkClick()}>
             <BsCheck /> OK
           </Button>
         </Modal.Footer>

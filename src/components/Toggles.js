@@ -13,8 +13,8 @@ export class Toggles extends Component {
       type: 'SHOW_MODAL',
       modalType: 'ADD_TOGGLE',
       modalProps: {
-        projectId: this.props.projectId
-      }
+        projectId: this.props.projectId,
+      },
     });
   };
 
@@ -28,7 +28,7 @@ export class Toggles extends Component {
       content = (
         <Table striped bordered hover>
           <tbody>
-            {this.props.toggles.map(toggle => (
+            {this.props.toggles.map((toggle) => (
               <Toggle key={toggle.key} toggle={toggle} />
             ))}
           </tbody>
@@ -46,8 +46,7 @@ export class Toggles extends Component {
         <div className="tableToolbar">
           <Button
             className="float-right"
-            size="sm"
-            variant="success"
+            variant="primary"
             onClick={this.handleAddClick}
           >
             <BsPlus /> Add new toggle

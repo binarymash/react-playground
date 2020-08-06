@@ -11,7 +11,7 @@ export class Projects extends Component {
     this.props.dispatch({
       type: 'SHOW_MODAL',
       modalType: 'ADD_PROJECT',
-      modalProps: {}
+      modalProps: {},
     });
   };
 
@@ -29,8 +29,7 @@ export class Projects extends Component {
         <div className="tableToolbar">
           <Button
             className="float-right"
-            size="sm"
-            variant="success"
+            variant="primary"
             onClick={this.handleAddClick}
           >
             <BsPlus /> Add new project
@@ -39,7 +38,7 @@ export class Projects extends Component {
 
         <Table striped bordered hover>
           <tbody>
-            {this.props.projects.map(project => (
+            {this.props.projects.map((project) => (
               <Project key={project.id} project={project} />
             ))}
           </tbody>

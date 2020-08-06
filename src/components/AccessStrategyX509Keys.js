@@ -15,7 +15,7 @@ export class AccessStrategyX509Keys extends Component {
   render() {
     if (!this.props.available) {
       return (
-        <Alert variant="info">
+        <Alert variant="secondary">
           To use this certificate you need to know the private key associated
           with it. This information is only available during certificate
           creation, and cannot be retrieved later.

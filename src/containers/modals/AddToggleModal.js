@@ -138,7 +138,7 @@ class AddToggleModal extends Component {
           </Button>
           <Button
             active={true}
-            variant="success"
+            variant="primary"
             onClick={() => this.handleOkClick()}
           >
             <BsCheck /> Save
