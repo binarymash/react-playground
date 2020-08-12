@@ -108,3 +108,11 @@ button {
   background-color: #f9f2f4 !important;
   opacity: 0.5;
 }
+
+amplify-authenticator {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  height: 100vh;
+}

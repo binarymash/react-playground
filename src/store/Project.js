@@ -3,6 +3,10 @@ import * as actionTypes from '../actions/types';
 
 // Read
 
+export const getActiveProjectId = (state) => {
+  return state.project.activeProjectId;
+};
+
 export const getIsLoading = (state, projectId) => {
   const projection = state.project.projects[projectId];
   if (projection) {
@@ -187,6 +191,7 @@ export const reducer = produce((draft, action) => {
     case actionTypes.receiveProject:
       draft.projects[action.projectId] = action.json;
       draft.projects[action.projectId].isLoading = false;
+      draft.activeProjectId = action.projectId;
       break;
 
     case actionTypes.receiveProjectError:

@@ -4,8 +4,15 @@ import { actionCreators } from './actions/index';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-
 import { getIsInitialised } from './store/Account';
+import Amplify from 'aws-amplify';
+import {
+  AmplifyAuthenticator,
+  AmplifySignUp,
+  AmplifySignIn,
+} from '@aws-amplify/ui-react';
+import { AuthState, onAuthUIStateChange } from '@aws-amplify/ui-components';
+
 import Layout from './containers/Layout';
 import DashboardPage from './containers/DashboardPage';
 import ProjectPage from './containers/ProjectPage';
@@ -14,12 +21,27 @@ import TogglePage from './containers/TogglePage';
 import ClientAccessStrategyX509Page from './containers/ClientAccessStrategyX509Page';
 import ModalRoot from './containers/modals/ModalRoot';
 import Loading from './components/Loading';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
+
+Amplify.configure({
+  region: process.env.REACT_APP_COGNITO_REGION,
+  userPoolId: process.env.REACT_APP_COGNITO_USER_POOL_ID,
+  userPoolWebClientId: process.env.REACT_APP_COGNITO_CLIENT_ID,
+});
 
 class App extends Component {
   componentDidMount() {
     this.props.initialise();
+    this.setState({});
   }
+
+  authStateChanged = (nextAuthState, authData) => {
+    this.setState({
+      authState: nextAuthState,
+      authData: authData,
+    });
+  };
 
   render() {
     if (!this.props.isInitialised) {
@@ -29,7 +51,7 @@ class App extends Component {
         top: '50%',
         left: '50%',
         marginRight: '-50%',
-        transform: 'translate(-50%, -50%)'
+        transform: 'translate(-50%, -50%)',
       };
 
       return (
@@ -39,38 +61,81 @@ class App extends Component {
       );
     }
 
+    if (this.state.authState === AuthState.SignedIn) {
+      return (
+        <Layout>
+          <Route exact path="/" component={DashboardPage} />
+          <Route exact path="/projects/:id" component={ProjectPage} />
+          <Route
+            exact
+            path="/projects/:projectId/environments/:environmentKey"
+            component={EnvironmentPage}
+          />
+          <Route
+            exact
+            path="/projects/:projectId/toggles/:toggleKey"
+            component={TogglePage}
+          />
+          <Route
+            exact
+            path="/projects/:projectId/certificates/:strategyId"
+            component={ClientAccessStrategyX509Page}
+          />
+          <ModalRoot />
+        </Layout>
+      );
+    }
+
     return (
-      <Layout>
-        <Route exact path="/" component={DashboardPage} />
-        <Route exact path="/projects/:id" component={ProjectPage} />
-        <Route
-          exact
-          path="/projects/:projectId/environments/:environmentKey"
-          component={EnvironmentPage}
+      <AmplifyAuthenticator
+        usernameAlias="email"
+        handleAuthStateChange={this.authStateChanged}
+      >
+        <AmplifySignUp
+          slot="sign-up"
+          usernameAlias="email"
+          formFields={[
+            {
+              type: 'email',
+              required: true,
+            },
+            {
+              type: 'password',
+              required: true,
+            },
+            // {
+            //   type: "given_name",
+            //   label: "Given Name *",
+            //   placeholder: "Enter your given name",
+            //   required: true,
+            // },
+            // {
+            //   type: "family_name",
+            //   label: "Family Name *",
+            //   placeholder: "Enter your family name",
+            //   required: true,
+            // },
+          ]}
         />
-        <Route
-          exact
-          path="/projects/:projectId/toggles/:toggleKey"
-          component={TogglePage}
+        <AmplifySignIn
+          slot="sign-in"
+          usernameAlias="email"
+          formFields={[{ type: 'email' }, { type: 'password' }]}
         />
-        <Route
-          exact
-          path="/projects/:projectId/certificates/:strategyId"
-          component={ClientAccessStrategyX509Page}
-        />
-        <ModalRoot />
-      </Layout>
+      </AmplifyAuthenticator>
     );
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    isInitialised: getIsInitialised(state)
+    isInitialised: getIsInitialised(state),
+    authState: null,
+    authData: null,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return bindActionCreators(actionCreators, dispatch);
 };
 
