@@ -11,7 +11,7 @@ import { IconContext } from 'react-icons';
 
 // define some custom breadcrumbs for certain routes (optional)
 const routes = [
-  { path: '/', breadcrumb: DashboardBreadcrumb },
+  // { path: '/', breadcrumb: DashboardBreadcrumb },
   { path: '/projects/:id', breadcrumb: ProjectBreadcrumb },
   {
     path: '/projects/:id/environments/:environmentKey',

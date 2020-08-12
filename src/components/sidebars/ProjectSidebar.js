@@ -24,17 +24,12 @@ export class ProjectSidebar extends Component {
 
     return (
       <div>
-        <hr />
-        <Navbar.Text>
-          <small>Current Project</small>
-        </Navbar.Text>
+        {/* <Navbar.Text></Navbar.Text> */}
         <Dropdown as={Nav.Item}>
           <Dropdown.Toggle as={Nav.Link} id="dropdown-basic">
-            {title}
+            Project: {title}
           </Dropdown.Toggle>
           <Dropdown.Menu>
-            <Dropdown.Header>Select a project...</Dropdown.Header>
-            <Dropdown.Divider />
             {this.props.projects.map((project) => (
               <LinkContainer
                 key={project.id}
@@ -46,6 +41,9 @@ export class ProjectSidebar extends Component {
             ))}
           </Dropdown.Menu>
         </Dropdown>
+        <Navbar.Text>
+          <hr />
+        </Navbar.Text>
       </div>
     );
   }

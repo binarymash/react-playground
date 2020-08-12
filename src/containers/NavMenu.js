@@ -30,9 +30,12 @@ class NavMenu extends Component {
             </Nav.Item>
             <Nav.Item>
               <LinkContainer to={`/`} exact>
-                <Nav.Link active={false}>Dashboard</Nav.Link>
+                <Nav.Link active={false}>Projects</Nav.Link>
               </LinkContainer>
             </Nav.Item>
+            <Navbar.Text>
+              <hr />
+            </Navbar.Text>
             <ProjectSidebar />
           </Nav>
         </Navbar.Collapse>
