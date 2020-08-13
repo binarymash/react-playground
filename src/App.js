@@ -37,14 +37,13 @@ class App extends Component {
   componentDidMount() {
     this.props.initialise();
     this.setState({});
-  }
-
-  authStateChanged = (nextAuthState, authData) => {
-    this.setState({
-      authState: nextAuthState,
-      authData: authData,
+    this.props.onAuthUIStateChange((nextAuthState, authData) => {
+      this.setState({
+        authState: nextAuthState,
+        authData: authData,
+      });
     });
-  };
+  }
 
   render() {
     if (!this.props.isInitialised) {
@@ -64,7 +63,7 @@ class App extends Component {
       );
     }
 
-    if (this.state.authState === AuthState.SignedIn) {
+    if (this.state.authState === AuthState.SignedIn && this.state.authData) {
       return (
         <Layout>
           <Route exact path="/" component={DashboardPage} />
@@ -105,10 +104,7 @@ class App extends Component {
     }
 
     return (
-      <AmplifyAuthenticator
-        usernameAlias="email"
-        handleAuthStateChange={this.authStateChanged}
-      >
+      <AmplifyAuthenticator usernameAlias="email">
         <AmplifySignUp
           slot="sign-up"
           usernameAlias="email"
@@ -150,6 +146,7 @@ const mapStateToProps = (state) => {
     isInitialised: getIsInitialised(state),
     authState: null,
     authData: null,
+    onAuthUIStateChange: onAuthUIStateChange,
   };
 };
 
