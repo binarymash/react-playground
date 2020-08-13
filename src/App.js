@@ -24,13 +24,17 @@ import AccessPage from './containers/AccessPage';
 import ClientAccessStrategyX509Page from './containers/ClientAccessStrategyX509Page';
 import ModalRoot from './containers/modals/ModalRoot';
 import Loading from './components/Loading';
+import ApiConfig from './services/api/config';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 Amplify.configure({
-  region: process.env.REACT_APP_COGNITO_REGION,
-  userPoolId: process.env.REACT_APP_COGNITO_USER_POOL_ID,
-  userPoolWebClientId: process.env.REACT_APP_COGNITO_CLIENT_ID,
+  Auth: {
+    region: process.env.REACT_APP_COGNITO_REGION,
+    userPoolId: process.env.REACT_APP_COGNITO_USER_POOL_ID,
+    userPoolWebClientId: process.env.REACT_APP_COGNITO_CLIENT_ID,
+  },
+  API: ApiConfig,
 });
 
 class App extends Component {
@@ -65,6 +69,7 @@ class App extends Component {
 
     if (this.state.authState === AuthState.SignedIn && this.state.authData) {
       return (
+        // <div>{JSON.stringify(this.state.authData)}</div>
         <Layout>
           <Route exact path="/" component={DashboardPage} />
           <Route exact path="/projects/:id" component={ProjectPage} />

@@ -1,268 +1,185 @@
-import Config from './config.js';
+import { API } from 'aws-amplify';
+import { QueriesApi, CommandsApi } from './config';
 
 export const Api = {
   // Read
 
   getProjects: () => {
-    const url = `${Config.query.baseUrl}/projects`;
-    return fetch(url).then(function (response) {
-      if (response.ok) {
-        return response.json();
-      }
-      throw new Error(response.status);
+    const path = `/projects`;
+
+    return API.get(QueriesApi, path).catch((error) => {
+      throw new Error(error.response.status);
     });
   },
 
   getProject: (projectId) => {
-    const url = `${Config.query.baseUrl}/projects/${projectId}`;
+    const path = `/projects/${projectId}`;
 
-    return fetch(url).then(function (response) {
-      if (response.ok) {
-        return response.json();
-      }
-      throw new Error(response.status);
+    return API.get(QueriesApi, path).catch((error) => {
+      throw new Error(error.response.status);
     });
   },
 
   getEnvironment: (projectId, environmentKey) => {
-    const url = `${Config.query.baseUrl}/projects/${projectId}/environments/${environmentKey}`;
+    const path = `/projects/${projectId}/environments/${environmentKey}`;
 
-    return fetch(url).then(function (response) {
-      if (response.ok) {
-        return response.json();
-      }
-      throw new Error(response.status);
+    return API.get(QueriesApi, path).catch((error) => {
+      throw new Error(error.response.status);
     });
   },
 
   getEnvironmentState: (projectId, environmentKey) => {
-    const url = `${Config.query.baseUrl}/projects/${projectId}/environments/${environmentKey}/state`;
+    const path = `/projects/${projectId}/environments/${environmentKey}/state`;
 
-    return fetch(url).then(function (response) {
-      if (response.ok) {
-        return response.json();
-      }
-      throw new Error(response.status);
+    return API.get(QueriesApi, path).catch((error) => {
+      throw new Error(error.response.status);
     });
   },
 
   getToggle: (projectId, toggleKey) => {
-    const url = `${Config.query.baseUrl}/projects/${projectId}/toggles/${toggleKey}`;
+    const path = `/projects/${projectId}/toggles/${toggleKey}`;
 
-    return fetch(url).then(function (response) {
-      if (response.ok) {
-        return response.json();
-      }
-      throw new Error(response.status);
+    return API.get(QueriesApi, path).catch((error) => {
+      throw new Error(error.response.status);
     });
   },
 
   getToggleState: (projectId, toggleKey) => {
-    const url = `${Config.query.baseUrl}/projects/${projectId}/toggles/${toggleKey}/state`;
+    const path = `/projects/${projectId}/toggles/${toggleKey}/state`;
 
-    return fetch(url).then(function (response) {
-      if (response.ok) {
-        return response.json();
-      }
-      throw new Error(response.status);
+    return API.get(QueriesApi, path).catch((error) => {
+      throw new Error(error.response.status);
+    });
+  },
+
+  getX509Certificate: (projectId, strategyId) => {
+    const path = `/projects/${projectId}/certificates/${strategyId}`;
+
+    return API.get(QueriesApi, path).catch((error) => {
+      throw new Error(error.response.status);
     });
   },
 
   // Write
 
   addProject: (id, name) => {
-    const url = `${Config.command.baseUrl}/projects/create`;
+    const path = `/projects/create`;
 
-    let request = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      body: JSON.stringify({
+    const init = {
+      body: {
         projectId: id,
         name: name,
-      }),
+      },
     };
 
-    return fetch(url, request).then(function (response) {
-      if (!response.ok) {
-        throw new Error(response.status);
-      }
+    return API.post(CommandsApi, path, init).catch((error) => {
+      throw new Error(error.response.status);
     });
   },
 
   deleteProject: (projectId) => {
-    const url = `${Config.command.baseUrl}/projects/${projectId}/delete`;
+    const path = `/projects/${projectId}/delete`;
 
-    let request = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      body: JSON.stringify({}),
+    let init = {
+      body: {},
     };
 
-    return fetch(url, request).then(function (response) {
-      if (!response.ok) {
-        throw new Error(response.status);
-      }
+    return API.post(CommandsApi, path, init).catch((error) => {
+      throw new Error(error.response.status);
     });
   },
 
   addToggle: (projectId, toggleKey, toggleName) => {
-    const url = `${Config.command.baseUrl}/projects/${projectId}/toggles/add`;
+    const path = `/projects/${projectId}/toggles/add`;
 
-    let request = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      body: JSON.stringify({
+    let init = {
+      body: {
         key: toggleKey,
         name: toggleName,
-      }),
+      },
     };
 
-    return fetch(url, request).then(function (response) {
-      if (!response.ok) {
-        throw new Error(response.status);
-      }
+    return API.post(CommandsApi, path, init).catch((error) => {
+      throw new Error(error.response.status);
     });
   },
 
   deleteToggle: (projectId, toggleKey) => {
-    const url = `${Config.command.baseUrl}/projects/${projectId}/toggles/${toggleKey}/delete`;
+    const path = `/projects/${projectId}/toggles/${toggleKey}/delete`;
 
-    let request = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      body: JSON.stringify({}),
+    let init = {
+      body: {},
     };
 
-    return fetch(url, request).then(function (response) {
-      if (!response.ok) {
-        throw new Error(response.status);
-      }
+    return API.post(CommandsApi, path, init).catch((error) => {
+      throw new Error(error.response.status);
     });
   },
 
   addEnvironment: (projectId, environmentKey, environmentName) => {
-    const url = `${Config.command.baseUrl}/projects/${projectId}/environments/add`;
+    const path = `/projects/${projectId}/environments/add`;
 
-    let request = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      body: JSON.stringify({
+    let init = {
+      body: {
         key: environmentKey,
         name: environmentName,
-      }),
+      },
     };
 
-    return fetch(url, request).then(function (response) {
-      if (!response.ok) {
-        throw new Error(response.status);
-      }
+    return API.post(CommandsApi, path, init).catch((error) => {
+      throw new Error(error.response.status);
     });
   },
 
   deleteEnvironment: (projectId, environmentKey) => {
-    const url = `${Config.command.baseUrl}/projects/${projectId}/environments/${environmentKey}/delete`;
+    const path = `/projects/${projectId}/environments/${environmentKey}/delete`;
 
-    let request = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      body: JSON.stringify({}),
+    let init = {
+      body: {},
     };
 
-    return fetch(url, request).then(function (response) {
-      if (!response.ok) {
-        throw new Error(response.status);
-      }
+    return API.post(CommandsApi, path, init).catch((error) => {
+      throw new Error(error.response.status);
     });
   },
 
   setToggleEnvironmentState: (projectId, environmentKey, toggleKey, value) => {
-    const url = `${Config.command.baseUrl}/projects/${projectId}/environments/${environmentKey}/toggles/${toggleKey}/change-state`;
+    const path = `/projects/${projectId}/environments/${environmentKey}/toggles/${toggleKey}/change-state`;
 
-    let request = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      body: JSON.stringify({
+    let init = {
+      body: {
         state: value,
-      }),
+      },
     };
 
-    return fetch(url, request).then(function (response) {
-      if (!response.ok) {
-        throw new Error(response.status);
-      }
-    });
-  },
-
-  getX509Certificate: (projectId, strategyId) => {
-    const url = `${Config.query.baseUrl}/projects/${projectId}/certificates/${strategyId}`;
-
-    return fetch(url).then(function (response) {
-      if (response.ok) {
-        return response.json();
-      }
-      throw new Error(response.status);
+    return API.post(CommandsApi, path, init).catch((error) => {
+      throw new Error(error.response.status);
     });
   },
 
   addClientAccessStrategyX509: (projectId, strategyId) => {
-    const url = `${Config.command.baseUrl}/projects/${projectId}/certificates/add`;
+    const path = `/projects/${projectId}/certificates/add`;
 
-    let request = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      body: JSON.stringify({
+    let init = {
+      body: {
         clientAccessStrategyId: strategyId,
-      }),
+      },
     };
 
-    return fetch(url, request).then(function (response) {
-      if (response.ok) {
-        return response.json();
-      }
-      throw new Error(response.status);
+    return API.post(CommandsApi, path, init).catch((error) => {
+      throw new Error(error.response.status);
     });
   },
 
   deleteClientAccessStrategyX509: (projectId, strategyId) => {
-    const url = `${Config.command.baseUrl}/projects/${projectId}/certificates/${strategyId}/delete`;
+    const path = `/projects/${projectId}/certificates/${strategyId}/delete`;
 
-    let request = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      body: JSON.stringify({}),
+    let init = {
+      body: {},
     };
 
-    return fetch(url, request).then(function (response) {
-      if (!response.ok) {
-        throw new Error(response.status);
-      }
+    return API.post(CommandsApi, path, init).catch((error) => {
+      throw new Error(error.response.status);
     });
   },
 };
