@@ -3,23 +3,26 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { actionCreators } from '../actions/index';
 import { getProject, getIsLoading } from '../store/Project';
-import Key from '../components/Key';
+import Badge from 'react-bootstrap/Badge';
+import AccessStrategies from '../components/AccessStrategies';
 import Audit from '../components/Audit';
 import PageLoading from '../components/PageLoading';
 import Fade from '../services/transitions/fade.js';
 import { motion, AnimatePresence } from 'framer-motion';
 
-class ProjectPage extends Component {
+class AccessPage extends Component {
   componentDidMount() {
-    this.props.selectProject(this.props.match.params.id);
+    this.props.selectProject(this.props.match.params.projectId);
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (prevProps.match.params.id === this.props.match.params.id) {
+    if (
+      prevProps.match.params.projectId === this.props.match.params.projectId
+    ) {
       return;
     }
 
-    this.props.selectProject(this.props.match.params.id);
+    this.props.selectProject(this.props.match.params.projectId);
   }
 
   render() {
@@ -35,14 +38,15 @@ class ProjectPage extends Component {
       <AnimatePresence>
         <motion.div initial="initial" animate="in" exit="out" variants={Fade}>
           <h1>
-            {this.props.project.name}
-            <div>
-              <small>
-                <Key value={this.props.project.id} />
-              </small>
-            </div>
+            Access Methods{' '}
+            <Badge variant="light">
+              {this.props.project.clientAccessStrategies.length}
+            </Badge>
           </h1>
-
+          <AccessStrategies
+            strategies={this.props.project.clientAccessStrategies}
+            projectId={this.props.project.id}
+          />
           <Audit audit={this.props.project.audit} />
         </motion.div>
       </AnimatePresence>
@@ -52,8 +56,8 @@ class ProjectPage extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    project: getProject(state, ownProps.match.params.id),
-    isLoading: getIsLoading(state, ownProps.match.params.id),
+    project: getProject(state, ownProps.match.params.projectId),
+    isLoading: getIsLoading(state, ownProps.match.params.projectId),
   };
 };
 
@@ -61,4 +65,4 @@ const mapDispatchToProps = (dispatch) => {
   return bindActionCreators(actionCreators, dispatch);
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProjectPage);
+export default connect(mapStateToProps, mapDispatchToProps)(AccessPage);

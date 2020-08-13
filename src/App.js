@@ -16,8 +16,11 @@ import { AuthState, onAuthUIStateChange } from '@aws-amplify/ui-components';
 import Layout from './containers/Layout';
 import DashboardPage from './containers/DashboardPage';
 import ProjectPage from './containers/ProjectPage';
+import EnvironmentsPage from './containers/EnvironmentsPage';
 import EnvironmentPage from './containers/EnvironmentPage';
+import TogglesPage from './containers/TogglesPage';
 import TogglePage from './containers/TogglePage';
+import AccessPage from './containers/AccessPage';
 import ClientAccessStrategyX509Page from './containers/ClientAccessStrategyX509Page';
 import ModalRoot from './containers/modals/ModalRoot';
 import Loading from './components/Loading';
@@ -73,8 +76,23 @@ class App extends Component {
           />
           <Route
             exact
+            path="/projects/:projectId/environments"
+            component={EnvironmentsPage}
+          />
+          <Route
+            exact
             path="/projects/:projectId/toggles/:toggleKey"
             component={TogglePage}
+          />
+          <Route
+            exact
+            path="/projects/:projectId/toggles"
+            component={TogglesPage}
+          />
+          <Route
+            exact
+            path="/projects/:projectId/certificates"
+            component={AccessPage}
           />
           <Route
             exact

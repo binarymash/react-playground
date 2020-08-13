@@ -39,10 +39,6 @@ export class AccessStrategies extends Component {
 
     return (
       <section>
-        <h2>
-          Access <Badge variant="light">{length}</Badge>
-        </h2>
-
         <div className="tableToolbar">
           <Button
             className="float-right"

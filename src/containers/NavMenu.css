@@ -44,10 +44,10 @@
     flex: 0 0 100% !important;
   }
 
-  .navbar {
+  /* .navbar {
     padding: 0;
     margin: 0;
-  }
+  } */
 
   /* .navbar  .container-fluid  .navbar-brand {
     margin: 0;
@@ -69,8 +69,13 @@
   }
   .nav-item a {
     width: 100%;
-    white-space: nowrap;
+    /* white-space: nowrap; */
+    white-space: inherit;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+
+  .dropdown-toggle {
+    white-space: inherit;
   }
 }

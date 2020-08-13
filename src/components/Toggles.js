@@ -1,6 +1,5 @@
 ﻿import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Badge from 'react-bootstrap/Badge';
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
 import { BsPlus } from 'react-icons/bs';
@@ -39,10 +38,6 @@ export class Toggles extends Component {
 
     return (
       <section>
-        <h2>
-          Toggles <Badge variant="light">{length}</Badge>
-        </h2>
-
         <div className="tableToolbar">
           <Button
             className="float-right"

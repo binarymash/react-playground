@@ -5,7 +5,7 @@ import { actionCreators } from '../actions/index';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import { LinkContainer } from 'react-router-bootstrap';
-import ProjectSidebar from '../components/sidebars/ProjectSidebar';
+import ProjectSelectorSidebar from '../components/sidebars/ProjectSelectorSidebar';
 import './NavMenu.css';
 
 import { AmplifySignOut } from '@aws-amplify/ui-react';
@@ -36,7 +36,7 @@ class NavMenu extends Component {
             <Navbar.Text>
               <hr />
             </Navbar.Text>
-            <ProjectSidebar />
+            <ProjectSelectorSidebar />
           </Nav>
         </Navbar.Collapse>
       </Navbar>
