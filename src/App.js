@@ -38,74 +38,89 @@ Amplify.configure({
 });
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
   componentDidMount() {
-    this.props.initialise();
-    this.setState({});
     this.props.onAuthUIStateChange((nextAuthState, authData) => {
+      if (
+        this.state.authState === AuthState.SignedIn &&
+        nextAuthState !== AuthState.SignedIn
+      ) {
+        this.props.signOut();
+      }
+
       this.setState({
         authState: nextAuthState,
         authData: authData,
       });
+
+      if (nextAuthState === AuthState.SignedIn) {
+        if (!this.props.isInitialised) {
+          this.props.initialise();
+        }
+      }
     });
   }
 
   render() {
-    if (!this.props.isInitialised) {
-      // https://www.w3.org/Style/Examples/007/center.en.html
-      let fill = {
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        marginRight: '-50%',
-        transform: 'translate(-50%, -50%)',
-      };
-
-      return (
-        <div style={fill}>
-          <Loading />
-        </div>
-      );
-    }
-
     if (this.state.authState === AuthState.SignedIn && this.state.authData) {
-      return (
-        // <div>{JSON.stringify(this.state.authData)}</div>
-        <Layout>
-          <Route exact path="/" component={DashboardPage} />
-          <Route exact path="/projects/:id" component={ProjectPage} />
-          <Route
-            exact
-            path="/projects/:projectId/environments/:environmentKey"
-            component={EnvironmentPage}
-          />
-          <Route
-            exact
-            path="/projects/:projectId/environments"
-            component={EnvironmentsPage}
-          />
-          <Route
-            exact
-            path="/projects/:projectId/toggles/:toggleKey"
-            component={TogglePage}
-          />
-          <Route
-            exact
-            path="/projects/:projectId/toggles"
-            component={TogglesPage}
-          />
-          <Route
-            exact
-            path="/projects/:projectId/certificates"
-            component={AccessPage}
-          />
-          <Route
-            exact
-            path="/projects/:projectId/certificates/:strategyId"
-            component={ClientAccessStrategyX509Page}
-          />
-          <ModalRoot />
-        </Layout>
-      );
+      if (this.props.isInitialised) {
+        return (
+          <Layout>
+            <Route exact path="/" component={DashboardPage} />
+            <Route exact path="/projects/:id" component={ProjectPage} />
+            <Route
+              exact
+              path="/projects/:projectId/environments/:environmentKey"
+              component={EnvironmentPage}
+            />
+            <Route
+              exact
+              path="/projects/:projectId/environments"
+              component={EnvironmentsPage}
+            />
+            <Route
+              exact
+              path="/projects/:projectId/toggles/:toggleKey"
+              component={TogglePage}
+            />
+            <Route
+              exact
+              path="/projects/:projectId/toggles"
+              component={TogglesPage}
+            />
+            <Route
+              exact
+              path="/projects/:projectId/certificates"
+              component={AccessPage}
+            />
+            <Route
+              exact
+              path="/projects/:projectId/certificates/:strategyId"
+              component={ClientAccessStrategyX509Page}
+            />
+            <ModalRoot />
+          </Layout>
+        );
+      } else {
+        // https://www.w3.org/Style/Examples/007/center.en.html
+        let fill = {
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          marginRight: '-50%',
+          transform: 'translate(-50%, -50%)',
+        };
+
+        return (
+          <div style={fill}>
+            <Loading />
+          </div>
+        );
+      }
     }
 
     return (
@@ -149,8 +164,6 @@ class App extends Component {
 const mapStateToProps = (state) => {
   return {
     isInitialised: getIsInitialised(state),
-    authState: null,
-    authData: null,
     onAuthUIStateChange: onAuthUIStateChange,
   };
 };

@@ -76,3 +76,5 @@ export const clientAccessStrategyX509DeleteFailed =
 
 export const showModal = 'SHOW_MODAL';
 export const hideModal = 'HIDE_MODAL';
+
+export const reset = 'RESET';

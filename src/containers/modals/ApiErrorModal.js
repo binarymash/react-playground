@@ -34,30 +34,42 @@ class ApiErrorModal extends Component {
     );
   }
 
-  GetContents = error => {
+  GetContents = (error) => {
     switch (error) {
       case '400':
         return {
           title: 'Change rejected',
           message:
-            'Your request was rejected by the server because it failed validation.'
+            'Your request was rejected by the server because it failed validation.',
+        };
+      case '401':
+        return {
+          title: 'Not authenticated',
+          message:
+            'Your request was rejected by the server because you are not logged in.',
+        };
+      case '403':
+        return {
+          title: 'Not authorised',
+          message:
+            'Your request was rejected by the server because you are not authorised to perform this action.',
         };
       case '409':
         return {
           title: 'Change conflict',
           message:
-            'It looks like someone has already made changes to this data, so your changes have not been applied.'
+            'It looks like someone has already made changes to this data, so your changes have not been applied.',
         };
       default:
         return {
           title: 'Server error',
-          message: 'Something went wrong on the server. Please try again.'
+          message: 'Something went wrong on the server. Please try again.',
         };
     }
   };
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return bindActionCreators(actionCreators, dispatch);
 };
 
