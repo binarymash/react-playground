@@ -4,20 +4,19 @@ import { Auth } from 'aws-amplify';
 
 export const SessionError = 'SESSION_ERROR';
 
-const authorization = () => {
-  return Auth.currentSession()
-    .then((session) => {
-      return {
-        headers: {
-          Authorization: `Bearer ${session.getAccessToken().getJwtToken()}`,
-          // Authorization: `Bearer ${session.getIdToken().getJwtToken()}`,
-        },
-      };
-    })
-    .catch((error) => {
-      Auth.signOut();
-      throw new Error(SessionError);
-    });
+const authorization = async () => {
+  try {
+    let session = await Auth.currentSession();
+    return {
+      headers: {
+        // Authorization: `Bearer ${session.getAccessToken().getJwtToken()}`,
+        Authorization: `Bearer ${session.getIdToken().getJwtToken()}`,
+      },
+    };
+  } catch (error) {
+    Auth.signOut();
+    throw new Error(SessionError);
+  }
 };
 
 export const Api = {
@@ -27,63 +26,77 @@ export const Api = {
     const path = `/projects`;
     const init = await authorization();
 
-    return API.get(QueriesApi, path, init).catch((error) => {
+    try {
+      return await API.get(QueriesApi, path, init);
+    } catch (error) {
       throw new Error(error.response.status);
-    });
+    }
   },
 
   getProject: async (projectId) => {
     const path = `/projects/${projectId}`;
     const init = await authorization();
 
-    return API.get(QueriesApi, path, init).catch((error) => {
+    try {
+      return await API.get(QueriesApi, path, init);
+    } catch (error) {
       throw new Error(error.response.status);
-    });
+    }
   },
 
   getEnvironment: async (projectId, environmentKey) => {
     const path = `/projects/${projectId}/environments/${environmentKey}`;
     const init = await authorization();
 
-    return API.get(QueriesApi, path, init).catch((error) => {
+    try {
+      return await API.get(QueriesApi, path, init);
+    } catch (error) {
       throw new Error(error.response.status);
-    });
+    }
   },
 
   getEnvironmentState: async (projectId, environmentKey) => {
     const path = `/projects/${projectId}/environments/${environmentKey}/state`;
     const init = await authorization();
 
-    return API.get(QueriesApi, path, init).catch((error) => {
+    try {
+      return await API.get(QueriesApi, path, init);
+    } catch (error) {
       throw new Error(error.response.status);
-    });
+    }
   },
 
   getToggle: async (projectId, toggleKey) => {
     const path = `/projects/${projectId}/toggles/${toggleKey}`;
     const init = await authorization();
 
-    return API.get(QueriesApi, path, init).catch((error) => {
+    try {
+      return await API.get(QueriesApi, path, init);
+    } catch (error) {
       throw new Error(error.response.status);
-    });
+    }
   },
 
   getToggleState: async (projectId, toggleKey) => {
     const path = `/projects/${projectId}/toggles/${toggleKey}/state`;
     const init = await authorization();
 
-    return API.get(QueriesApi, path, init).catch((error) => {
+    try {
+      return await API.get(QueriesApi, path, init);
+    } catch (error) {
       throw new Error(error.response.status);
-    });
+    }
   },
 
   getX509Certificate: async (projectId, strategyId) => {
     const path = `/projects/${projectId}/certificates/${strategyId}`;
     const init = await authorization();
 
-    return API.get(QueriesApi, path, init).catch((error) => {
+    try {
+      return await API.get(QueriesApi, path, init);
+    } catch (error) {
       throw new Error(error.response.status);
-    });
+    }
   },
 
   // Write
@@ -100,9 +113,11 @@ export const Api = {
       ...auth,
     };
 
-    return API.post(CommandsApi, path, init).catch((error) => {
+    try {
+      return await API.post(CommandsApi, path, init);
+    } catch (error) {
       throw new Error(error.response.status);
-    });
+    }
   },
 
   deleteProject: async (projectId) => {
@@ -114,9 +129,11 @@ export const Api = {
       ...auth,
     };
 
-    return API.post(CommandsApi, path, init).catch((error) => {
+    try {
+      return await API.post(CommandsApi, path, init);
+    } catch (error) {
       throw new Error(error.response.status);
-    });
+    }
   },
 
   addToggle: async (projectId, toggleKey, toggleName) => {
@@ -131,9 +148,11 @@ export const Api = {
       ...auth,
     };
 
-    return API.post(CommandsApi, path, init).catch((error) => {
+    try {
+      return await API.post(CommandsApi, path, init);
+    } catch (error) {
       throw new Error(error.response.status);
-    });
+    }
   },
 
   deleteToggle: async (projectId, toggleKey) => {
@@ -145,9 +164,11 @@ export const Api = {
       ...auth,
     };
 
-    return API.post(CommandsApi, path, init).catch((error) => {
+    try {
+      return await API.post(CommandsApi, path, init);
+    } catch (error) {
       throw new Error(error.response.status);
-    });
+    }
   },
 
   addEnvironment: async (projectId, environmentKey, environmentName) => {
@@ -162,9 +183,11 @@ export const Api = {
       ...auth,
     };
 
-    return API.post(CommandsApi, path, init).catch((error) => {
+    try {
+      return await API.post(CommandsApi, path, init);
+    } catch (error) {
       throw new Error(error.response.status);
-    });
+    }
   },
 
   deleteEnvironment: async (projectId, environmentKey) => {
@@ -176,9 +199,11 @@ export const Api = {
       ...auth,
     };
 
-    return API.post(CommandsApi, path, init).catch((error) => {
+    try {
+      return await API.post(CommandsApi, path, init);
+    } catch (error) {
       throw new Error(error.response.status);
-    });
+    }
   },
 
   setToggleEnvironmentState: async (
@@ -197,9 +222,11 @@ export const Api = {
       ...auth,
     };
 
-    return API.post(CommandsApi, path, init).catch((error) => {
+    try {
+      return await API.post(CommandsApi, path, init);
+    } catch (error) {
       throw new Error(error.response.status);
-    });
+    }
   },
 
   addClientAccessStrategyX509: async (projectId, strategyId) => {
@@ -213,9 +240,11 @@ export const Api = {
       ...auth,
     };
 
-    return API.post(CommandsApi, path, init).catch((error) => {
+    try {
+      return await API.post(CommandsApi, path, init);
+    } catch (error) {
       throw new Error(error.response.status);
-    });
+    }
   },
 
   deleteClientAccessStrategyX509: async (projectId, strategyId) => {
@@ -227,8 +256,10 @@ export const Api = {
       ...auth,
     };
 
-    return API.post(CommandsApi, path, init).catch((error) => {
+    try {
+      return await API.post(CommandsApi, path, init);
+    } catch (error) {
       throw new Error(error.response.status);
-    });
+    }
   },
 };

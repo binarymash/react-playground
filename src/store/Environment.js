@@ -144,7 +144,7 @@ export const reducer = produce((draft, action) => {
 
     case actionTypes.receiveEnvironment:
       storeKey = getStoreKey(action.projectId, action.environmentKey);
-      draft.environments[storeKey] = action.json;
+      draft.environments[storeKey] = action.data;
       draft.environments[storeKey].isLoading = false;
       break;
 
@@ -165,7 +165,7 @@ export const reducer = produce((draft, action) => {
 
     case actionTypes.receiveEnvironmentState:
       storeKey = getStoreKey(action.projectId, action.environmentKey);
-      draft.environmentStates[storeKey] = action.json;
+      draft.environmentStates[storeKey] = action.data;
       draft.environmentStates[storeKey].isLoading = false;
       break;
 

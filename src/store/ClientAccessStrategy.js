@@ -128,7 +128,7 @@ export const reducer = produce((draft, action) => {
 
     case actionTypes.receiveClientAccessStrategy:
       storeKey = getStoreKey(action.projectId, action.strategyId);
-      draft.strategies[storeKey].strategy = action.json;
+      draft.strategies[storeKey].strategy = action.data;
       draft.strategies[storeKey].isLoading = false;
       break;
 

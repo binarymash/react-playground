@@ -141,7 +141,7 @@ export const reducer = produce((draft, action) => {
 
     case actionTypes.receiveToggle:
       storeKey = getStoreKey(action.projectId, action.toggleKey);
-      draft.toggles[storeKey] = action.json;
+      draft.toggles[storeKey] = action.data;
       draft.toggles[storeKey].isLoading = false;
       break;
 
@@ -162,7 +162,7 @@ export const reducer = produce((draft, action) => {
 
     case actionTypes.receiveToggleState:
       storeKey = getStoreKey(action.projectId, action.toggleKey);
-      draft.toggleStates[storeKey] = action.json;
+      draft.toggleStates[storeKey] = action.data;
       draft.toggleStates[storeKey].isLoading = false;
       break;
 

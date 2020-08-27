@@ -9,12 +9,12 @@ const nominalState = () => {
           projects: [
             {
               id: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
-              name: 'My First Project'
+              name: 'My First Project',
             },
             {
               id: '1fbde650-09cf-11e9-8a6f-775854a0b1e9',
-              name: 'my new environment'
-            }
+              name: 'my new environment',
+            },
           ],
           accountId: 'e70fd009-22c4-44e0-ab13-2b6edaf0bbdb',
           audit: {
@@ -22,16 +22,16 @@ const nominalState = () => {
             createdBy: 'SystemUser',
             lastModified: '2018-12-27T12:01:20.7401734+00:00',
             lastModifiedBy: 'AnonymousUser',
-            version: 2
-          }
+            version: 2,
+          },
         },
         audit: {
           generated: '2018-12-31T16:36:12.5757663+00:00',
-          streamPosition: 13
-        }
+          streamPosition: 13,
+        },
       },
-      isLoading: false
-    }
+      isLoading: false,
+    },
   };
 };
 
@@ -41,12 +41,12 @@ it('should return projects', () => {
   const expectedResult = [
     {
       id: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
-      name: 'My First Project'
+      name: 'My First Project',
     },
     {
       id: '1fbde650-09cf-11e9-8a6f-775854a0b1e9',
-      name: 'my new environment'
-    }
+      name: 'my new environment',
+    },
   ];
 
   expect(account.getProjects(currentState)).toEqual(expectedResult);
@@ -59,7 +59,7 @@ it('should return audit', () => {
     createdBy: 'SystemUser',
     lastModified: '2018-12-27T12:01:20.7401734+00:00',
     lastModifiedBy: 'AnonymousUser',
-    version: 2
+    version: 2,
   };
   expect(account.getAudit(currentState)).toEqual(expectedResult);
 });
@@ -86,10 +86,10 @@ it('should return the initial state', () => {
   const expectedNewState = {
     projection: {
       account: {
-        projects: []
-      }
+        projects: [],
+      },
     },
-    isLoading: false
+    isLoading: false,
   };
 
   expect(account.reducer(currentState, action)).toEqual(expectedNewState);
@@ -99,17 +99,17 @@ it('should handle INITIALISED', () => {
   const currentState = undefined;
 
   const action = {
-    type: actionTypes.initialised
+    type: actionTypes.initialised,
   };
 
   const expectedNewState = {
     projection: {
       account: {
-        projects: []
-      }
+        projects: [],
+      },
     },
     isLoading: false,
-    isInitialised: true
+    isInitialised: true,
   };
 
   expect(account.reducer(currentState, action)).toEqual(expectedNewState);
@@ -119,16 +119,16 @@ it('should handle REQUEST_ACCOUNT', () => {
   const currentState = undefined;
 
   const action = {
-    type: actionTypes.requestAccount
+    type: actionTypes.requestAccount,
   };
 
   const expectedNewState = {
     projection: {
       account: {
-        projects: []
-      }
+        projects: [],
+      },
     },
-    isLoading: true
+    isLoading: true,
   };
 
   expect(account.reducer(currentState, action)).toEqual(expectedNewState);
@@ -138,25 +138,25 @@ it('should handle RECEIVE_ACCOUNT', () => {
   const currentState = {
     projection: {
       account: {
-        projects: []
-      }
+        projects: [],
+      },
     },
-    isLoading: true
+    isLoading: true,
   };
 
   const action = {
     type: actionTypes.receiveAccount,
-    json: {
+    data: {
       account: {
         projects: [
           {
             id: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
-            name: 'My First Project'
+            name: 'My First Project',
           },
           {
             id: '1fbde650-09cf-11e9-8a6f-775854a0b1e9',
-            name: 'my new environment'
-          }
+            name: 'my new environment',
+          },
         ],
         accountId: 'e70fd009-22c4-44e0-ab13-2b6edaf0bbdb',
         audit: {
@@ -164,14 +164,14 @@ it('should handle RECEIVE_ACCOUNT', () => {
           createdBy: 'SystemUser',
           lastModified: '2018-12-27T12:01:20.7401734+00:00',
           lastModifiedBy: 'AnonymousUser',
-          version: 2
-        }
+          version: 2,
+        },
       },
       audit: {
         generated: '2018-12-31T16:36:12.5757663+00:00',
-        streamPosition: 13
-      }
-    }
+        streamPosition: 13,
+      },
+    },
   };
 
   const expectedNewState = {
@@ -180,12 +180,12 @@ it('should handle RECEIVE_ACCOUNT', () => {
         projects: [
           {
             id: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
-            name: 'My First Project'
+            name: 'My First Project',
           },
           {
             id: '1fbde650-09cf-11e9-8a6f-775854a0b1e9',
-            name: 'my new environment'
-          }
+            name: 'my new environment',
+          },
         ],
         accountId: 'e70fd009-22c4-44e0-ab13-2b6edaf0bbdb',
         audit: {
@@ -193,15 +193,15 @@ it('should handle RECEIVE_ACCOUNT', () => {
           createdBy: 'SystemUser',
           lastModified: '2018-12-27T12:01:20.7401734+00:00',
           lastModifiedBy: 'AnonymousUser',
-          version: 2
-        }
+          version: 2,
+        },
       },
       audit: {
         generated: '2018-12-31T16:36:12.5757663+00:00',
-        streamPosition: 13
-      }
+        streamPosition: 13,
+      },
     },
-    isLoading: false
+    isLoading: false,
   };
 
   expect(account.reducer(currentState, action)).toEqual(expectedNewState);
@@ -211,24 +211,24 @@ it('should handle RECEIVE_ACCOUNT_ERROR', () => {
   const currentState = {
     projection: {
       account: {
-        projects: []
-      }
+        projects: [],
+      },
     },
-    isLoading: true
+    isLoading: true,
   };
 
   const action = {
     type: actionTypes.receiveAccountError,
-    error: 'some error'
+    error: 'some error',
   };
 
   const expectedNewState = {
     projection: {
       account: {
-        projects: []
-      }
+        projects: [],
+      },
     },
-    isLoading: false
+    isLoading: false,
   };
 
   expect(account.reducer(currentState, action)).toEqual(expectedNewState);
@@ -241,8 +241,8 @@ it('should handle PROJECT_ADD_SUCCEEDED', () => {
         projects: [
           {
             id: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
-            name: 'My First Project'
-          }
+            name: 'My First Project',
+          },
         ],
         accountId: 'e70fd009-22c4-44e0-ab13-2b6edaf0bbdb',
         audit: {
@@ -250,21 +250,21 @@ it('should handle PROJECT_ADD_SUCCEEDED', () => {
           createdBy: 'SystemUser',
           lastModified: '2018-12-27T12:01:20.7401734+00:00',
           lastModifiedBy: 'AnonymousUser',
-          version: 2
-        }
+          version: 2,
+        },
       },
       audit: {
         generated: '2018-12-31T16:36:12.5757663+00:00',
-        streamPosition: 13
-      }
+        streamPosition: 13,
+      },
     },
-    isLoading: false
+    isLoading: false,
   };
 
   const action = {
     type: actionTypes.projectAddSucceeded,
     id: '8960F481-E25C-442A-AA8B-67A772658D37',
-    name: 'Another project'
+    name: 'Another project',
   };
 
   const expectedNewState = {
@@ -273,12 +273,12 @@ it('should handle PROJECT_ADD_SUCCEEDED', () => {
         projects: [
           {
             id: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
-            name: 'My First Project'
+            name: 'My First Project',
           },
           {
             id: '8960F481-E25C-442A-AA8B-67A772658D37',
-            name: 'Another project'
-          }
+            name: 'Another project',
+          },
         ],
         accountId: 'e70fd009-22c4-44e0-ab13-2b6edaf0bbdb',
         audit: {
@@ -286,12 +286,12 @@ it('should handle PROJECT_ADD_SUCCEEDED', () => {
           createdBy: 'SystemUser',
           lastModified: undefined,
           lastModifiedBy: undefined,
-          version: undefined
-        }
+          version: undefined,
+        },
       },
-      audit: undefined
+      audit: undefined,
     },
-    isLoading: false
+    isLoading: false,
   };
 
   expect(account.reducer(currentState, action)).toEqual(expectedNewState);
@@ -304,12 +304,12 @@ it('should handle PROJECT_DELETE_SUCCEEDED', () => {
         projects: [
           {
             id: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
-            name: 'My First Project'
+            name: 'My First Project',
           },
           {
             id: '8960F481-E25C-442A-AA8B-67A772658D37',
-            name: 'Another project'
-          }
+            name: 'Another project',
+          },
         ],
         accountId: 'e70fd009-22c4-44e0-ab13-2b6edaf0bbdb',
         audit: {
@@ -317,17 +317,17 @@ it('should handle PROJECT_DELETE_SUCCEEDED', () => {
           createdBy: 'SystemUser',
           lastModified: undefined,
           lastModifiedBy: undefined,
-          version: undefined
-        }
+          version: undefined,
+        },
       },
-      audit: undefined
+      audit: undefined,
     },
-    isLoading: false
+    isLoading: false,
   };
 
   const action = {
     type: actionTypes.projectDeleteSucceeded,
-    id: '8960F481-E25C-442A-AA8B-67A772658D37'
+    id: '8960F481-E25C-442A-AA8B-67A772658D37',
   };
 
   const expectedNewState = {
@@ -336,8 +336,8 @@ it('should handle PROJECT_DELETE_SUCCEEDED', () => {
         projects: [
           {
             id: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
-            name: 'My First Project'
-          }
+            name: 'My First Project',
+          },
         ],
         accountId: 'e70fd009-22c4-44e0-ab13-2b6edaf0bbdb',
         audit: {
@@ -345,12 +345,12 @@ it('should handle PROJECT_DELETE_SUCCEEDED', () => {
           createdBy: 'SystemUser',
           lastModified: undefined,
           lastModifiedBy: undefined,
-          version: undefined
-        }
+          version: undefined,
+        },
       },
-      audit: undefined
+      audit: undefined,
     },
-    isLoading: false
+    isLoading: false,
   };
 
   expect(account.reducer(currentState, action)).toEqual(expectedNewState);

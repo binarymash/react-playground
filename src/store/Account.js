@@ -4,30 +4,30 @@ import * as actionTypes from '../actions/types';
 const INITIAL_STATE = {
   projection: {
     account: {
-      projects: []
-    }
+      projects: [],
+    },
   },
-  isLoading: false
+  isLoading: false,
 };
 
-export const getProjects = state => {
-  return state.account.projection.account.projects.map(project => {
+export const getProjects = (state) => {
+  return state.account.projection.account.projects.map((project) => {
     return {
       id: project.id,
-      name: project.name
+      name: project.name,
     };
   });
 };
 
-export const getAudit = state => {
+export const getAudit = (state) => {
   return state.account.projection.account.audit;
 };
 
-export const getIsInitialised = state => {
+export const getIsInitialised = (state) => {
   return state.account.isInitialised === true;
 };
 
-export const getIsLoading = state => {
+export const getIsLoading = (state) => {
   return state.account.isLoading === true;
 };
 
@@ -43,7 +43,7 @@ export const reducer = produce((draft, action) => {
 
     case actionTypes.receiveAccount:
       draft.isLoading = false;
-      draft.projection = action.json;
+      draft.projection = action.data;
       break;
 
     case actionTypes.receiveAccountError:
@@ -53,7 +53,7 @@ export const reducer = produce((draft, action) => {
     case actionTypes.projectAddSucceeded:
       draft.projection.account.projects.push({
         id: action.id,
-        name: action.name
+        name: action.name,
       });
 
       updateAudit(draft.projection);
@@ -62,7 +62,7 @@ export const reducer = produce((draft, action) => {
     case actionTypes.projectDeleteSucceeded:
       draft.projection.account.projects.splice(
         draft.projection.account.projects.findIndex(
-          project => project.id === action.projectId
+          (project) => project.id === action.projectId
         ),
         1
       );
@@ -75,7 +75,7 @@ export const reducer = produce((draft, action) => {
   }
 }, INITIAL_STATE);
 
-const updateAudit = projection => {
+const updateAudit = (projection) => {
   projection.audit = undefined;
   projection.account.audit.lastModified = undefined;
   projection.account.audit.lastModifiedBy = undefined;

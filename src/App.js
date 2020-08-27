@@ -43,8 +43,8 @@ class App extends Component {
     this.state = {};
   }
 
-  componentDidMount() {
-    this.props.onAuthUIStateChange((nextAuthState, authData) => {
+  async componentDidMount() {
+    this.props.onAuthUIStateChange(async (nextAuthState, authData) => {
       if (
         this.state.authState === AuthState.SignedIn &&
         nextAuthState !== AuthState.SignedIn
@@ -59,7 +59,7 @@ class App extends Component {
 
       if (nextAuthState === AuthState.SignedIn) {
         if (!this.props.isInitialised) {
-          this.props.initialise();
+          await this.props.initialise();
         }
       }
     });
@@ -154,7 +154,10 @@ class App extends Component {
         <AmplifySignIn
           slot="sign-in"
           usernameAlias="email"
-          formFields={[{ type: 'email' }, { type: 'password' }]}
+          formFields={[
+            { type: 'email', required: true },
+            { type: 'password', required: true },
+          ]}
         />
       </AmplifyAuthenticator>
     );

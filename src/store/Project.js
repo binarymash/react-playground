@@ -189,7 +189,7 @@ export const reducer = produce((draft, action) => {
       break;
 
     case actionTypes.receiveProject:
-      draft.projects[action.projectId] = action.json;
+      draft.projects[action.projectId] = action.data;
       draft.projects[action.projectId].isLoading = false;
       draft.activeProjectId = action.projectId;
       break;

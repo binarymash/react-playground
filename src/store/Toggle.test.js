@@ -15,15 +15,15 @@ const nominalState = () => {
               createdBy: 'SystemUser',
               lastModified: '2018-12-27T11:48:19.8836223+00:00',
               lastModifiedBy: 'SystemUser',
-              version: 3
-            }
+              version: 3,
+            },
           },
           audit: {
             generated: '2018-12-31T18:09:15.782011+00:00',
-            streamPosition: 8
+            streamPosition: 8,
           },
-          isLoading: false
-        }
+          isLoading: false,
+        },
       },
       toggleStates: {
         '8f73d020-96c4-407e-8602-74fd4e2ed08b/my-first-toggle': {
@@ -32,18 +32,18 @@ const nominalState = () => {
               {
                 key: 'my-first-environment',
                 value: 'False',
-                version: 4
-              }
-            ]
+                version: 4,
+              },
+            ],
           },
           audit: {
             generated: '2019-01-27T16:41:57.24491+00:00',
-            streamPosition: 9
+            streamPosition: 9,
           },
-          isLoading: false
-        }
-      }
-    }
+          isLoading: false,
+        },
+      },
+    },
   };
 };
 
@@ -102,34 +102,34 @@ it('should return toggle', () => {
           environments: [
             {
               key: 'my-first-environment',
-              name: 'My First Environment'
-            }
+              name: 'My First Environment',
+            },
           ],
           toggles: [
             {
               key: 'my-first-toggle',
-              name: 'My First Toggle'
+              name: 'My First Toggle',
             },
             {
               key: 'my-second-toggle',
-              name: 'My Second Toggle'
-            }
+              name: 'My Second Toggle',
+            },
           ],
           audit: {
             created: '2018-12-27T11:48:19.6625847+00:00',
             createdBy: 'SystemUser',
             lastModified: '2018-12-27T11:50:03.1484767+00:00',
             lastModifiedBy: 'AnonymousUser',
-            version: 5
-          }
+            version: 5,
+          },
         },
         audit: {
           generated: '2018-12-31T18:09:15.8431617+00:00',
-          streamPosition: 10
+          streamPosition: 10,
         },
-        isLoading: false
-      }
-    }
+        isLoading: false,
+      },
+    },
   };
 
   const expectedResult = {
@@ -141,16 +141,16 @@ it('should return toggle', () => {
         key: 'my-first-environment',
         name: 'My First Environment',
         value: false,
-        version: 4
-      }
+        version: 4,
+      },
     ],
     audit: {
       created: '2018-12-27T11:48:19.8836223+00:00',
       createdBy: 'SystemUser',
       lastModified: '2018-12-27T11:48:19.8836223+00:00',
       lastModifiedBy: 'SystemUser',
-      version: 3
-    }
+      version: 3,
+    },
   };
 
   expect(toggle.getToggle(currentState, projectId, toggleKey)).toEqual(
@@ -163,7 +163,7 @@ it('should return the initial state', () => {
   const action = {};
   const expectedNewState = {
     toggles: {},
-    toggleStates: {}
+    toggleStates: {},
   };
 
   expect(toggle.reducer(currentState, action)).toEqual(expectedNewState);
@@ -175,16 +175,16 @@ it('should handle REQUEST_TOGGLE', () => {
   const action = {
     type: actionTypes.requestToggle,
     projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
-    toggleKey: 'my-first-toggle'
+    toggleKey: 'my-first-toggle',
   };
 
   const expectedNewState = {
     toggles: {
       '8f73d020-96c4-407e-8602-74fd4e2ed08b/my-first-toggle': {
-        isLoading: true
-      }
+        isLoading: true,
+      },
     },
-    toggleStates: {}
+    toggleStates: {},
   };
 
   expect(toggle.reducer(currentState, action)).toEqual(expectedNewState);
@@ -194,16 +194,16 @@ it('should handle RECEIVE_TOGGLE', () => {
   const currentState = {
     toggles: {
       '8f73d020-96c4-407e-8602-74fd4e2ed08b/my-first-toggle': {
-        isLoading: true
-      }
-    }
+        isLoading: true,
+      },
+    },
   };
 
   const action = {
     type: actionTypes.receiveToggle,
     projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
     toggleKey: 'my-first-toggle',
-    json: {
+    data: {
       toggle: {
         projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
         key: 'my-first-toggle',
@@ -213,14 +213,14 @@ it('should handle RECEIVE_TOGGLE', () => {
           createdBy: 'SystemUser',
           lastModified: '2018-12-27T11:48:19.8836223+00:00',
           lastModifiedBy: 'SystemUser',
-          version: 3
-        }
+          version: 3,
+        },
       },
       audit: {
         generated: '2018-12-31T18:09:15.782011+00:00',
-        streamPosition: 8
-      }
-    }
+        streamPosition: 8,
+      },
+    },
   };
 
   const expectedNewState = {
@@ -235,16 +235,16 @@ it('should handle RECEIVE_TOGGLE', () => {
             createdBy: 'SystemUser',
             lastModified: '2018-12-27T11:48:19.8836223+00:00',
             lastModifiedBy: 'SystemUser',
-            version: 3
-          }
+            version: 3,
+          },
         },
         audit: {
           generated: '2018-12-31T18:09:15.782011+00:00',
-          streamPosition: 8
+          streamPosition: 8,
         },
-        isLoading: false
-      }
-    }
+        isLoading: false,
+      },
+    },
   };
 
   expect(toggle.reducer(currentState, action)).toEqual(expectedNewState);
@@ -254,24 +254,24 @@ it('should handle RECEIVE_TOGGLE_ERROR', () => {
   const currentState = {
     toggles: {
       '8f73d020-96c4-407e-8602-74fd4e2ed08b/my-first-toggle': {
-        isLoading: true
-      }
-    }
+        isLoading: true,
+      },
+    },
   };
 
   const action = {
     type: actionTypes.receiveToggleError,
     projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
     toggleKey: 'my-first-toggle',
-    error: 'some error'
+    error: 'some error',
   };
 
   const expectedNewState = {
     toggles: {
       '8f73d020-96c4-407e-8602-74fd4e2ed08b/my-first-toggle': {
-        isLoading: false
-      }
-    }
+        isLoading: false,
+      },
+    },
   };
 
   expect(toggle.reducer(currentState, action)).toEqual(expectedNewState);
@@ -283,16 +283,16 @@ it('should handle REQUEST_TOGGLESTATE', () => {
   const action = {
     type: actionTypes.requestToggleState,
     projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
-    toggleKey: 'my-first-toggle'
+    toggleKey: 'my-first-toggle',
   };
 
   const expectedNewState = {
     toggles: {},
     toggleStates: {
       '8f73d020-96c4-407e-8602-74fd4e2ed08b/my-first-toggle': {
-        isLoading: true
-      }
-    }
+        isLoading: true,
+      },
+    },
   };
 
   expect(toggle.reducer(currentState, action)).toEqual(expectedNewState);
@@ -303,30 +303,30 @@ it('should handle RECEIVE_TOGGLESTATE', () => {
     toggles: {},
     toggleStates: {
       '8f73d020-96c4-407e-8602-74fd4e2ed08b/my-first-toggle': {
-        isLoading: true
-      }
-    }
+        isLoading: true,
+      },
+    },
   };
 
   const actions = {
     type: actionTypes.receiveToggleState,
     projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
     toggleKey: 'my-first-toggle',
-    json: {
+    data: {
       toggleState: {
         environmentStates: [
           {
             key: 'my-first-environment',
             value: 'False',
-            version: 4
-          }
-        ]
+            version: 4,
+          },
+        ],
       },
       audit: {
         generated: '2019-01-27T16:41:57.24491+00:00',
-        streamPosition: 9
-      }
-    }
+        streamPosition: 9,
+      },
+    },
   };
 
   const expectedNewState = {
@@ -338,17 +338,17 @@ it('should handle RECEIVE_TOGGLESTATE', () => {
             {
               key: 'my-first-environment',
               value: 'False',
-              version: 4
-            }
-          ]
+              version: 4,
+            },
+          ],
         },
         audit: {
           generated: '2019-01-27T16:41:57.24491+00:00',
-          streamPosition: 9
+          streamPosition: 9,
         },
-        isLoading: false
-      }
-    }
+        isLoading: false,
+      },
+    },
   };
 
   expect(toggle.reducer(currentState, actions)).toEqual(expectedNewState);
@@ -359,25 +359,25 @@ it('should handle RECEIVE_TOGGLESTATE_ERROR', () => {
     toggles: {},
     toggleStates: {
       '8f73d020-96c4-407e-8602-74fd4e2ed08b/my-first-toggle': {
-        isLoading: true
-      }
-    }
+        isLoading: true,
+      },
+    },
   };
 
   const action = {
     type: actionTypes.receiveToggleStateError,
     projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
     toggleKey: 'my-first-toggle',
-    error: 'some error'
+    error: 'some error',
   };
 
   const expectedNewState = {
     toggles: {},
     toggleStates: {
       '8f73d020-96c4-407e-8602-74fd4e2ed08b/my-first-toggle': {
-        isLoading: false
-      }
-    }
+        isLoading: false,
+      },
+    },
   };
 
   expect(toggle.reducer(currentState, action)).toEqual(expectedNewState);

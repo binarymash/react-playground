@@ -12,31 +12,31 @@ const nominalState = () => {
             environments: [
               {
                 key: 'my-first-environment',
-                name: 'My First Environment'
-              }
+                name: 'My First Environment',
+              },
             ],
             toggles: [
               {
                 key: 'my-first-toggle',
-                name: 'My First Toggle'
-              }
+                name: 'My First Toggle',
+              },
             ],
             audit: {
               created: '2018-12-27T11:48:19.6625847+00:00',
               createdBy: 'SystemUser',
               lastModified: '2018-12-27T11:50:03.1484767+00:00',
               lastModifiedBy: 'AnonymousUser',
-              version: 5
-            }
+              version: 5,
+            },
           },
           audit: {
             generated: '2018-12-31T18:09:15.8431617+00:00',
-            streamPosition: 10
+            streamPosition: 10,
           },
-          isLoading: false
-        }
-      }
-    }
+          isLoading: false,
+        },
+      },
+    },
   };
 };
 
@@ -61,23 +61,23 @@ it('should return project', () => {
       {
         key: 'my-first-environment',
         name: 'My First Environment',
-        projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b'
-      }
+        projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
+      },
     ],
     toggles: [
       {
         key: 'my-first-toggle',
         name: 'My First Toggle',
-        projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b'
-      }
+        projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
+      },
     ],
     audit: {
       created: '2018-12-27T11:48:19.6625847+00:00',
       createdBy: 'SystemUser',
       lastModified: '2018-12-27T11:50:03.1484767+00:00',
       lastModifiedBy: 'AnonymousUser',
-      version: 5
-    }
+      version: 5,
+    },
   };
 
   expect(project.getProject(currentState, projectId)).toEqual(expectedResult);
@@ -119,7 +119,7 @@ it('should return the initial state', () => {
   const currentState = undefined;
   const action = {};
   const expectedNewState = {
-    projects: {}
+    projects: {},
   };
 
   expect(project.reducer(currentState, action)).toEqual(expectedNewState);
@@ -130,15 +130,15 @@ it('should handle REQUEST_PROJECT', () => {
 
   const action = {
     type: actionTypes.requestProject,
-    projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b'
+    projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
   };
 
   const expectedNewState = {
     projects: {
       '8f73d020-96c4-407e-8602-74fd4e2ed08b': {
-        isLoading: true
-      }
-    }
+        isLoading: true,
+      },
+    },
   };
 
   expect(project.reducer(currentState, action)).toEqual(expectedNewState);
@@ -148,15 +148,15 @@ it('should handle RECEIVE_PROJECT', () => {
   const currentState = {
     projects: {
       '8f73d020-96c4-407e-8602-74fd4e2ed08b': {
-        isLoading: true
-      }
-    }
+        isLoading: true,
+      },
+    },
   };
 
   const action = {
     type: actionTypes.receiveProject,
     projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
-    json: {
+    data: {
       project: {
         id: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
         name: 'My First Project',
@@ -165,26 +165,26 @@ it('should handle RECEIVE_PROJECT', () => {
           createdBy: 'SystemUser',
           lastModified: '2018-12-27T11:50:03.1484767+00:00',
           lastModifiedBy: 'AnonymousUser',
-          version: 5
+          version: 5,
         },
         environments: [
           {
             key: 'my-first-environment',
-            name: 'My First Environment'
-          }
+            name: 'My First Environment',
+          },
         ],
         toggles: [
           {
             key: 'my-first-toggle',
-            name: 'My First Toggle'
-          }
-        ]
+            name: 'My First Toggle',
+          },
+        ],
       },
       audit: {
         generated: '2018-12-31T18:09:15.8431617+00:00',
-        streamPosition: 10
-      }
-    }
+        streamPosition: 10,
+      },
+    },
   };
 
   const expectedNewState = {
@@ -198,28 +198,28 @@ it('should handle RECEIVE_PROJECT', () => {
             createdBy: 'SystemUser',
             lastModified: '2018-12-27T11:50:03.1484767+00:00',
             lastModifiedBy: 'AnonymousUser',
-            version: 5
+            version: 5,
           },
           environments: [
             {
               key: 'my-first-environment',
-              name: 'My First Environment'
-            }
+              name: 'My First Environment',
+            },
           ],
           toggles: [
             {
               key: 'my-first-toggle',
-              name: 'My First Toggle'
-            }
-          ]
+              name: 'My First Toggle',
+            },
+          ],
         },
         audit: {
           generated: '2018-12-31T18:09:15.8431617+00:00',
-          streamPosition: 10
+          streamPosition: 10,
         },
-        isLoading: false
-      }
-    }
+        isLoading: false,
+      },
+    },
   };
 
   expect(project.reducer(currentState, action)).toEqual(expectedNewState);
@@ -229,23 +229,23 @@ it('should handle RECEIVE_PROJECT_ERROR', () => {
   const currentState = {
     projects: {
       '8f73d020-96c4-407e-8602-74fd4e2ed08b': {
-        isLoading: true
-      }
-    }
+        isLoading: true,
+      },
+    },
   };
 
   const action = {
     type: actionTypes.receiveProjectError,
     projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
-    error: 'some error'
+    error: 'some error',
   };
 
   const expectedNewState = {
     projects: {
       '8f73d020-96c4-407e-8602-74fd4e2ed08b': {
-        isLoading: false
-      }
-    }
+        isLoading: false,
+      },
+    },
   };
 
   expect(project.reducer(currentState, action)).toEqual(expectedNewState);
@@ -261,37 +261,37 @@ it('should handle TOGGLE_ADD_SUCCEEDED', () => {
           environments: [
             {
               key: 'my-first-environment',
-              name: 'My First Environment'
-            }
+              name: 'My First Environment',
+            },
           ],
           toggles: [
             {
               key: 'my-first-toggle',
-              name: 'My First Toggle'
-            }
+              name: 'My First Toggle',
+            },
           ],
           audit: {
             created: '2018-12-27T11:48:19.6625847+00:00',
             createdBy: 'SystemUser',
             lastModified: '2018-12-27T11:50:03.1484767+00:00',
             lastModifiedBy: 'AnonymousUser',
-            version: 5
-          }
+            version: 5,
+          },
         },
         audit: {
           generated: '2018-12-31T18:09:15.8431617+00:00',
-          streamPosition: 10
+          streamPosition: 10,
         },
-        isLoading: false
-      }
-    }
+        isLoading: false,
+      },
+    },
   };
 
   const action = {
     type: actionTypes.toggleAddSucceeded,
     projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
     toggleKey: 'my-second-toggle',
-    toggleName: 'My Second Toggle'
+    toggleName: 'My Second Toggle',
   };
 
   const expectedNewState = {
@@ -303,31 +303,31 @@ it('should handle TOGGLE_ADD_SUCCEEDED', () => {
           environments: [
             {
               key: 'my-first-environment',
-              name: 'My First Environment'
-            }
+              name: 'My First Environment',
+            },
           ],
           toggles: [
             {
               key: 'my-first-toggle',
-              name: 'My First Toggle'
+              name: 'My First Toggle',
             },
             {
               key: 'my-second-toggle',
-              name: 'My Second Toggle'
-            }
+              name: 'My Second Toggle',
+            },
           ],
           audit: {
             created: '2018-12-27T11:48:19.6625847+00:00',
             createdBy: 'SystemUser',
             lastModified: undefined,
             lastModifiedBy: undefined,
-            version: undefined
-          }
+            version: undefined,
+          },
         },
         audit: undefined,
-        isLoading: false
-      }
-    }
+        isLoading: false,
+      },
+    },
   };
 
   expect(project.reducer(currentState, action)).toEqual(expectedNewState);
@@ -343,40 +343,40 @@ it('should handle TOGGLE_DELETE_SUCCEEDED', () => {
           environments: [
             {
               key: 'my-first-environment',
-              name: 'My First Environment'
-            }
+              name: 'My First Environment',
+            },
           ],
           toggles: [
             {
               key: 'my-first-toggle',
-              name: 'My First Toggle'
+              name: 'My First Toggle',
             },
             {
               key: 'my-second-toggle',
-              name: 'My Second Toggle'
-            }
+              name: 'My Second Toggle',
+            },
           ],
           audit: {
             created: '2018-12-27T11:48:19.6625847+00:00',
             createdBy: 'SystemUser',
             lastModified: '2018-12-27T11:50:03.1484767+00:00',
             lastModifiedBy: 'AnonymousUser',
-            version: 5
-          }
+            version: 5,
+          },
         },
         audit: {
           generated: '2018-12-31T18:09:15.8431617+00:00',
-          streamPosition: 10
+          streamPosition: 10,
         },
-        isLoading: false
-      }
-    }
+        isLoading: false,
+      },
+    },
   };
 
   const action = {
     type: actionTypes.toggleDeleteSucceeded,
     projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
-    toggleKey: 'my-first-toggle'
+    toggleKey: 'my-first-toggle',
   };
 
   const expectedNewState = {
@@ -388,27 +388,27 @@ it('should handle TOGGLE_DELETE_SUCCEEDED', () => {
           environments: [
             {
               key: 'my-first-environment',
-              name: 'My First Environment'
-            }
+              name: 'My First Environment',
+            },
           ],
           toggles: [
             {
               key: 'my-second-toggle',
-              name: 'My Second Toggle'
-            }
+              name: 'My Second Toggle',
+            },
           ],
           audit: {
             created: '2018-12-27T11:48:19.6625847+00:00',
             createdBy: 'SystemUser',
             lastModified: undefined,
             lastModifiedBy: undefined,
-            version: undefined
-          }
+            version: undefined,
+          },
         },
         audit: undefined,
-        isLoading: false
-      }
-    }
+        isLoading: false,
+      },
+    },
   };
 
   expect(project.reducer(currentState, action)).toEqual(expectedNewState);
@@ -424,37 +424,37 @@ it('should handle ENVIRONMENT_ADD_SUCCEEDED', () => {
           environments: [
             {
               key: 'my-first-environment',
-              name: 'My First Environment'
-            }
+              name: 'My First Environment',
+            },
           ],
           toggles: [
             {
               key: 'my-first-toggle',
-              name: 'My First Toggle'
-            }
+              name: 'My First Toggle',
+            },
           ],
           audit: {
             created: '2018-12-27T11:48:19.6625847+00:00',
             createdBy: 'SystemUser',
             lastModified: '2018-12-27T11:50:03.1484767+00:00',
             lastModifiedBy: 'AnonymousUser',
-            version: 5
-          }
+            version: 5,
+          },
         },
         audit: {
           generated: '2018-12-31T18:09:15.8431617+00:00',
-          streamPosition: 10
+          streamPosition: 10,
         },
-        isLoading: false
-      }
-    }
+        isLoading: false,
+      },
+    },
   };
 
   const action = {
     type: actionTypes.environmentAddSucceeded,
     projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
     environmentKey: 'another-environment',
-    environmentName: 'This is my other environment'
+    environmentName: 'This is my other environment',
   };
 
   const expectedNewState = {
@@ -466,31 +466,31 @@ it('should handle ENVIRONMENT_ADD_SUCCEEDED', () => {
           environments: [
             {
               key: 'my-first-environment',
-              name: 'My First Environment'
+              name: 'My First Environment',
             },
             {
               key: 'another-environment',
-              name: 'This is my other environment'
-            }
+              name: 'This is my other environment',
+            },
           ],
           toggles: [
             {
               key: 'my-first-toggle',
-              name: 'My First Toggle'
-            }
+              name: 'My First Toggle',
+            },
           ],
           audit: {
             created: '2018-12-27T11:48:19.6625847+00:00',
             createdBy: 'SystemUser',
             lastModified: undefined,
             lastModifiedBy: undefined,
-            version: undefined
-          }
+            version: undefined,
+          },
         },
         audit: undefined,
-        isLoading: false
-      }
-    }
+        isLoading: false,
+      },
+    },
   };
 
   expect(project.reducer(currentState, action)).toEqual(expectedNewState);
@@ -506,40 +506,40 @@ it('should handle ENVIRONMENT_DELETE_SUCCEEDED', () => {
           environments: [
             {
               key: 'my-first-environment',
-              name: 'My First Environment'
+              name: 'My First Environment',
             },
             {
               key: 'another-environment',
-              name: 'This is my other environment'
-            }
+              name: 'This is my other environment',
+            },
           ],
           toggles: [
             {
               key: 'my-first-toggle',
-              name: 'My First Toggle'
-            }
+              name: 'My First Toggle',
+            },
           ],
           audit: {
             created: '2018-12-27T11:48:19.6625847+00:00',
             createdBy: 'SystemUser',
             lastModified: '2018-12-27T11:50:03.1484767+00:00',
             lastModifiedBy: 'AnonymousUser',
-            version: 5
-          }
+            version: 5,
+          },
         },
         audit: {
           generated: '2018-12-31T18:09:15.8431617+00:00',
-          streamPosition: 10
+          streamPosition: 10,
         },
-        isLoading: false
-      }
-    }
+        isLoading: false,
+      },
+    },
   };
 
   const action = {
     type: actionTypes.environmentDeleteSucceeded,
     projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
-    environmentKey: 'another-environment'
+    environmentKey: 'another-environment',
   };
 
   const expectedNewState = {
@@ -551,27 +551,27 @@ it('should handle ENVIRONMENT_DELETE_SUCCEEDED', () => {
           environments: [
             {
               key: 'my-first-environment',
-              name: 'My First Environment'
-            }
+              name: 'My First Environment',
+            },
           ],
           toggles: [
             {
               key: 'my-first-toggle',
-              name: 'My First Toggle'
-            }
+              name: 'My First Toggle',
+            },
           ],
           audit: {
             created: '2018-12-27T11:48:19.6625847+00:00',
             createdBy: 'SystemUser',
             lastModified: undefined,
             lastModifiedBy: undefined,
-            version: undefined
-          }
+            version: undefined,
+          },
         },
         audit: undefined,
-        isLoading: false
-      }
-    }
+        isLoading: false,
+      },
+    },
   };
 
   expect(project.reducer(currentState, action)).toEqual(expectedNewState);
@@ -587,41 +587,41 @@ it('should handle PROJECT_DELETE_SUCCEEDED', () => {
           environments: [
             {
               key: 'my-first-environment',
-              name: 'My First Environment'
-            }
+              name: 'My First Environment',
+            },
           ],
           toggles: [
             {
               key: 'my-first-toggle',
-              name: 'My First Toggle'
-            }
+              name: 'My First Toggle',
+            },
           ],
           audit: {
             created: '2018-12-27T11:48:19.6625847+00:00',
             createdBy: 'SystemUser',
             lastModified: '2018-12-27T11:50:03.1484767+00:00',
             lastModifiedBy: 'AnonymousUser',
-            version: 5
-          }
+            version: 5,
+          },
         },
         audit: {
           generated: '2018-12-31T18:09:15.8431617+00:00',
-          streamPosition: 10
+          streamPosition: 10,
         },
-        isLoading: false
-      }
-    }
+        isLoading: false,
+      },
+    },
   };
 
   const action = {
     type: actionTypes.projectDeleteSucceeded,
-    projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b'
+    projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
   };
 
   const expectedNewState = {
     projects: {
-      '8f73d020-96c4-407e-8602-74fd4e2ed08b': undefined
-    }
+      '8f73d020-96c4-407e-8602-74fd4e2ed08b': undefined,
+    },
   };
 
   expect(project.reducer(currentState, action)).toEqual(expectedNewState);

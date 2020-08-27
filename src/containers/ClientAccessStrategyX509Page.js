@@ -17,24 +17,19 @@ import { motion, AnimatePresence } from 'framer-motion';
 class ClientAccessStrategyX509Page extends Component {
   state = {};
 
-  doCreate = () => {
-    this.props
-      .addClientAccessStrategyX509(
-        this.props.match.params.projectId,
-        this.props.match.params.strategyId
-      )
-      .then((response) => {
-        if (response) {
-          this.setState({
-            privateKey: response.PrivateKey,
-            publicKey: response.PublicKey,
-            keysAvailable: true,
-          });
-        }
-      })
-      .then(() => {
-        this.doLoad();
+  doCreate = async () => {
+    let keys = await this.props.addClientAccessStrategyX509(
+      this.props.match.params.projectId,
+      this.props.match.params.strategyId
+    );
+    if (keys) {
+      this.setState({
+        privateKey: keys.PrivateKey,
+        publicKey: keys.PublicKey,
+        keysAvailable: true,
       });
+    }
+    this.doLoad();
   };
 
   doLoad = () => {
@@ -44,10 +39,10 @@ class ClientAccessStrategyX509Page extends Component {
     );
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     window.scrollTo(0, 0);
     if (this.props.isCreating) {
-      this.doCreate();
+      await this.doCreate();
     } else {
       this.doLoad();
     }
