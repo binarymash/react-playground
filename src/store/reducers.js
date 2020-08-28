@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import { connectRouter } from 'connected-react-router';
-import * as actions from '../actions/types';
+import * as actions from '../actions/actions';
 import * as Account from './Account';
 import * as Project from './Project';
 import * as Environment from './Environment';

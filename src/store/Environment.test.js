@@ -1,5 +1,5 @@
 import * as environment from './Environment';
-import * as actions from '../actions/types';
+import * as actions from '../actions/actions';
 
 const nominalState = () => {
   return {

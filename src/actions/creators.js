@@ -1,6 +1,6 @@
 import { Api, SessionError } from '../services/api/api.js';
 import { v1 as uuidv1 } from 'uuid';
-import * as actions from './types';
+import * as actions from './actions';
 import { push } from 'connected-react-router';
 
 const handleError = (dispatch, error, requestFailureAction) => {

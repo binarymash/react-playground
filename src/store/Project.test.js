@@ -1,5 +1,5 @@
 import * as project from './Project';
-import * as actions from '../actions/types';
+import * as actions from '../actions/actions';
 
 const nominalState = () => {
   return {

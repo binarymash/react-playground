@@ -1,5 +1,5 @@
 import { reducer } from './Modal';
-import * as actions from '../actions/types';
+import * as actions from '../actions/actions';
 
 it('should return the initial state', () => {
   const currentState = undefined;
