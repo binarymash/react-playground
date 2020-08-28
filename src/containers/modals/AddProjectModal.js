@@ -16,11 +16,10 @@ class AddProjectModal extends Component {
     };
   }
 
-  handleOkClick = (event) => {
+  handleOkClick = async (event) => {
     if (this.isValid()) {
-      this.props.hideModal().then(() => {
-        this.props.addProject(this.state.name);
-      });
+      this.props.hideModal();
+      await this.props.addProject(this.state.name);
     }
   };
 

@@ -496,11 +496,11 @@ export const clientAccessStrategyX509DeleteFailed = (
 };
 
 export const SHOW_MODAL = 'SHOW_MODAL';
-export const showModal = (message) => {
+export const showModal = (modalType, modalProps) => {
   return {
     type: SHOW_MODAL,
-    modalType: 'API_ERROR',
-    modalProps: { error: message },
+    modalType,
+    modalProps,
   };
 };
 

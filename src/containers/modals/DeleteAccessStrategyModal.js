@@ -7,13 +7,14 @@ import Modal from 'react-bootstrap/Modal';
 import { BsExclamationCircle, BsX, BsCheck } from 'react-icons/bs';
 
 class DeleteAccessStrategyModal extends Component {
-  handleOkClick = () => {
-    this.props.hideModal().then(() => {
-      this.props.deleteClientAccesStrategyX509(
+  handleOkClick = async () => {
+    Promise.all([
+      this.props.hideModal(),
+      this.props.deleteClientAccessStrategyX509(
         this.props.projectId,
         this.props.strategyId
-      );
-    });
+      ),
+    ]);
   };
 
   render() {

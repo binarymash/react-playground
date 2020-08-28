@@ -7,10 +7,9 @@ import Modal from 'react-bootstrap/Modal';
 import { BsExclamationCircle, BsX, BsCheck } from 'react-icons/bs';
 
 class DeleteToggleModal extends Component {
-  handleOkClick = () => {
-    this.props.hideModal().then(() => {
-      this.props.deleteToggle(this.props.projectId, this.props.toggleKey);
-    });
+  handleOkClick = async () => {
+    this.props.hideModal();
+    await this.props.deleteToggle(this.props.projectId, this.props.toggleKey);
   };
 
   render() {

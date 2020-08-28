@@ -7,13 +7,12 @@ import Modal from 'react-bootstrap/Modal';
 import { BsExclamationCircle, BsX, BsCheck } from 'react-icons/bs';
 
 class DeleteEnvironmentModal extends Component {
-  handleOkClick = () => {
-    this.props.hideModal().then(() => {
-      this.props.deleteEnvironment(
-        this.props.projectId,
-        this.props.environmentKey
-      );
-    });
+  handleOkClick = async () => {
+    this.props.hideModal();
+    await this.props.deleteEnvironment(
+      this.props.projectId,
+      this.props.environmentKey
+    );
   };
 
   render() {

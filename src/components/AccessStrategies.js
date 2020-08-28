@@ -1,6 +1,7 @@
 ﻿import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Badge from 'react-bootstrap/Badge';
+import { bindActionCreators } from 'redux';
+import { actionCreators } from '../actions/creators';
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
 import AccessStrategyX509 from './AccessStrategyX509';
@@ -9,12 +10,8 @@ import { BsPlus } from 'react-icons/bs';
 
 export class AccessStrategies extends Component {
   handleAddClick = () => {
-    this.props.dispatch({
-      type: 'SHOW_MODAL',
-      modalType: 'ADD_ACCESS_STRATEGY',
-      modalProps: {
-        projectId: this.props.projectId,
-      },
+    this.props.showModal('ADD_ACCESS_STRATEGY', {
+      projectId: this.props.projectId,
     });
   };
 
@@ -54,4 +51,8 @@ export class AccessStrategies extends Component {
   }
 }
 
-export default connect()(AccessStrategies);
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators(actionCreators, dispatch);
+};
+
+export default connect(null, mapDispatchToProps)(AccessStrategies);

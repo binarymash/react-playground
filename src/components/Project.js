@@ -1,17 +1,15 @@
 ﻿import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { actionCreators } from '../actions/creators';
 import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
 import { BsX } from 'react-icons/bs';
 
 export class Project extends Component {
   handleDeleteClick = () => {
-    this.props.dispatch({
-      type: 'SHOW_MODAL',
-      modalType: 'DELETE_PROJECT',
-      modalProps: {
-        projectId: this.props.project.id
-      }
+    this.props.showModal('DELETE_PROJECT', {
+      projectId: this.props.project.id,
     });
   };
 
@@ -42,4 +40,8 @@ export class Project extends Component {
   }
 }
 
-export default connect()(Project);
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators(actionCreators, dispatch);
+};
+
+export default connect(null, mapDispatchToProps)(Project);

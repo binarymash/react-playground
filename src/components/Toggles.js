@@ -1,5 +1,7 @@
 ﻿import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { actionCreators } from '../actions/creators';
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
 import { BsPlus } from 'react-icons/bs';
@@ -8,12 +10,8 @@ import Loading from './Loading';
 
 export class Toggles extends Component {
   handleAddClick = () => {
-    this.props.dispatch({
-      type: 'SHOW_MODAL',
-      modalType: 'ADD_TOGGLE',
-      modalProps: {
-        projectId: this.props.projectId,
-      },
+    this.props.showModal('ADD_TOGGLE', {
+      projectId: this.props.projectId,
     });
   };
 
@@ -53,4 +51,8 @@ export class Toggles extends Component {
   }
 }
 
-export default connect()(Toggles);
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators(actionCreators, dispatch);
+};
+
+export default connect(null, mapDispatchToProps)(Toggles);

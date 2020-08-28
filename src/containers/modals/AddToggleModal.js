@@ -20,15 +20,14 @@ class AddToggleModal extends Component {
     };
   }
 
-  handleOkClick = (event) => {
+  handleOkClick = async () => {
     if (this.isValid()) {
-      this.props.hideModal().then(() => {
-        this.props.addToggle(
-          this.props.projectId,
-          this.state.key,
-          this.state.name
-        );
-      });
+      this.props.hideModal();
+      await this.props.addToggle(
+        this.props.projectId,
+        this.state.key,
+        this.state.name
+      );
     }
   };
 

@@ -1,5 +1,7 @@
 ﻿import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { actionCreators } from '../actions/creators';
 import Badge from 'react-bootstrap/Badge';
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
@@ -8,11 +10,7 @@ import Project from './Project';
 
 export class Projects extends Component {
   handleAddClick = () => {
-    this.props.dispatch({
-      type: 'SHOW_MODAL',
-      modalType: 'ADD_PROJECT',
-      modalProps: {},
-    });
+    this.props.showModal('ADD_PROJECT', {});
   };
 
   render() {
@@ -48,4 +46,8 @@ export class Projects extends Component {
   }
 }
 
-export default connect()(Projects);
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators(actionCreators, dispatch);
+};
+
+export default connect(null, mapDispatchToProps)(Projects);

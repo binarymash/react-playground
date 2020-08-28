@@ -5,7 +5,7 @@ import { push } from 'connected-react-router';
 
 const handleError = (dispatch, error, requestFailureAction) => {
   if (error.message !== SessionError) {
-    dispatch(actions.showModal(error.message));
+    showModal('API_ERROR', { error: error.message });
     if (requestFailureAction) {
       dispatch(requestFailureAction);
     }
@@ -191,10 +191,6 @@ const setToggleEnvironmentState = (
   }
 };
 
-const hideModal = () => async (dispatch) => {
-  dispatch(actions.hideModal());
-};
-
 const addProject = (name) => async (dispatch) => {
   try {
     let id = uuidv1();
@@ -280,7 +276,7 @@ const deleteEnvironment = (projectId, environmentKey) => async (dispatch) => {
   }
 };
 
-const createClientAccesStrategyX509 = (projectId, strategyId) => async (
+const createClientAccessStrategyX509 = (projectId, strategyId) => async (
   dispatch
 ) => {
   dispatch(actions.clientAccessStrategyX509AddRequested(projectId, strategyId));
@@ -305,7 +301,7 @@ const addClientAccessStrategyX509 = (projectId, strategyId) => async (
   }
 };
 
-const deleteClientAccesStrategyX509 = (projectId, strategyId) => async (
+const deleteClientAccessStrategyX509 = (projectId, strategyId) => async (
   dispatch
 ) => {
   try {
@@ -323,7 +319,15 @@ const deleteClientAccesStrategyX509 = (projectId, strategyId) => async (
   }
 };
 
-const signOut = () => async (dispatch) => {
+const showModal = (modalType, modalProps) => (dispatch) => {
+  dispatch(actions.showModal(modalType, modalProps));
+};
+
+const hideModal = () => (dispatch) => {
+  dispatch(actions.hideModal());
+};
+
+const signOut = () => (dispatch) => {
   dispatch(actions.reset());
 };
 
@@ -349,10 +353,11 @@ export const actionCreators = {
   addEnvironment,
   deleteEnvironment,
   addClientAccessStrategyX509,
-  deleteClientAccesStrategyX509,
+  deleteClientAccessStrategyX509,
 
   // ui
+  showModal,
   hideModal,
-  createClientAccesStrategyX509,
+  createClientAccessStrategyX509,
   signOut,
 };

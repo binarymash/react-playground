@@ -8,10 +8,12 @@ import { BsX, BsCheck } from 'react-icons/bs';
 import { v1 as uuidv1 } from 'uuid';
 
 class AddAccessStrategyModal extends Component {
-  handleOkClick = (event) => {
-    this.props.hideModal().then(() => {
-      this.props.createClientAccesStrategyX509(this.props.projectId, uuidv1());
-    });
+  handleOkClick = async (event) => {
+    this.props.hideModal();
+    await this.props.createClientAccessStrategyX509(
+      this.props.projectId,
+      uuidv1()
+    );
   };
 
   render() {

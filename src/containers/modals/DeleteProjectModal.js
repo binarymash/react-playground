@@ -7,10 +7,9 @@ import Modal from 'react-bootstrap/Modal';
 import { BsExclamationCircle, BsX, BsCheck } from 'react-icons/bs';
 
 class DeleteProjectModal extends Component {
-  handleOkClick = () => {
-    this.props.hideModal().then(() => {
-      this.props.deleteProject(this.props.projectId);
-    });
+  handleOkClick = async () => {
+    this.props.hideModal();
+    await this.props.deleteProject(this.props.projectId);
   };
 
   render() {

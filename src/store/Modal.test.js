@@ -15,14 +15,10 @@ it('should return the initial state', () => {
 it('should handle SHOW_MODAL', () => {
   const currentState = undefined;
 
-  const action = {
-    type: actions.SHOW_MODAL,
-    modalType: 'SOME_MODAL_TYPE',
-    modalProps: {
-      a: '123',
-      b: '456',
-    },
-  };
+  const action = actions.showModal('SOME_MODAL_TYPE', {
+    a: '123',
+    b: '456',
+  });
 
   const expectedNewState = {
     modalType: 'SOME_MODAL_TYPE',
@@ -35,7 +31,7 @@ it('should handle SHOW_MODAL', () => {
   expect(reducer(currentState, action)).toEqual(expectedNewState);
 });
 
-it('should handle SHOW_MODAL', () => {
+it('should handle HIDE_MODAL', () => {
   const currentState = {
     modalType: 'SOME_MODAL_TYPE',
     modalProps: {
