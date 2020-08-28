@@ -11,10 +11,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import 'bootstrap/dist/css/bootstrap.css';
 
 class DashboardPage extends Component {
-  componentDidMount() {
-    this.props.requestAccount();
-  }
-
   render() {
     if (this.props.isLoading) {
       return <PageLoading />;
@@ -36,15 +32,15 @@ class DashboardPage extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     projects: getProjects(state),
     isLoading: getIsLoading(state),
-    audit: getAudit(state)
+    audit: getAudit(state),
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return bindActionCreators(actionCreators, dispatch);
 };
 

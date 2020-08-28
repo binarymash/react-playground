@@ -38,8 +38,8 @@ export class EnvironmentState extends Component {
     );
   }
 
-  handleChange = () => {
-    this.props.setToggleEnvironmentState(
+  handleChange = async () => {
+    await this.props.setToggleEnvironmentState(
       this.props.projectId,
       this.props.environment.key,
       this.props.toggleKey,

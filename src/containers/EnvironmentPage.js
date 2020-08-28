@@ -5,7 +5,7 @@ import { actionCreators } from '../actions/index';
 import {
   getEnvironment,
   getIsEnvironmentLoading,
-  getIsEnvironmentStateLoading
+  getIsEnvironmentStateLoading,
 } from '../store/Environment';
 import Key from '../components/Key';
 import ToggleStates from '../components/ToggleStates';
@@ -15,26 +15,36 @@ import Fade from '../services/transitions/fade.js';
 import { motion, AnimatePresence } from 'framer-motion';
 
 class EnvironmentPage extends Component {
-  componentDidMount() {
-    this.props.selectEnvironment(
+  async initializeStoreData(projectId, environmentKey) {
+    await Promise.all([
+      this.props.fetchProjectIfNeeded(projectId),
+      this.props.fetchEnvironment(projectId, environmentKey),
+      this.props.fetchEnvironmentState(projectId, environmentKey),
+    ]);
+  }
+
+  shouldInitializeStoreData(prevProps, props) {
+    return (
+      prevProps.match.params.projectId !== props.match.params.projectId ||
+      prevProps.match.params.environmentKey !==
+        props.match.params.environmentKey
+    );
+  }
+
+  async componentDidMount() {
+    await this.initializeStoreData(
       this.props.match.params.projectId,
       this.props.match.params.environmentKey
     );
   }
 
-  componentDidUpdate(prevProps) {
-    if (
-      prevProps.match.params.projectId === this.props.match.params.projectId &&
-      prevProps.match.params.environmentKey ===
+  async componentDidUpdate(prevProps) {
+    if (this.shouldInitializeStoreData(prevProps, this.props)) {
+      await this.initializeStoreData(
+        this.props.match.params.projectId,
         this.props.match.params.environmentKey
-    ) {
-      return;
+      );
     }
-
-    this.props.selectEnvironment(
-      this.props.match.params.projectId,
-      this.props.match.params.environmentKey
-    );
   }
 
   render() {
@@ -88,11 +98,11 @@ const mapStateToProps = (state, ownProps) => {
       state,
       ownProps.match.params.projectId,
       ownProps.match.params.environmentKey
-    )
+    ),
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return bindActionCreators(actionCreators, dispatch);
 };
 

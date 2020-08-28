@@ -59,7 +59,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'EvelynManagementUI'
-copyright = '2018, Philip Wood'
+copyright = '2020, Philip Wood'
 author = 'Philip Wood'
 
 # The version info for the project you're documenting, acts as replacement for

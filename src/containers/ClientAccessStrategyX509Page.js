@@ -17,10 +17,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 class ClientAccessStrategyX509Page extends Component {
   state = {};
 
-  doCreate = async () => {
+  async doCreate(projectId, strategyId) {
     let keys = await this.props.addClientAccessStrategyX509(
-      this.props.match.params.projectId,
-      this.props.match.params.strategyId
+      projectId,
+      strategyId
     );
     if (keys) {
       this.setState({
@@ -29,26 +29,32 @@ class ClientAccessStrategyX509Page extends Component {
         keysAvailable: true,
       });
     }
-    this.doLoad();
-  };
+    await this.doLoad(projectId, strategyId);
+  }
 
-  doLoad = () => {
-    this.props.selectClientAccessStrategy(
-      this.props.match.params.projectId,
-      this.props.match.params.strategyId
-    );
-  };
+  async doLoad(projectId, strategyId) {
+    await Promise.all([
+      this.props.fetchProjectIfNeeded(projectId),
+      this.props.fetchX509Certificate(projectId, strategyId),
+    ]);
+  }
 
   async componentDidMount() {
     window.scrollTo(0, 0);
     if (this.props.isCreating) {
-      await this.doCreate();
+      await this.doCreate(
+        this.props.match.params.projectId,
+        this.props.match.params.strategyId
+      );
     } else {
-      this.doLoad();
+      await this.doLoad(
+        this.props.match.params.projectId,
+        this.props.match.params.strategyId
+      );
     }
   }
 
-  componentDidUpdate(prevProps) {
+  async componentDidUpdate(prevProps) {
     if (
       prevProps.match.params.projectId === this.props.match.params.projectId &&
       prevProps.match.params.strategyId === this.props.match.params.strategyId
@@ -56,7 +62,7 @@ class ClientAccessStrategyX509Page extends Component {
       return;
     }
 
-    this.doLoad();
+    await this.doLoad();
   }
 
   render() {

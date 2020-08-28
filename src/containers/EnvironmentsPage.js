@@ -11,18 +11,18 @@ import Fade from '../services/transitions/fade.js';
 import { motion, AnimatePresence } from 'framer-motion';
 
 class EnvironmentsPage extends Component {
-  componentDidMount() {
-    this.props.selectProject(this.props.match.params.projectId);
+  async componentDidMount() {
+    await this.props.fetchProjectIfNeeded(this.props.match.params.projectId);
   }
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
+  async componentDidUpdate(prevProps, prevState, snapshot) {
     if (
       prevProps.match.params.projectId === this.props.match.params.projectId
     ) {
       return;
     }
 
-    this.props.selectProject(this.props.match.params.projectId);
+    await this.props.fetchProjectIfNeeded(this.props.match.params.projectId);
   }
 
   render() {

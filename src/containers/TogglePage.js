@@ -5,7 +5,7 @@ import { actionCreators } from '../actions/index';
 import {
   getToggle,
   getIsToggleLoading,
-  getIsToggleStateLoading
+  getIsToggleStateLoading,
 } from '../store/Toggle';
 import Key from '../components/Key';
 import EnvironmentStates from '../components/EnvironmentStates';
@@ -15,25 +15,35 @@ import Fade from '../services/transitions/fade.js';
 import { motion, AnimatePresence } from 'framer-motion';
 
 class TogglePage extends Component {
-  componentDidMount() {
-    this.props.selectToggle(
+  async initializeStoreData(projectId, toggleKey) {
+    await Promise.all([
+      this.props.fetchProjectIfNeeded(projectId),
+      this.props.fetchToggle(projectId, toggleKey),
+      this.props.fetchToggleState(projectId, toggleKey),
+    ]);
+  }
+
+  shouldInitializeStoreData(prevProps, props) {
+    return (
+      prevProps.match.params.projectId !== props.match.params.projectId ||
+      prevProps.match.params.toggleKey !== props.match.params.toggleKey
+    );
+  }
+
+  async componentDidMount() {
+    await this.initializeStoreData(
       this.props.match.params.projectId,
       this.props.match.params.toggleKey
     );
   }
 
-  componentDidUpdate(prevProps) {
-    if (
-      prevProps.match.params.projectId === this.props.match.params.projectId &&
-      prevProps.match.params.toggleKey === this.props.match.params.toggleKey
-    ) {
-      return;
+  async componentDidUpdate(prevProps) {
+    if (this.shouldInitializeStoreData(prevProps, this.props)) {
+      await this.initializeStoreData(
+        this.props.match.params.projectId,
+        this.props.match.params.toggleKey
+      );
     }
-
-    this.props.selectToggle(
-      this.props.match.params.projectId,
-      this.props.match.params.toggleKey
-    );
   }
 
   render() {
@@ -87,11 +97,11 @@ const mapStateToProps = (state, ownProps) => {
       state,
       ownProps.match.params.projectId,
       ownProps.match.params.toggleKey
-    )
+    ),
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return bindActionCreators(actionCreators, dispatch);
 };
 
