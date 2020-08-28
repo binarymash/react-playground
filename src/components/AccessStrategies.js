@@ -7,10 +7,11 @@ import Table from 'react-bootstrap/Table';
 import AccessStrategyX509 from './AccessStrategyX509';
 import Loading from './Loading';
 import { BsPlus } from 'react-icons/bs';
+import * as modalTypes from '../containers/modals/types';
 
 export class AccessStrategies extends Component {
   handleAddClick = () => {
-    this.props.showModal('ADD_ACCESS_STRATEGY', {
+    this.props.showModal(modalTypes.ADD_ACCESS_STRATEGY, {
       projectId: this.props.projectId,
     });
   };

@@ -7,10 +7,11 @@ import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
 import { BsPlus } from 'react-icons/bs';
 import Project from './Project';
+import * as modalTypes from '../containers/modals/types';
 
 export class Projects extends Component {
   handleAddClick = () => {
-    this.props.showModal('ADD_PROJECT', {});
+    this.props.showModal(modalTypes.ADD_PROJECT, {});
   };
 
   render() {

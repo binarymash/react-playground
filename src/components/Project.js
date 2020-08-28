@@ -5,10 +5,11 @@ import { actionCreators } from '../actions/creators';
 import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
 import { BsX } from 'react-icons/bs';
+import * as modalTypes from '../containers/modals/types';
 
 export class Project extends Component {
   handleDeleteClick = () => {
-    this.props.showModal('DELETE_PROJECT', {
+    this.props.showModal(modalTypes.DELETE_PROJECT, {
       projectId: this.props.project.id,
     });
   };

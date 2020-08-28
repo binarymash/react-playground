@@ -5,10 +5,11 @@ import { actionCreators } from '../actions/creators';
 import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
 import { BsX } from 'react-icons/bs';
+import * as modalTypes from '../containers/modals/types';
 
 export class Environment extends Component {
   handleDeleteClick = () => {
-    this.props.showModal('DELETE_ENVIRONMENT', {
+    this.props.showModal(modalTypes.DELETE_ENVIRONMENT, {
       projectId: this.props.environment.projectId,
       environmentKey: this.props.environment.key,
     });

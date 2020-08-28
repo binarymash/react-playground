@@ -5,10 +5,11 @@ import { actionCreators } from '../actions/creators';
 import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
 import { BsX } from 'react-icons/bs';
+import * as modalTypes from '../containers/modals/types';
 
 export class Toggle extends Component {
   handleDeleteClick = () => {
-    this.props.showModal('DELETE_TOGGLE', {
+    this.props.showModal(modalTypes.DELETE_TOGGLE, {
       projectId: this.props.toggle.projectId,
       toggleKey: this.props.toggle.key,
     });

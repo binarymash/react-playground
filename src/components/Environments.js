@@ -6,10 +6,11 @@ import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
 import { BsPlus } from 'react-icons/bs';
 import Environment from './Environment';
+import * as modalTypes from '../containers/modals/types';
 
 export class Environments extends Component {
   handleAddClick = () => {
-    this.props.showModal('ADD_ENVIRONMENT', {
+    this.props.showModal(modalTypes.ADD_ENVIRONMENT, {
       projectId: this.props.projectId,
     });
   };

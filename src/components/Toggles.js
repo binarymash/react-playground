@@ -7,10 +7,11 @@ import Table from 'react-bootstrap/Table';
 import { BsPlus } from 'react-icons/bs';
 import Toggle from './Toggle';
 import Loading from './Loading';
+import * as modalTypes from '../containers/modals/types';
 
 export class Toggles extends Component {
   handleAddClick = () => {
-    this.props.showModal('ADD_TOGGLE', {
+    this.props.showModal(modalTypes.ADD_TOGGLE, {
       projectId: this.props.projectId,
     });
   };

@@ -1,5 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import * as modalTypes from './types';
 import ApiErrorModal from './ApiErrorModal';
 import AddProjectModal from './AddProjectModal';
 import DeleteProjectModal from './DeleteProjectModal';
@@ -24,20 +25,19 @@ class ModalRoot extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return state.modal;
 };
 
-const MODAL_COMPONENTS = {
-  API_ERROR: ApiErrorModal,
-  ADD_PROJECT: AddProjectModal,
-  DELETE_PROJECT: DeleteProjectModal,
-  ADD_ENVIRONMENT: AddEnvironmentModal,
-  DELETE_ENVIRONMENT: DeleteEnvironmentModal,
-  ADD_TOGGLE: AddToggleModal,
-  DELETE_TOGGLE: DeleteToggleModal,
-  ADD_ACCESS_STRATEGY: AddAccessStrategyModal,
-  DELETE_ACCESS_STRATEGY: DeleteAccessStrategyModal
-};
+let MODAL_COMPONENTS = {};
+MODAL_COMPONENTS[modalTypes.API_ERROR] = ApiErrorModal;
+MODAL_COMPONENTS[modalTypes.ADD_PROJECT] = AddProjectModal;
+MODAL_COMPONENTS[modalTypes.DELETE_PROJECT] = DeleteProjectModal;
+MODAL_COMPONENTS[modalTypes.ADD_ENVIRONMENT] = AddEnvironmentModal;
+MODAL_COMPONENTS[modalTypes.DELETE_ENVIRONMENT] = DeleteEnvironmentModal;
+MODAL_COMPONENTS[modalTypes.ADD_TOGGLE] = AddToggleModal;
+MODAL_COMPONENTS[modalTypes.DELETE_TOGGLE] = DeleteToggleModal;
+MODAL_COMPONENTS[modalTypes.ADD_ACCESS_STRATEGY] = AddAccessStrategyModal;
+MODAL_COMPONENTS[modalTypes.DELETE_ACCESS_STRATEGY] = DeleteAccessStrategyModal;
 
 export default connect(mapStateToProps)(ModalRoot);

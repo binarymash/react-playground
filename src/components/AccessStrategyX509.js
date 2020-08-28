@@ -5,10 +5,11 @@ import { actionCreators } from '../actions/creators';
 import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
 import { BsX } from 'react-icons/bs';
+import * as modalTypes from '../containers/modals/types';
 
 export class AccessStrategyX509 extends Component {
   handleDeleteClick = () => {
-    this.props.showModal('DELETE_ACCESS_STRATEGY', {
+    this.props.showModal(modalTypes.DELETE_ACCESS_STRATEGY, {
       projectId: this.props.strategy.projectId,
       strategyId: this.props.strategy.id,
     });

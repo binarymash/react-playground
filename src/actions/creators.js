@@ -1,11 +1,12 @@
 import { Api, SessionError } from '../services/api/api.js';
 import { v1 as uuidv1 } from 'uuid';
 import * as actions from './actions';
+import * as modalTypes from '../containers/modals/types';
 import { push } from 'connected-react-router';
 
 const handleError = (dispatch, error, requestFailureAction) => {
   if (error.message !== SessionError) {
-    showModal('API_ERROR', { error: error.message });
+    showModal(modalTypes.API_ERROR, { error: error.message });
     if (requestFailureAction) {
       dispatch(requestFailureAction);
     }
