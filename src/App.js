@@ -1,6 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { Route } from 'react-router';
-import { actionCreators } from './actions/index';
+import { actionCreators } from './actions/creators';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';

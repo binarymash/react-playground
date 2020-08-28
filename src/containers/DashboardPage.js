@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { actionCreators } from '../actions/index';
+import { actionCreators } from '../actions/creators';
 import { getProjects, getIsLoading, getAudit } from '../store/Account';
 import Projects from '../components/Projects';
 import Audit from '../components/Audit';

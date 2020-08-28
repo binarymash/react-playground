@@ -1,6 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
-import { actionCreators } from '../actions/index';
+import { actionCreators } from '../actions/creators';
 import { connect } from 'react-redux';
 import Form from 'react-bootstrap/Form';
 import '../components/react-bootstrap-switch.css';

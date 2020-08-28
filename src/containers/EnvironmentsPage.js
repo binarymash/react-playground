@@ -1,7 +1,7 @@
 ﻿import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { actionCreators } from '../actions/index';
+import { actionCreators } from '../actions/creators';
 import { getProject, getIsLoading } from '../store/Project';
 import Badge from 'react-bootstrap/Badge';
 import Environments from '../components/Environments';
