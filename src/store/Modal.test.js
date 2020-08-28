@@ -1,12 +1,12 @@
 import { reducer } from './Modal';
-import * as actionTypes from '../actions/types';
+import * as actions from '../actions/types';
 
 it('should return the initial state', () => {
   const currentState = undefined;
   const action = {};
   const expectedNewState = {
     modalType: null,
-    modalProps: {}
+    modalProps: {},
   };
 
   expect(reducer(currentState, action)).toEqual(expectedNewState);
@@ -16,20 +16,20 @@ it('should handle SHOW_MODAL', () => {
   const currentState = undefined;
 
   const action = {
-    type: actionTypes.showModal,
+    type: actions.SHOW_MODAL,
     modalType: 'SOME_MODAL_TYPE',
     modalProps: {
       a: '123',
-      b: '456'
-    }
+      b: '456',
+    },
   };
 
   const expectedNewState = {
     modalType: 'SOME_MODAL_TYPE',
     modalProps: {
       a: '123',
-      b: '456'
-    }
+      b: '456',
+    },
   };
 
   expect(reducer(currentState, action)).toEqual(expectedNewState);
@@ -40,17 +40,15 @@ it('should handle SHOW_MODAL', () => {
     modalType: 'SOME_MODAL_TYPE',
     modalProps: {
       a: '123',
-      b: '456'
-    }
+      b: '456',
+    },
   };
 
-  const action = {
-    type: actionTypes.hideModal
-  };
+  const action = actions.hideModal();
 
   const expectedNewState = {
     modalType: null,
-    modalProps: {}
+    modalProps: {},
   };
 
   expect(reducer(currentState, action)).toEqual(expectedNewState);

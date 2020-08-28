@@ -1,5 +1,5 @@
 ﻿import produce from 'immer';
-import * as actionTypes from '../actions/types';
+import * as actions from '../actions/types';
 
 const getStoreKey = (projectId, strategyId) => {
   let storeKey = `${projectId}/${strategyId}`;
@@ -78,7 +78,7 @@ export const reducer = produce((draft, action) => {
   let storeKey = undefined;
 
   switch (action.type) {
-    case actionTypes.clientAccessStrategyX509AddRequested:
+    case actions.CLIENT_ACCESS_STRATEGY_X509_ADD_REQUESTED:
       {
         storeKey = getStoreKey(action.projectId, action.strategyId);
         let projection = draft.strategies[storeKey];
@@ -90,7 +90,7 @@ export const reducer = produce((draft, action) => {
       }
       break;
 
-    case actionTypes.clientAccessStrategyX509AddSucceeded:
+    case actions.CLIENT_ACCESS_STRATEGY_X509_ADD_SUCCEEDED:
       {
         storeKey = getStoreKey(action.projectId, action.strategyId);
         let projection = draft.strategies[storeKey];
@@ -102,7 +102,7 @@ export const reducer = produce((draft, action) => {
       }
       break;
 
-    case actionTypes.clientAccessStrategyX509AddFailed:
+    case actions.CLIENT_ACCESS_STRATEGY_X509_ADD_FAILED:
       {
         storeKey = getStoreKey(action.projectId, action.strategyId);
         let projection = draft.strategies[storeKey];
@@ -114,7 +114,7 @@ export const reducer = produce((draft, action) => {
       }
       break;
 
-    case actionTypes.requestClientAccessStrategy:
+    case actions.REQUEST_CLIENT_ACCESS_STRATEGY:
       {
         storeKey = getStoreKey(action.projectId, action.strategyId);
         let projection = draft.strategies[storeKey];
@@ -126,18 +126,18 @@ export const reducer = produce((draft, action) => {
       }
       break;
 
-    case actionTypes.receiveClientAccessStrategy:
+    case actions.RECEIVE_CLIENT_ACCESS_STRATEGY:
       storeKey = getStoreKey(action.projectId, action.strategyId);
       draft.strategies[storeKey].strategy = action.data;
       draft.strategies[storeKey].isLoading = false;
       break;
 
-    case actionTypes.receiveClientAccessStrategyError:
+    case actions.RECEIVE_CLIENT_ACCESS_STRATEGY_ERROR:
       storeKey = getStoreKey(action.projectId, action.strategyId);
       draft.strategies[storeKey].isLoading = false;
       break;
 
-    case actionTypes.clientAccessStrategyX509DeleteSucceeded:
+    case actions.CLIENT_ACCESS_STRATEGY_X509_DELETE_SUCCEEDED:
       {
         storeKey = getStoreKey(action.projectId, action.strategyId);
         draft.strategies[storeKey] = undefined;

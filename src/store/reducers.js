@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import { connectRouter } from 'connected-react-router';
-import * as actionTypes from '../actions/types';
+import * as actions from '../actions/types';
 import * as Account from './Account';
 import * as Project from './Project';
 import * as Environment from './Environment';
@@ -21,7 +21,7 @@ const createRootReducer = (history) => {
   });
 
   return (state, action) => {
-    if (action.type === actionTypes.reset) {
+    if (action.type === actions.reset) {
       const { router } = state;
       state = { router };
     }

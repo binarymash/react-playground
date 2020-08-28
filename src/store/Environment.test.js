@@ -1,5 +1,5 @@
 import * as environment from './Environment';
-import * as actionTypes from '../actions/types';
+import * as actions from '../actions/types';
 
 const nominalState = () => {
   return {
@@ -171,11 +171,10 @@ it('should return the initial state', () => {
 it('should handle REQUEST_ENVIRONMENT', () => {
   const currentState = undefined;
 
-  const action = {
-    type: actionTypes.requestEnvironment,
-    projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
-    environmentKey: 'some-environment',
-  };
+  const action = actions.requestEnvironment(
+    '8f73d020-96c4-407e-8602-74fd4e2ed08b',
+    'some-environment'
+  );
 
   const expectedNewState = {
     environments: {
@@ -199,11 +198,10 @@ it('should handle RECEIVE_ENVIRONMENT', () => {
     environmentStates: {},
   };
 
-  const action = {
-    type: actionTypes.receiveEnvironment,
-    projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
-    environmentKey: 'some-environment',
-    data: {
+  const action = actions.receiveEnvironment(
+    '8f73d020-96c4-407e-8602-74fd4e2ed08b',
+    'some-environment',
+    {
       environment: {
         projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
         key: 'some-environment',
@@ -220,8 +218,8 @@ it('should handle RECEIVE_ENVIRONMENT', () => {
         generated: '2018-12-31T18:09:15.6839632+00:00',
         streamPosition: 6,
       },
-    },
-  };
+    }
+  );
 
   const expectedNewState = {
     environments: {
@@ -261,12 +259,11 @@ it('should handle RECEIVE_ENVIRONMENT_ERROR', () => {
     environmentStates: {},
   };
 
-  const action = {
-    type: actionTypes.receiveEnvironmentError,
-    projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
-    environmentKey: 'some-environment',
-    error: 'some error',
-  };
+  const action = actions.receiveEnvironmentError(
+    '8f73d020-96c4-407e-8602-74fd4e2ed08b',
+    'some-environment',
+    'some error'
+  );
 
   const expectedNewState = {
     environments: {
@@ -283,11 +280,10 @@ it('should handle RECEIVE_ENVIRONMENT_ERROR', () => {
 it('should handle REQUEST_ENVIRONMENTSTATE', () => {
   const currentState = undefined;
 
-  const action = {
-    type: actionTypes.requestEnvironmentState,
-    projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
-    environmentKey: 'my-first-environment',
-  };
+  const action = actions.requestEnvironmentState(
+    '8f73d020-96c4-407e-8602-74fd4e2ed08b',
+    'my-first-environment'
+  );
 
   const expectedNewState = {
     environments: {},
@@ -311,11 +307,10 @@ it('should handle RECEIVE_ENVIRONMENTSTATE', () => {
     },
   };
 
-  const actions = {
-    type: actionTypes.receiveEnvironmentState,
-    projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
-    environmentKey: 'my-first-environment',
-    data: {
+  const action = actions.receiveEnvironmentState(
+    '8f73d020-96c4-407e-8602-74fd4e2ed08b',
+    'my-first-environment',
+    {
       environmentState: {
         toggleStates: [
           {
@@ -329,8 +324,8 @@ it('should handle RECEIVE_ENVIRONMENTSTATE', () => {
         generated: '2018-12-31T18:09:15.8617841+00:00',
         streamPosition: 19,
       },
-    },
-  };
+    }
+  );
 
   const expectedNewState = {
     environments: {},
@@ -354,7 +349,7 @@ it('should handle RECEIVE_ENVIRONMENTSTATE', () => {
     },
   };
 
-  expect(environment.reducer(currentState, actions)).toEqual(expectedNewState);
+  expect(environment.reducer(currentState, action)).toEqual(expectedNewState);
 });
 
 it('should handle RECEIVE_ENVIRONMENTSTATE_ERROR', () => {
@@ -367,12 +362,11 @@ it('should handle RECEIVE_ENVIRONMENTSTATE_ERROR', () => {
     },
   };
 
-  const action = {
-    type: actionTypes.receiveEnvironmentStateError,
-    projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
-    environmentKey: 'my-first-environment',
-    error: 'some error',
-  };
+  const action = actions.receiveEnvironmentStateError(
+    '8f73d020-96c4-407e-8602-74fd4e2ed08b',
+    'my-first-environment',
+    'some error'
+  );
 
   const expectedNewState = {
     environments: {},
@@ -409,13 +403,12 @@ it('should handle TOGGLEENVIRONMENTSTATE_UPDATE_SUCCEEDED', () => {
     },
   };
 
-  const action = {
-    type: actionTypes.toggleEnvironmentStateUpdateSucceeded,
-    projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
-    environmentKey: 'my-first-environment',
-    toggleKey: 'my-first-toggle',
-    value: 'True',
-  };
+  const action = actions.toggleEnvironmentStateUpdateSucceeded(
+    '8f73d020-96c4-407e-8602-74fd4e2ed08b',
+    'my-first-environment',
+    'my-first-toggle',
+    'True'
+  );
 
   const expectedNewState = {
     environments: {},

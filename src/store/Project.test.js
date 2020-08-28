@@ -1,5 +1,5 @@
 import * as project from './Project';
-import * as actionTypes from '../actions/types';
+import * as actions from '../actions/types';
 
 const nominalState = () => {
   return {
@@ -128,10 +128,7 @@ it('should return the initial state', () => {
 it('should handle REQUEST_PROJECT', () => {
   const currentState = undefined;
 
-  const action = {
-    type: actionTypes.requestProject,
-    projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
-  };
+  const action = actions.requestProject('8f73d020-96c4-407e-8602-74fd4e2ed08b');
 
   const expectedNewState = {
     projects: {
@@ -153,10 +150,9 @@ it('should handle RECEIVE_PROJECT', () => {
     },
   };
 
-  const action = {
-    type: actionTypes.receiveProject,
-    projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
-    data: {
+  const action = actions.receiveProject(
+    '8f73d020-96c4-407e-8602-74fd4e2ed08b',
+    {
       project: {
         id: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
         name: 'My First Project',
@@ -184,8 +180,8 @@ it('should handle RECEIVE_PROJECT', () => {
         generated: '2018-12-31T18:09:15.8431617+00:00',
         streamPosition: 10,
       },
-    },
-  };
+    }
+  );
 
   const expectedNewState = {
     projects: {
@@ -234,11 +230,10 @@ it('should handle RECEIVE_PROJECT_ERROR', () => {
     },
   };
 
-  const action = {
-    type: actionTypes.receiveProjectError,
-    projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
-    error: 'some error',
-  };
+  const action = actions.receiveProjectError(
+    '8f73d020-96c4-407e-8602-74fd4e2ed08b',
+    'some error'
+  );
 
   const expectedNewState = {
     projects: {
@@ -287,12 +282,11 @@ it('should handle TOGGLE_ADD_SUCCEEDED', () => {
     },
   };
 
-  const action = {
-    type: actionTypes.toggleAddSucceeded,
-    projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
-    toggleKey: 'my-second-toggle',
-    toggleName: 'My Second Toggle',
-  };
+  const action = actions.toggleAddSucceeded(
+    '8f73d020-96c4-407e-8602-74fd4e2ed08b',
+    'my-second-toggle',
+    'My Second Toggle'
+  );
 
   const expectedNewState = {
     projects: {
@@ -373,11 +367,10 @@ it('should handle TOGGLE_DELETE_SUCCEEDED', () => {
     },
   };
 
-  const action = {
-    type: actionTypes.toggleDeleteSucceeded,
-    projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
-    toggleKey: 'my-first-toggle',
-  };
+  const action = actions.toggleDeleteSucceeded(
+    '8f73d020-96c4-407e-8602-74fd4e2ed08b',
+    'my-first-toggle'
+  );
 
   const expectedNewState = {
     projects: {
@@ -450,12 +443,11 @@ it('should handle ENVIRONMENT_ADD_SUCCEEDED', () => {
     },
   };
 
-  const action = {
-    type: actionTypes.environmentAddSucceeded,
-    projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
-    environmentKey: 'another-environment',
-    environmentName: 'This is my other environment',
-  };
+  const action = actions.environmentAddSucceeded(
+    '8f73d020-96c4-407e-8602-74fd4e2ed08b',
+    'another-environment',
+    'This is my other environment'
+  );
 
   const expectedNewState = {
     projects: {
@@ -536,11 +528,10 @@ it('should handle ENVIRONMENT_DELETE_SUCCEEDED', () => {
     },
   };
 
-  const action = {
-    type: actionTypes.environmentDeleteSucceeded,
-    projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
-    environmentKey: 'another-environment',
-  };
+  const action = actions.environmentDeleteSucceeded(
+    '8f73d020-96c4-407e-8602-74fd4e2ed08b',
+    'another-environment'
+  );
 
   const expectedNewState = {
     projects: {
@@ -613,10 +604,9 @@ it('should handle PROJECT_DELETE_SUCCEEDED', () => {
     },
   };
 
-  const action = {
-    type: actionTypes.projectDeleteSucceeded,
-    projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
-  };
+  const action = actions.projectDeletedSucceeded(
+    '8f73d020-96c4-407e-8602-74fd4e2ed08b'
+  );
 
   const expectedNewState = {
     projects: {

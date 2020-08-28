@@ -1,5 +1,5 @@
 ﻿import produce from 'immer';
-import * as actionTypes from '../actions/types';
+import * as actions from '../actions/types';
 
 const getStoreKey = (projectId, environmentKey) => {
   let storeKey = `${projectId}/${environmentKey}`;
@@ -132,7 +132,7 @@ export const reducer = produce((draft, action) => {
   let projection = undefined;
 
   switch (action.type) {
-    case actionTypes.requestEnvironment:
+    case actions.REQUEST_ENVIRONMENT:
       storeKey = getStoreKey(action.projectId, action.environmentKey);
       projection = draft.environments[storeKey];
       if (!projection) {
@@ -142,18 +142,18 @@ export const reducer = produce((draft, action) => {
       projection.isLoading = true;
       break;
 
-    case actionTypes.receiveEnvironment:
+    case actions.RECEIVE_ENVIRONMENT:
       storeKey = getStoreKey(action.projectId, action.environmentKey);
       draft.environments[storeKey] = action.data;
       draft.environments[storeKey].isLoading = false;
       break;
 
-    case actionTypes.receiveEnvironmentError:
+    case actions.RECEIVE_ENVIRONMENT_ERROR:
       storeKey = getStoreKey(action.projectId, action.environmentKey);
       draft.environments[storeKey].isLoading = false;
       break;
 
-    case actionTypes.requestEnvironmentState:
+    case actions.REQUEST_ENVIRONMENT_STATE:
       storeKey = getStoreKey(action.projectId, action.environmentKey);
       projection = draft.environmentStates[storeKey];
       if (!projection) {
@@ -163,18 +163,18 @@ export const reducer = produce((draft, action) => {
       projection.isLoading = true;
       break;
 
-    case actionTypes.receiveEnvironmentState:
+    case actions.RECEIVE_ENVIRONMENT_STATE:
       storeKey = getStoreKey(action.projectId, action.environmentKey);
       draft.environmentStates[storeKey] = action.data;
       draft.environmentStates[storeKey].isLoading = false;
       break;
 
-    case actionTypes.receiveEnvironmentStateError:
+    case actions.RECEIVE_ENVIRONMENT_STATE_ERROR:
       storeKey = getStoreKey(action.projectId, action.environmentKey);
       draft.environmentStates[storeKey].isLoading = false;
       break;
 
-    case actionTypes.toggleEnvironmentStateUpdateRequested:
+    case actions.TOGGLE_ENVIRONMENT_STATE_UPDATE_REQUESTED:
       storeKey = getStoreKey(action.projectId, action.environmentKey);
 
       projection = draft.environmentStates[storeKey];
@@ -189,7 +189,7 @@ export const reducer = produce((draft, action) => {
       }
       break;
 
-    case actionTypes.toggleEnvironmentStateUpdateSucceeded:
+    case actions.TOGGLE_ENVIRONMENT_STATE_UPDATE_SUCCEEDED:
       storeKey = getStoreKey(action.projectId, action.environmentKey);
 
       projection = draft.environmentStates[storeKey];
@@ -208,7 +208,7 @@ export const reducer = produce((draft, action) => {
       }
       break;
 
-    case actionTypes.toggleEnvironmentStateUpdateFailed:
+    case actions.TOGGLE_ENVIRONMENT_STATE_UPDATE_FAILED:
       storeKey = getStoreKey(action.projectId, action.environmentKey);
 
       projection = draft.environmentStates[storeKey];

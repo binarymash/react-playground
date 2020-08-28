@@ -1,5 +1,5 @@
 import * as toggle from './Toggle';
-import * as actionTypes from '../actions/types';
+import * as actions from '../actions/types';
 
 const nominalState = () => {
   return {
@@ -172,11 +172,10 @@ it('should return the initial state', () => {
 it('should handle REQUEST_TOGGLE', () => {
   const currentState = undefined;
 
-  const action = {
-    type: actionTypes.requestToggle,
-    projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
-    toggleKey: 'my-first-toggle',
-  };
+  const action = actions.requestToggle(
+    '8f73d020-96c4-407e-8602-74fd4e2ed08b',
+    'my-first-toggle'
+  );
 
   const expectedNewState = {
     toggles: {
@@ -199,11 +198,10 @@ it('should handle RECEIVE_TOGGLE', () => {
     },
   };
 
-  const action = {
-    type: actionTypes.receiveToggle,
-    projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
-    toggleKey: 'my-first-toggle',
-    data: {
+  const action = actions.receiveToggle(
+    '8f73d020-96c4-407e-8602-74fd4e2ed08b',
+    'my-first-toggle',
+    {
       toggle: {
         projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
         key: 'my-first-toggle',
@@ -220,8 +218,8 @@ it('should handle RECEIVE_TOGGLE', () => {
         generated: '2018-12-31T18:09:15.782011+00:00',
         streamPosition: 8,
       },
-    },
-  };
+    }
+  );
 
   const expectedNewState = {
     toggles: {
@@ -259,12 +257,11 @@ it('should handle RECEIVE_TOGGLE_ERROR', () => {
     },
   };
 
-  const action = {
-    type: actionTypes.receiveToggleError,
-    projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
-    toggleKey: 'my-first-toggle',
-    error: 'some error',
-  };
+  const action = actions.receiveToggleError(
+    '8f73d020-96c4-407e-8602-74fd4e2ed08b',
+    'my-first-toggle',
+    'some error'
+  );
 
   const expectedNewState = {
     toggles: {
@@ -280,11 +277,10 @@ it('should handle RECEIVE_TOGGLE_ERROR', () => {
 it('should handle REQUEST_TOGGLESTATE', () => {
   const currentState = undefined;
 
-  const action = {
-    type: actionTypes.requestToggleState,
-    projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
-    toggleKey: 'my-first-toggle',
-  };
+  const action = actions.requestToggleState(
+    '8f73d020-96c4-407e-8602-74fd4e2ed08b',
+    'my-first-toggle'
+  );
 
   const expectedNewState = {
     toggles: {},
@@ -308,11 +304,10 @@ it('should handle RECEIVE_TOGGLESTATE', () => {
     },
   };
 
-  const actions = {
-    type: actionTypes.receiveToggleState,
-    projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
-    toggleKey: 'my-first-toggle',
-    data: {
+  const action = actions.receiveToggleState(
+    '8f73d020-96c4-407e-8602-74fd4e2ed08b',
+    'my-first-toggle',
+    {
       toggleState: {
         environmentStates: [
           {
@@ -326,8 +321,8 @@ it('should handle RECEIVE_TOGGLESTATE', () => {
         generated: '2019-01-27T16:41:57.24491+00:00',
         streamPosition: 9,
       },
-    },
-  };
+    }
+  );
 
   const expectedNewState = {
     toggles: {},
@@ -351,7 +346,7 @@ it('should handle RECEIVE_TOGGLESTATE', () => {
     },
   };
 
-  expect(toggle.reducer(currentState, actions)).toEqual(expectedNewState);
+  expect(toggle.reducer(currentState, action)).toEqual(expectedNewState);
 });
 
 it('should handle RECEIVE_TOGGLESTATE_ERROR', () => {
@@ -364,12 +359,11 @@ it('should handle RECEIVE_TOGGLESTATE_ERROR', () => {
     },
   };
 
-  const action = {
-    type: actionTypes.receiveToggleStateError,
-    projectId: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
-    toggleKey: 'my-first-toggle',
-    error: 'some error',
-  };
+  const action = actions.receiveToggleStateError(
+    '8f73d020-96c4-407e-8602-74fd4e2ed08b',
+    'my-first-toggle',
+    'some error'
+  );
 
   const expectedNewState = {
     toggles: {},

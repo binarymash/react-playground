@@ -1,5 +1,5 @@
 ﻿import produce from 'immer';
-import * as actionTypes from '../actions/types';
+import * as actions from '../actions/types';
 
 const getStoreKey = (projectId, toggleKey) => {
   let storeKey = `${projectId}/${toggleKey}`;
@@ -127,7 +127,7 @@ export const reducer = produce((draft, action) => {
   let projection = undefined;
 
   switch (action.type) {
-    case actionTypes.requestToggle:
+    case actions.REQUEST_TOGGLE:
       {
         storeKey = getStoreKey(action.projectId, action.toggleKey);
         let projection = draft.toggles[storeKey];
@@ -139,18 +139,18 @@ export const reducer = produce((draft, action) => {
       }
       break;
 
-    case actionTypes.receiveToggle:
+    case actions.RECEIVE_TOGGLE:
       storeKey = getStoreKey(action.projectId, action.toggleKey);
       draft.toggles[storeKey] = action.data;
       draft.toggles[storeKey].isLoading = false;
       break;
 
-    case actionTypes.receiveToggleError:
+    case actions.RECEIVE_TOGGLE_ERROR:
       storeKey = getStoreKey(action.projectId, action.toggleKey);
       draft.toggles[storeKey].isLoading = false;
       break;
 
-    case actionTypes.requestToggleState:
+    case actions.REQUEST_TOGGLE_STATE:
       storeKey = getStoreKey(action.projectId, action.toggleKey);
       projection = draft.toggleStates[storeKey];
       if (!projection) {
@@ -160,18 +160,18 @@ export const reducer = produce((draft, action) => {
       projection.isLoading = true;
       break;
 
-    case actionTypes.receiveToggleState:
+    case actions.RECEIVE_TOGGLE_STATE:
       storeKey = getStoreKey(action.projectId, action.toggleKey);
       draft.toggleStates[storeKey] = action.data;
       draft.toggleStates[storeKey].isLoading = false;
       break;
 
-    case actionTypes.receiveToggleStateError:
+    case actions.RECEIVE_TOGGLE_STATE_ERROR:
       storeKey = getStoreKey(action.projectId, action.toggleKey);
       draft.toggleStates[storeKey].isLoading = false;
       break;
 
-    case actionTypes.toggleEnvironmentStateUpdateRequested:
+    case actions.TOGGLE_ENVIRONMENT_STATE_UPDATE_REQUESTED:
       storeKey = getStoreKey(action.projectId, action.toggleKey);
 
       projection = draft.toggleStates[storeKey];
@@ -186,7 +186,7 @@ export const reducer = produce((draft, action) => {
       }
       break;
 
-    case actionTypes.toggleEnvironmentStateUpdateSucceeded:
+    case actions.TOGGLE_ENVIRONMENT_STATE_UPDATE_SUCCEEDED:
       storeKey = getStoreKey(action.projectId, action.toggleKey);
 
       projection = draft.toggleStates[storeKey];
@@ -205,7 +205,7 @@ export const reducer = produce((draft, action) => {
       }
       break;
 
-    case actionTypes.toggleEnvironmentStateUpdateFailed:
+    case actions.TOGGLE_ENVIRONMENT_STATE_UPDATE_FAILED:
       storeKey = getStoreKey(action.projectId, action.toggleKey);
 
       projection = draft.toggleStates[storeKey];

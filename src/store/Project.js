@@ -1,5 +1,5 @@
 ﻿import produce from 'immer';
-import * as actionTypes from '../actions/types';
+import * as actions from '../actions/types';
 
 // Read
 
@@ -180,7 +180,7 @@ export const reducer = produce((draft, action) => {
   let projection = draft.projects[action.projectId];
 
   switch (action.type) {
-    case actionTypes.requestProject:
+    case actions.REQUEST_PROJECT:
       if (!projection) {
         projection = {};
         draft.projects[action.projectId] = projection;
@@ -188,17 +188,17 @@ export const reducer = produce((draft, action) => {
       projection.isLoading = true;
       break;
 
-    case actionTypes.receiveProject:
+    case actions.RECEIVE_PROJECT:
       draft.projects[action.projectId] = action.data;
       draft.projects[action.projectId].isLoading = false;
       draft.activeProjectId = action.projectId;
       break;
 
-    case actionTypes.receiveProjectError:
+    case actions.RECEIVE_PROJECT_ERROR:
       projection.isLoading = false;
       break;
 
-    case actionTypes.toggleAddSucceeded:
+    case actions.TOGGLE_ADD_SUCCEEDED:
       projection.project.toggles.push({
         key: action.toggleKey,
         name: action.toggleName,
@@ -207,7 +207,7 @@ export const reducer = produce((draft, action) => {
       updateAudit(projection);
       break;
 
-    case actionTypes.toggleDeleteSucceeded:
+    case actions.TOGGLE_DELETE_SUCCEEDED:
       projection.project.toggles.splice(
         projection.project.toggles.findIndex(
           (toggle) => toggle.key === action.toggleKey
@@ -218,7 +218,7 @@ export const reducer = produce((draft, action) => {
       updateAudit(projection);
       break;
 
-    case actionTypes.environmentAddSucceeded:
+    case actions.ENVIRONMENT_ADD_SUCCEEDED:
       projection.project.environments.push({
         key: action.environmentKey,
         name: action.environmentName,
@@ -227,7 +227,7 @@ export const reducer = produce((draft, action) => {
       updateAudit(projection);
       break;
 
-    case actionTypes.environmentDeleteSucceeded:
+    case actions.ENVIRONMENT_DELETE_SUCCEEDED:
       projection.project.environments.splice(
         projection.project.environments.findIndex(
           (environment) => environment.key === action.environmentKey
@@ -238,11 +238,11 @@ export const reducer = produce((draft, action) => {
       updateAudit(projection);
       break;
 
-    case actionTypes.projectDeleteSucceeded:
+    case actions.PROJECT_DELETE_SUCCEEDED:
       draft.projects[action.projectId] = undefined;
       break;
 
-    case actionTypes.clientAccessStrategyX509DeleteSucceeded:
+    case actions.CLIENT_ACCESS_STRATEGY_X509_DELETE_SUCCEEDED:
       projection.project.clientAccessStrategies.splice(
         projection.project.clientAccessStrategies.findIndex(
           (strategy) => strategy.id === action.strategyId

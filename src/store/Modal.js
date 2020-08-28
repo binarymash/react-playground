@@ -1,5 +1,5 @@
 ﻿import produce from 'immer';
-import * as actionTypes from '../actions/types';
+import * as actions from '../actions/types';
 
 // Read
 
@@ -7,17 +7,17 @@ import * as actionTypes from '../actions/types';
 
 const INITIAL_STATE = {
   modalType: null,
-  modalProps: {}
+  modalProps: {},
 };
 
 export const reducer = produce((draft, action) => {
   switch (action.type) {
-    case actionTypes.showModal:
+    case actions.SHOW_MODAL:
       draft.modalType = action.modalType;
       draft.modalProps = action.modalProps;
       break;
 
-    case actionTypes.hideModal:
+    case actions.HIDE_MODAL:
       draft.modalType = INITIAL_STATE.modalType;
       draft.modalProps = INITIAL_STATE.modalProps;
       break;
