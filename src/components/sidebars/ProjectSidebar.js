@@ -8,7 +8,6 @@ import '../../containers/NavMenu.css';
 
 export class ProjectSidebar extends Component {
   render() {
-    debugger;
     if (!this.props.project) {
       return <div></div>;
     }

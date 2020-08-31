@@ -65,7 +65,6 @@ const mapStateToProps = (state) => {
     activeProjectId: activeProjectId,
   };
 
-  debugger;
   return response;
 };
 
