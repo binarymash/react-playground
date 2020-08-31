@@ -1,7 +1,7 @@
 ﻿import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
-import Tooltip from 'react-bootstrap/Tooltip';
+// import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+// import Tooltip from 'react-bootstrap/Tooltip';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { AiOutlineCopy } from 'react-icons/ai';
 import { IconContext } from 'react-icons';
@@ -12,11 +12,11 @@ export class Key extends Component {
       return null;
     }
 
-    let tooltip = (
-      <Tooltip id="copied-tooltip" className="in" placement="right">
-        Copied to clipboard!
-      </Tooltip>
-    );
+    // let tooltip = (
+    //   <Tooltip id="copied-tooltip" className="in" placement="right">
+    //     Copied to clipboard!
+    //   </Tooltip>
+    // );
 
     return (
       <CopyToClipboard

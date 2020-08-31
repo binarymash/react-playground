@@ -4,9 +4,9 @@ import Alert from 'react-bootstrap/Alert';
 import Accordion from 'react-bootstrap/Accordion';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import { BsEyeFill } from 'react-icons/bs';
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
-import Tooltip from 'react-bootstrap/Tooltip';
+// import { BsEyeFill } from 'react-icons/bs';
+// import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+// import Tooltip from 'react-bootstrap/Tooltip';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { AiOutlineCopy } from 'react-icons/ai';
 import { IconContext } from 'react-icons';
@@ -23,20 +23,20 @@ export class AccessStrategyX509Keys extends Component {
       );
     }
 
-    let iconStyle = {
-      fontSize: '2.5em',
-      paddingLeft: '8px',
-    };
+    // let iconStyle = {
+    //   fontSize: '2.5em',
+    //   paddingLeft: '8px',
+    // };
 
     let accordianStyle = {
       paddingBottom: '14px',
     };
 
-    let tooltip = (
-      <Tooltip id="copied-tooltip" className="in" placement="left">
-        Copied to clipboard!
-      </Tooltip>
-    );
+    // let tooltip = (
+    //   <Tooltip id="copied-tooltip" className="in" placement="left">
+    //     Copied to clipboard!
+    //   </Tooltip>
+    // );
 
     return (
       <div>

@@ -18,7 +18,6 @@ export class Toggles extends Component {
 
   render() {
     let content = null;
-    let length = 0;
 
     if (this.props.isLoading) {
       content = <Loading />;
@@ -32,7 +31,6 @@ export class Toggles extends Component {
           </tbody>
         </Table>
       );
-      length = this.props.toggles.length;
     }
 
     return (

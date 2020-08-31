@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import withBreadcrumbs from 'react-router-breadcrumbs-hoc';
 import ProjectBreadcrumb from './ProjectBreadcrumb';
-import DashboardBreadcrumb from './DashboardBreadcrumb';
+// import DashboardBreadcrumb from './DashboardBreadcrumb';
 import EnvironmentsBreadcrumb from './EnvironmentsBreadcrumb';
 import EnvironmentBreadcrumb from './EnvironmentBreadcrumb';
 import TogglesBreadcrumb from './TogglesBreadcrumb';

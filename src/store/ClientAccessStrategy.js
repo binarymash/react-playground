@@ -138,10 +138,8 @@ export const reducer = produce((draft, action) => {
       break;
 
     case actions.CLIENT_ACCESS_STRATEGY_X509_DELETE_SUCCEEDED:
-      {
-        storeKey = getStoreKey(action.projectId, action.strategyId);
-        draft.strategies[storeKey] = undefined;
-      }
+      storeKey = getStoreKey(action.projectId, action.strategyId);
+      draft.strategies[storeKey] = undefined;
       break;
 
     default:
