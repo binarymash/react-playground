@@ -3,10 +3,6 @@ import * as actions from '../actions/actions';
 
 // Read
 
-export const getActiveProjectId = (state) => {
-  return state.project.activeProjectId;
-};
-
 export const getIsLoading = (state, projectId) => {
   const projection = state.project.projects[projectId];
   if (projection) {
@@ -16,7 +12,7 @@ export const getIsLoading = (state, projectId) => {
 };
 
 export const getProject = (state, projectId) => {
-  const projection = state.project.projects[projectId];
+  const projection = state?.project?.projects[projectId];
   let project = undefined;
 
   if (projection) {
@@ -191,7 +187,6 @@ export const reducer = produce((draft, action) => {
     case actions.RECEIVE_PROJECT:
       draft.projects[action.projectId] = action.data;
       draft.projects[action.projectId].isLoading = false;
-      draft.activeProjectId = action.projectId;
       break;
 
     case actions.RECEIVE_PROJECT_ERROR:

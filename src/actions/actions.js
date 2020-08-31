@@ -517,3 +517,27 @@ export const reset = () => {
     type: RESET,
   };
 };
+
+export const SELECT_PROJECT_REQUESTED = 'SELECT_PROJECT_REQUESTED';
+export const selectProjectRequested = (projectId) => {
+  return {
+    type: SELECT_PROJECT_REQUESTED,
+    projectId,
+  };
+};
+
+export const SELECT_PROJECT_SUCCEEDED = 'SELECT_PROJECT_SUCCEEDED';
+export const selectProjectSucceeded = (projectId) => {
+  return {
+    type: SELECT_PROJECT_SUCCEEDED,
+    projectId,
+  };
+};
+
+export const SELECT_PROJECT_FAILED = 'SELECT_PROJECT_FAILED';
+export const selectProjectFailed = (projectId) => {
+  return {
+    type: SELECT_PROJECT_FAILED,
+    projectId,
+  };
+};

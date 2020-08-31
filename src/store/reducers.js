@@ -7,6 +7,7 @@ import * as Environment from './Environment';
 import * as Toggle from './Toggle';
 import * as Strategy from './ClientAccessStrategy';
 import * as Modal from './Modal';
+import * as Ui from './Ui';
 
 const createRootReducer = (history) => {
   const appReducer = combineReducers({
@@ -18,6 +19,7 @@ const createRootReducer = (history) => {
     toggle: Toggle.reducer,
     modal: Modal.reducer,
     strategy: Strategy.reducer,
+    ui: Ui.reducer,
   });
 
   return (state, action) => {

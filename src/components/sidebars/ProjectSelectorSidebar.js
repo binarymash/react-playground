@@ -4,13 +4,19 @@ import { connect } from 'react-redux';
 import { actionCreators } from '../../actions/creators';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Nav from 'react-bootstrap/Nav';
-import { LinkContainer } from 'react-router-bootstrap';
 import { getProjects } from '../../store/Account';
-import { getActiveProjectId } from '../../store/Project';
+import { getProject } from '../../store/Project';
+import { getActiveProjectId } from '../../store/Ui';
 import ProjectSidebar from './ProjectSidebar';
 import '../../containers/NavMenu.css';
 
 export class ProjectSelectorSidebar extends Component {
+  async handleOnSelect(projectId) {
+    if (this.props.activeProjectId !== projectId) {
+      await this.props.selectProject(projectId);
+    }
+  }
+
   render() {
     let title = 'No project selected';
     if (this.props.activeProjectId) {
@@ -24,32 +30,43 @@ export class ProjectSelectorSidebar extends Component {
 
     return (
       <div>
-        <Dropdown as={Nav.Item}>
+        <Dropdown>
           <Dropdown.Toggle as={Nav.Link}>Project: {title}</Dropdown.Toggle>
           <Dropdown.Menu>
             {this.props.projects.map((project) => (
-              <LinkContainer
+              // <LinkContainer
+              //   key={project.id}
+              //   to={`/projects/${project.id}`}
+              //   exact
+              // >
+              <Dropdown.Item
                 key={project.id}
-                to={`/projects/${project.id}`}
-                exact
+                onSelect={async () => await this.handleOnSelect(project.id)}
               >
-                <Dropdown.Item>{project.name}</Dropdown.Item>
-              </LinkContainer>
+                {project.name}
+              </Dropdown.Item>
+              // </LinkContainer>
             ))}
           </Dropdown.Menu>
         </Dropdown>
         <hr />
-        <ProjectSidebar projectId={this.props.activeProjectId} />
+        <ProjectSidebar project={this.props.activeProject} />
       </div>
     );
   }
 }
 
 const mapStateToProps = (state) => {
-  return {
+  let activeProjectId = getActiveProjectId(state);
+
+  let response = {
     projects: getProjects(state),
-    activeProjectId: getActiveProjectId(state),
+    activeProject: getProject(state, activeProjectId),
+    activeProjectId: activeProjectId,
   };
+
+  debugger;
+  return response;
 };
 
 const mapDispatchToProps = (dispatch) => {

@@ -14,12 +14,22 @@ const handleError = (dispatch, error, requestFailureAction) => {
 };
 
 const initialise = () => async (dispatch, getState) => {
-  await fetchAccount()(dispatch, getState);
+  await fetchAccountIfNeeded()(dispatch, getState);
   let projects = getState().account.projection.account.projects;
   if (projects.length > 0) {
-    await fetchProjectIfNeeded(projects[0].id)(dispatch, getState);
+    await selectProject(projects[0].id)(dispatch, getState);
   }
   dispatch(actions.initialised());
+};
+
+const shouldFetchAccount = () => (state) => {
+  return !state?.account?.isLoading;
+};
+
+const fetchAccountIfNeeded = () => async (dispatch, getState) => {
+  if (shouldFetchAccount(getState())) {
+    await fetchAccount()(dispatch);
+  }
 };
 
 const fetchAccount = () => async (dispatch) => {
@@ -32,13 +42,13 @@ const fetchAccount = () => async (dispatch) => {
 };
 
 const fetchProjectIfNeeded = (projectId) => async (dispatch, getState) => {
-  if (shouldFetchProject(projectId, getState)) {
+  if (shouldFetchProject(projectId, getState())) {
     await fetchProject(projectId)(dispatch);
   }
 };
 
-const shouldFetchProject = (projectId, getState) => {
-  return !getState()?.project?.projects[projectId];
+const shouldFetchProject = (projectId, state) => {
+  return !state?.project?.projects[projectId];
 };
 
 const fetchProject = (projectId) => async (dispatch) => {
@@ -328,6 +338,16 @@ const hideModal = () => (dispatch) => {
   dispatch(actions.hideModal());
 };
 
+const selectProject = (projectId) => async (dispatch) => {
+  try {
+    dispatch(actions.selectProjectRequested(projectId));
+    await fetchProject(projectId)(dispatch);
+    dispatch(actions.selectProjectSucceeded(projectId));
+  } catch (error) {
+    handleError(dispatch, error, actions.selectProjectFailed(projectId));
+  }
+};
+
 const signOut = () => (dispatch) => {
   dispatch(actions.reset());
 };
@@ -360,5 +380,6 @@ export const actionCreators = {
   showModal,
   hideModal,
   createClientAccessStrategyX509,
+  selectProject,
   signOut,
 };

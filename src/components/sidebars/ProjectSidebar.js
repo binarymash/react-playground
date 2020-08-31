@@ -8,29 +8,37 @@ import '../../containers/NavMenu.css';
 
 export class ProjectSidebar extends Component {
   render() {
+    debugger;
+    if (!this.props.project) {
+      return <div></div>;
+    }
+
     return (
       <div>
         <Nav.Item>
-          <LinkContainer to={`/projects/${this.props.projectId}`} exact>
+          <LinkContainer to={`/projects/${this.props.project.id}`} exact>
             <Nav.Link active={false}>Summary</Nav.Link>
           </LinkContainer>
         </Nav.Item>
         <Nav.Item>
           <LinkContainer
-            to={`/projects/${this.props.projectId}/environments`}
+            to={`/projects/${this.props.project.id}/environments`}
             exact
           >
             <Nav.Link active={false}>Environments</Nav.Link>
           </LinkContainer>
         </Nav.Item>
         <Nav.Item>
-          <LinkContainer to={`/projects/${this.props.projectId}/toggles`} exact>
+          <LinkContainer
+            to={`/projects/${this.props.project.id}/toggles`}
+            exact
+          >
             <Nav.Link active={false}>Toggles</Nav.Link>
           </LinkContainer>
         </Nav.Item>
         <Nav.Item>
           <LinkContainer
-            to={`/projects/${this.props.projectId}/certificates`}
+            to={`/projects/${this.props.project.id}/certificates`}
             exact
           >
             <Nav.Link active={false}>Access</Nav.Link>
