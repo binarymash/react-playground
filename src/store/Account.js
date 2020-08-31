@@ -37,7 +37,7 @@ export const reducer = produce((draft, action) => {
       draft.isInitialised = true;
       break;
 
-    case action.REQUEST_ACCOUNT:
+    case actions.REQUEST_ACCOUNT:
       draft.isLoading = true;
       break;
 

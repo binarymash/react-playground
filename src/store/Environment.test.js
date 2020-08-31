@@ -277,7 +277,7 @@ it('should handle RECEIVE_ENVIRONMENT_ERROR', () => {
   expect(environment.reducer(currentState, action)).toEqual(expectedNewState);
 });
 
-it('should handle REQUEST_ENVIRONMENTSTATE', () => {
+it('should handle REQUEST_ENVIRONMENT_STATE', () => {
   const currentState = undefined;
 
   const action = actions.requestEnvironmentState(
@@ -297,7 +297,7 @@ it('should handle REQUEST_ENVIRONMENTSTATE', () => {
   expect(environment.reducer(currentState, action)).toEqual(expectedNewState);
 });
 
-it('should handle RECEIVE_ENVIRONMENTSTATE', () => {
+it('should handle RECEIVE_ENVIRONMENT_STATE', () => {
   const currentState = {
     environments: {},
     environmentStates: {
@@ -352,7 +352,7 @@ it('should handle RECEIVE_ENVIRONMENTSTATE', () => {
   expect(environment.reducer(currentState, action)).toEqual(expectedNewState);
 });
 
-it('should handle RECEIVE_ENVIRONMENTSTATE_ERROR', () => {
+it('should handle RECEIVE_ENVIRONMENT_STATE_ERROR', () => {
   const currentState = {
     environments: {},
     environmentStates: {
@@ -380,7 +380,7 @@ it('should handle RECEIVE_ENVIRONMENTSTATE_ERROR', () => {
   expect(environment.reducer(currentState, action)).toEqual(expectedNewState);
 });
 
-it('should handle TOGGLEENVIRONMENTSTATE_UPDATE_SUCCEEDED', () => {
+it('should handle TOGGLE_ENVIRONMENT_STATE_UPDATE_SUCCEEDED', () => {
   const currentState = {
     environments: {},
     environmentStates: {
@@ -418,6 +418,7 @@ it('should handle TOGGLEENVIRONMENTSTATE_UPDATE_SUCCEEDED', () => {
           toggleStates: [
             {
               key: 'my-first-toggle',
+              updating: false,
               value: 'True',
               version: undefined,
             },

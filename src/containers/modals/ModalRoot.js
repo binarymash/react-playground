@@ -26,7 +26,7 @@ class ModalRoot extends Component {
 }
 
 const mapStateToProps = (state) => {
-  return state.modal;
+  return state.ui;
 };
 
 let MODAL_COMPONENTS = {};

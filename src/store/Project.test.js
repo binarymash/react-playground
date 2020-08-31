@@ -57,6 +57,7 @@ it('should return project', () => {
   const expectedResult = {
     id: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
     name: 'My First Project',
+    clientAccessStrategies: [],
     environments: [
       {
         key: 'my-first-environment',
