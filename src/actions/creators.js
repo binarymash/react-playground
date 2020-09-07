@@ -22,7 +22,7 @@ const initialise = () => async (dispatch, getState) => {
   dispatch(actions.initialised());
 };
 
-const shouldFetchAccount = () => (state) => {
+const shouldFetchAccount = (state) => {
   return !state?.account?.isLoading;
 };
 

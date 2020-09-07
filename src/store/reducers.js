@@ -21,7 +21,7 @@ const createRootReducer = (history) => {
   });
 
   return (state, action) => {
-    if (action.type === actions.reset) {
+    if (action.type === actions.RESET) {
       const { router } = state;
       state = { router };
     }
