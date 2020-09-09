@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import Form from 'react-bootstrap/Form';
 import '../components/react-bootstrap-switch.css';
 import { Link } from 'react-router-dom';
+import Updating from './Updating';
 
 export class ToggleState extends Component {
   render() {
@@ -14,7 +15,8 @@ export class ToggleState extends Component {
           <Link
             to={`/projects/${this.props.projectId}/toggles/${this.props.toggle.key}`}
           >
-            {this.props.toggle.name}
+            {this.props.toggle.name}{' '}
+            <Updating isActive={this.props.toggle.updating} />
           </Link>
         </td>
         <td>

@@ -203,19 +203,19 @@ const setToggleEnvironmentState = (
 };
 
 const addProject = (name) => async (dispatch) => {
+  let id = uuidv1();
   try {
-    let id = uuidv1();
-    dispatch(actions.projectAddRequested());
+    dispatch(actions.projectAddRequested(id, name));
     await Api.addProject(id, name);
-    dispatch(actions.projectAddSucceeded(id, name));
+    dispatch(actions.projectAddSucceeded(id));
   } catch (error) {
-    handleError(dispatch, error, actions.projectAddFailed(error));
+    handleError(dispatch, error, actions.projectAddFailed(id, error));
   }
 };
 
 const deleteProject = (projectId) => async (dispatch) => {
   try {
-    dispatch(actions.projectDeleteRequested());
+    dispatch(actions.projectDeleteRequested(projectId));
     await Api.deleteProject(projectId);
     dispatch(actions.projectDeletedSucceeded(projectId));
   } catch (error) {

@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import '../components/react-bootstrap-switch.css';
 import { Link } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
+import Updating from './Updating';
 
 export class EnvironmentState extends Component {
   render() {
@@ -16,7 +17,8 @@ export class EnvironmentState extends Component {
           <Link
             to={`/projects/${this.props.projectId}/environments/${this.props.environment.key}`}
           >
-            {this.props.environment.name}
+            {this.props.environment.name}{' '}
+            <Updating isActive={this.props.environment.updating} />
           </Link>
         </td>
         <td className="nowrap">

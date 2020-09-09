@@ -15,6 +15,7 @@ export const getProjects = (state) => {
     return {
       id: project.id,
       name: project.name,
+      isUpdating: getProjectIsUpdating(project),
     };
   });
 };
@@ -50,11 +51,37 @@ export const reducer = produce((draft, action) => {
       draft.isLoading = false;
       break;
 
-    case actions.PROJECT_ADD_SUCCEEDED:
+    case actions.PROJECT_ADD_REQUESTED:
       draft.projection.account.projects.push({
         id: action.id,
         name: action.name,
+        isCreating: true,
       });
+      break;
+
+    case actions.PROJECT_ADD_SUCCEEDED:
+      draft.projection.account.projects
+        .filter((project) => project.id === action.id)
+        .forEach((p) => (p.isCreating = false));
+
+      updateAudit(draft.projection);
+      break;
+
+    case actions.PROJECT_ADD_FAILED:
+      draft.projection.account.projects.splice(
+        draft.projection.account.projects.findIndex(
+          (project) => project.id === action.projectId
+        ),
+        1
+      );
+
+      updateAudit(draft.projection);
+      break;
+
+    case actions.PROJECT_DELETE_REQUESTED:
+      draft.projection.account.projects
+        .filter((project) => project.id === action.projectId)
+        .forEach((p) => (p.isDeleting = true));
 
       updateAudit(draft.projection);
       break;
@@ -70,6 +97,14 @@ export const reducer = produce((draft, action) => {
       updateAudit(draft.projection);
       break;
 
+    case actions.PROJECT_DELETE_FAILED:
+      draft.projection.account.projects
+        .filter((project) => project.id === action.projectId)
+        .forEach((p) => (p.isDeleting = false));
+
+      updateAudit(draft.projection);
+      break;
+
     default:
       break;
   }
@@ -80,4 +115,8 @@ const updateAudit = (projection) => {
   projection.account.audit.lastModified = undefined;
   projection.account.audit.lastModifiedBy = undefined;
   projection.account.audit.version = undefined;
+};
+
+const getProjectIsUpdating = (project) => {
+  return project.isCreating || project.isDeleting;
 };

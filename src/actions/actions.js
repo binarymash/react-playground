@@ -267,33 +267,36 @@ export const toggleEnvironmentStateUpdateFailed = (
 };
 
 export const PROJECT_ADD_REQUESTED = 'PROJECT_ADD_REQUESTED';
-export const projectAddRequested = () => {
+export const projectAddRequested = (id, name) => {
   return {
     type: PROJECT_ADD_REQUESTED,
+    id,
+    name,
   };
 };
 
 export const PROJECT_ADD_SUCCEEDED = 'PROJECT_ADD_SUCCEEDED';
-export const projectAddSucceeded = (id, name) => {
+export const projectAddSucceeded = (id) => {
   return {
     type: PROJECT_ADD_SUCCEEDED,
-    id: id,
-    name: name,
+    id,
   };
 };
 
 export const PROJECT_ADD_FAILED = 'PROJECT_ADD_FAILED';
-export const projectAddFailed = (error) => {
+export const projectAddFailed = (id, error) => {
   return {
     type: PROJECT_ADD_FAILED,
+    id,
     error,
   };
 };
 
 export const PROJECT_DELETE_REQUESTED = 'PROJECT_DELETE_REQUESTED';
-export const projectDeleteRequested = () => {
+export const projectDeleteRequested = (projectId) => {
   return {
     type: PROJECT_DELETE_REQUESTED,
+    projectId,
   };
 };
 
@@ -301,7 +304,7 @@ export const PROJECT_DELETE_SUCCEEDED = 'PROJECT_DELETE_SUCCEEDED';
 export const projectDeletedSucceeded = (projectId) => {
   return {
     type: PROJECT_DELETE_SUCCEEDED,
-    projectId: projectId,
+    projectId,
   };
 };
 

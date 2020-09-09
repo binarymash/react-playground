@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
 import { BsX } from 'react-icons/bs';
 import * as modalTypes from '../containers/modals/types';
+import Updating from './Updating';
 
 export class Project extends Component {
   handleDeleteClick = () => {
@@ -23,7 +24,8 @@ export class Project extends Component {
       <tr>
         <td className="fill">
           <Link to={`/projects/${this.props.project.id}`}>
-            {this.props.project.name}
+            {this.props.project.name}{' '}
+            <Updating isActive={this.props.project.isUpdating} />
           </Link>
         </td>
         <td className="nowrap">
