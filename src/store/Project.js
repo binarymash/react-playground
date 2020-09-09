@@ -121,6 +121,7 @@ const getEnvironment = (projectId, environment) => {
     projectId: projectId,
     key: environment.key,
     name: environment.name,
+    isUpdating: environment.isCreating || environment.isDeleting,
   };
 };
 
@@ -137,6 +138,7 @@ const getToggle = (projectId, toggle) => {
     projectId: projectId,
     key: toggle.key,
     name: toggle.name,
+    isUpdating: toggle.isCreating || toggle.isDeleting,
   };
 };
 
@@ -193,13 +195,31 @@ export const reducer = produce((draft, action) => {
       projection.isLoading = false;
       break;
 
-    case actions.TOGGLE_ADD_SUCCEEDED:
+    case actions.TOGGLE_ADD_REQUESTED:
       projection.project.toggles.push({
         key: action.toggleKey,
         name: action.toggleName,
+        isCreating: true,
       });
+      break;
 
+    case actions.TOGGLE_ADD_SUCCEEDED:
+      projection.project.toggles
+        .filter((toggle) => toggle.key === action.toggleKey)
+        .forEach((e) => (e.isCreating = false));
       updateAudit(projection);
+      break;
+
+    case actions.TOGGLE_ADD_FAILED:
+      projection.project.toggles
+        .filter((toggle) => toggle.key === action.toggleKey)
+        .forEach((e) => (e.isCreating = false));
+      break;
+
+    case actions.TOGGLE_DELETE_REQUESTED:
+      projection.project.toggles
+        .filter((toggle) => toggle.key === action.toggleKey)
+        .forEach((t) => (t.isDeleting = true));
       break;
 
     case actions.TOGGLE_DELETE_SUCCEEDED:
@@ -209,17 +229,43 @@ export const reducer = produce((draft, action) => {
         ),
         1
       );
-
       updateAudit(projection);
       break;
 
-    case actions.ENVIRONMENT_ADD_SUCCEEDED:
+    case actions.TOGGLE_DELETE_FAILED:
+      projection.project.toggles
+        .filter((toggle) => toggle.key === action.toggleKey)
+        .forEach((t) => (t.isDeleting = false));
+      break;
+
+    case actions.ENVIRONMENT_ADD_REQUESTED:
       projection.project.environments.push({
         key: action.environmentKey,
         name: action.environmentName,
+        isCreating: true,
       });
+      break;
 
+    case actions.ENVIRONMENT_ADD_SUCCEEDED:
+      projection.project.environments
+        .filter((environment) => environment.key === action.environmentKey)
+        .forEach((e) => (e.isCreating = false));
       updateAudit(projection);
+      break;
+
+    case actions.ENVIRONMENT_ADD_FAILED:
+      projection.project.environments.splice(
+        projection.project.environments.findIndex(
+          (environment) => environment.key === action.environmentKey
+        ),
+        1
+      );
+      break;
+
+    case actions.ENVIRONMENT_DELETE_REQUESTED:
+      projection.project.environments
+        .filter((environment) => environment.key === action.environmentKey)
+        .forEach((e) => (e.isDeleting = true));
       break;
 
     case actions.ENVIRONMENT_DELETE_SUCCEEDED:
@@ -231,6 +277,12 @@ export const reducer = produce((draft, action) => {
       );
 
       updateAudit(projection);
+      break;
+
+    case actions.ENVIRONMENT_DELETE_FAILED:
+      projection.project.environments
+        .filter((environment) => environment.key === action.environmentKey)
+        .forEach((e) => (e.isDeleting = false));
       break;
 
     case actions.PROJECT_DELETE_SUCCEEDED:

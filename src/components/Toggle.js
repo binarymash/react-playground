@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
 import { BsX } from 'react-icons/bs';
 import * as modalTypes from '../containers/modals/types';
+import Updating from './Updating';
 
 export class Toggle extends Component {
   handleDeleteClick = () => {
@@ -26,7 +27,8 @@ export class Toggle extends Component {
           <Link
             to={`/projects/${this.props.toggle.projectId}/toggles/${this.props.toggle.key}`}
           >
-            {this.props.toggle.name}
+            {this.props.toggle.name}{' '}
+            <Updating isActive={this.props.toggle.isUpdating} />
           </Link>
         </td>
         <td className="nowrap">

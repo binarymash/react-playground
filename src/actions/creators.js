@@ -225,9 +225,9 @@ const deleteProject = (projectId) => async (dispatch) => {
 
 const addToggle = (projectId, toggleKey, toggleName) => async (dispatch) => {
   try {
-    dispatch(actions.toggleAddRequested());
+    dispatch(actions.toggleAddRequested(projectId, toggleKey, toggleName));
     await Api.addToggle(projectId, toggleKey, toggleName);
-    dispatch(actions.toggleAddSucceeded(projectId, toggleKey, toggleName));
+    dispatch(actions.toggleAddSucceeded(projectId, toggleKey));
   } catch (error) {
     handleError(
       dispatch,
@@ -239,7 +239,7 @@ const addToggle = (projectId, toggleKey, toggleName) => async (dispatch) => {
 
 const deleteToggle = (projectId, toggleKey) => async (dispatch) => {
   try {
-    dispatch(actions.toggleDeleteRequested());
+    dispatch(actions.toggleDeleteRequested(projectId, toggleKey));
     await Api.deleteToggle(projectId, toggleKey);
     dispatch(actions.toggleDeleteSucceeded(projectId, toggleKey));
   } catch (error) {
@@ -255,15 +255,15 @@ const addEnvironment = (projectId, environmentKey, environmentName) => async (
   dispatch
 ) => {
   try {
-    dispatch(actions.environmentAddRequested());
-    await Api.addEnvironment(projectId, environmentKey, environmentName);
     dispatch(
-      actions.environmentAddSucceeded(
+      actions.environmentAddRequested(
         projectId,
         environmentKey,
         environmentName
       )
     );
+    await Api.addEnvironment(projectId, environmentKey, environmentName);
+    dispatch(actions.environmentAddSucceeded(projectId, environmentKey));
   } catch (error) {
     handleError(
       dispatch,
@@ -275,7 +275,7 @@ const addEnvironment = (projectId, environmentKey, environmentName) => async (
 
 const deleteEnvironment = (projectId, environmentKey) => async (dispatch) => {
   try {
-    dispatch(actions.environmentDeleteRequested());
+    dispatch(actions.environmentDeleteRequested(projectId, environmentKey));
     await Api.deleteEnvironment(projectId, environmentKey);
     dispatch(actions.environmentDeleteSucceeded(projectId, environmentKey));
   } catch (error) {

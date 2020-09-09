@@ -75,7 +75,6 @@ export const reducer = produce((draft, action) => {
         1
       );
 
-      updateAudit(draft.projection);
       break;
 
     case actions.PROJECT_DELETE_REQUESTED:
@@ -83,7 +82,6 @@ export const reducer = produce((draft, action) => {
         .filter((project) => project.id === action.projectId)
         .forEach((p) => (p.isDeleting = true));
 
-      updateAudit(draft.projection);
       break;
 
     case actions.PROJECT_DELETE_SUCCEEDED:
@@ -102,7 +100,6 @@ export const reducer = produce((draft, action) => {
         .filter((project) => project.id === action.projectId)
         .forEach((p) => (p.isDeleting = false));
 
-      updateAudit(draft.projection);
       break;
 
     default:

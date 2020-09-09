@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
 import { BsX } from 'react-icons/bs';
 import * as modalTypes from '../containers/modals/types';
+import Updating from './Updating';
 
 export class Environment extends Component {
   handleDeleteClick = () => {
@@ -26,7 +27,8 @@ export class Environment extends Component {
           <Link
             to={`/projects/${this.props.environment.projectId}/environments/${this.props.environment.key}`}
           >
-            {this.props.environment.name}
+            {this.props.environment.name}{' '}
+            <Updating isActive={this.props.environment.isUpdating} />
           </Link>
         </td>
         <td className="nowrap">

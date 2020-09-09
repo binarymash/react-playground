@@ -318,19 +318,21 @@ export const projectDeleteFailed = (projectId, error) => {
 };
 
 export const TOGGLE_ADD_REQUESTED = 'TOGGLE_ADD_REQUESTED';
-export const toggleAddRequested = () => {
+export const toggleAddRequested = (projectId, toggleKey, toggleName) => {
   return {
     type: TOGGLE_ADD_REQUESTED,
+    projectId,
+    toggleKey,
+    toggleName,
   };
 };
 
 export const TOGGLE_ADD_SUCCEEDED = 'TOGGLE_ADD_SUCCEEDED';
-export const toggleAddSucceeded = (projectId, toggleKey, toggleName) => {
+export const toggleAddSucceeded = (projectId, toggleKey) => {
   return {
     type: TOGGLE_ADD_SUCCEEDED,
     projectId,
     toggleKey,
-    toggleName,
   };
 };
 
@@ -345,9 +347,11 @@ export const toggleAddFailed = (projectId, toggleKey, error) => {
 };
 
 export const TOGGLE_DELETE_REQUESTED = 'TOGGLE_DELETE_REQUESTED';
-export const toggleDeleteRequested = () => {
+export const toggleDeleteRequested = (projectId, toggleKey) => {
   return {
     type: TOGGLE_DELETE_REQUESTED,
+    projectId,
+    toggleKey,
   };
 };
 
@@ -371,23 +375,25 @@ export const toggleDeleteFailed = (projectId, toggleKey, error) => {
 };
 
 export const ENVIRONMENT_ADD_REQUESTED = 'ENVIRONMENT_ADD_REQUESTED';
-export const environmentAddRequested = () => {
-  return {
-    type: ENVIRONMENT_ADD_REQUESTED,
-  };
-};
-
-export const ENVIRONMENT_ADD_SUCCEEDED = 'ENVIRONMENT_ADD_SUCCEEDED';
-export const environmentAddSucceeded = (
+export const environmentAddRequested = (
   projectId,
   environmentKey,
   environmentName
 ) => {
   return {
-    type: ENVIRONMENT_ADD_SUCCEEDED,
+    type: ENVIRONMENT_ADD_REQUESTED,
     projectId,
     environmentKey,
     environmentName,
+  };
+};
+
+export const ENVIRONMENT_ADD_SUCCEEDED = 'ENVIRONMENT_ADD_SUCCEEDED';
+export const environmentAddSucceeded = (projectId, environmentKey) => {
+  return {
+    type: ENVIRONMENT_ADD_SUCCEEDED,
+    projectId,
+    environmentKey,
   };
 };
 
@@ -402,9 +408,11 @@ export const environmentAddFailed = (projectId, environmentKey, error) => {
 };
 
 export const ENVIRONMENT_DELETE_REQUESTED = 'ENVIRONMENT_DELETE_REQUESTED';
-export const environmentDeleteRequested = () => {
+export const environmentDeleteRequested = (projectId, environmentKey) => {
   return {
     type: ENVIRONMENT_DELETE_REQUESTED,
+    projectId: projectId,
+    environmentKey: environmentKey,
   };
 };
 
