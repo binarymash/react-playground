@@ -212,9 +212,12 @@ export const reducer = produce((draft, action) => {
       break;
 
     case actions.TOGGLE_ADD_FAILED:
-      projection.project.toggles
-        .filter((toggle) => toggle.key === action.toggleKey)
-        .forEach((e) => (e.isCreating = false));
+      projection.project.toggles.splice(
+        projection.project.toggles.findIndex(
+          (toggle) => toggle.key === action.toggleKey
+        ),
+        1
+      );
       break;
 
     case actions.TOGGLE_DELETE_REQUESTED:

@@ -274,12 +274,15 @@ it('should handle PROJECT_ADD_REQUESTED', () => {
         audit: {
           created: '2018-12-27T11:48:19.5302129+00:00',
           createdBy: 'SystemUser',
-          lastModified: undefined,
-          lastModifiedBy: undefined,
-          version: undefined,
+          lastModified: '2018-12-27T12:01:20.7401734+00:00',
+          lastModifiedBy: 'AnonymousUser',
+          version: 2,
         },
       },
-      audit: undefined,
+      audit: {
+        generated: '2018-12-31T16:36:12.5757663+00:00',
+        streamPosition: 13,
+      },
     },
     isLoading: false,
   };
@@ -334,6 +337,7 @@ it('should handle PROJECT_ADD_SUCCEEDED', () => {
           {
             id: '8960F481-E25C-442A-AA8B-67A772658D37',
             name: 'Another project',
+            isCreating: false,
           },
         ],
         accountId: 'e70fd009-22c4-44e0-ab13-2b6edaf0bbdb',
@@ -346,6 +350,141 @@ it('should handle PROJECT_ADD_SUCCEEDED', () => {
         },
       },
       audit: undefined,
+    },
+    isLoading: false,
+  };
+
+  expect(account.reducer(currentState, action)).toEqual(expectedNewState);
+});
+
+it('should handle PROJECT_ADD_FAILED', () => {
+  const currentState = {
+    projection: {
+      account: {
+        projects: [
+          {
+            id: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
+            name: 'My First Project',
+          },
+          {
+            id: '8960F481-E25C-442A-AA8B-67A772658D37',
+            name: 'Another project',
+            isCreating: true,
+          },
+        ],
+        accountId: 'e70fd009-22c4-44e0-ab13-2b6edaf0bbdb',
+        audit: {
+          created: '2018-12-27T11:48:19.5302129+00:00',
+          createdBy: 'SystemUser',
+          lastModified: '2018-12-27T12:01:20.7401734+00:00',
+          lastModifiedBy: 'AnonymousUser',
+          version: 2,
+        },
+      },
+      audit: {
+        generated: '2018-12-31T16:36:12.5757663+00:00',
+        streamPosition: 13,
+      },
+    },
+    isLoading: false,
+  };
+
+  const action = actions.projectAddFailed(
+    '8960F481-E25C-442A-AA8B-67A772658D37'
+  );
+
+  const expectedNewState = {
+    projection: {
+      account: {
+        projects: [
+          {
+            id: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
+            name: 'My First Project',
+          },
+        ],
+        accountId: 'e70fd009-22c4-44e0-ab13-2b6edaf0bbdb',
+        audit: {
+          created: '2018-12-27T11:48:19.5302129+00:00',
+          createdBy: 'SystemUser',
+          lastModified: '2018-12-27T12:01:20.7401734+00:00',
+          lastModifiedBy: 'AnonymousUser',
+          version: 2,
+        },
+      },
+      audit: {
+        generated: '2018-12-31T16:36:12.5757663+00:00',
+        streamPosition: 13,
+      },
+    },
+    isLoading: false,
+  };
+
+  expect(account.reducer(currentState, action)).toEqual(expectedNewState);
+});
+
+it('should handle PROJECT_DELETE_FAILED', () => {
+  const currentState = {
+    projection: {
+      account: {
+        projects: [
+          {
+            id: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
+            name: 'My First Project',
+          },
+          {
+            id: '8960F481-E25C-442A-AA8B-67A772658D37',
+            name: 'Another project',
+          },
+        ],
+        accountId: 'e70fd009-22c4-44e0-ab13-2b6edaf0bbdb',
+        audit: {
+          created: '2018-12-27T11:48:19.5302129+00:00',
+          createdBy: 'SystemUser',
+          lastModified: '2018-12-27T12:01:20.7401734+00:00',
+          lastModifiedBy: 'AnonymousUser',
+          version: 2,
+        },
+      },
+      audit: {
+        generated: '2018-12-31T16:36:12.5757663+00:00',
+        streamPosition: 13,
+      },
+    },
+    isLoading: false,
+  };
+
+  const action = actions.projectDeleteRequested(
+    '8960F481-E25C-442A-AA8B-67A772658D37',
+    'error'
+  );
+
+  const expectedNewState = {
+    projection: {
+      account: {
+        projects: [
+          {
+            id: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
+            name: 'My First Project',
+          },
+          {
+            id: '8960F481-E25C-442A-AA8B-67A772658D37',
+            name: 'Another project',
+            isDeleting: true,
+          },
+        ],
+        accountId: 'e70fd009-22c4-44e0-ab13-2b6edaf0bbdb',
+        audit: {
+          created: '2018-12-27T11:48:19.5302129+00:00',
+          createdBy: 'SystemUser',
+          lastModified: '2018-12-27T12:01:20.7401734+00:00',
+          lastModifiedBy: 'AnonymousUser',
+          version: 2,
+        },
+      },
+      audit: {
+        generated: '2018-12-31T16:36:12.5757663+00:00',
+        streamPosition: 13,
+      },
     },
     isLoading: false,
   };
@@ -371,12 +510,15 @@ it('should handle PROJECT_DELETE_SUCCEEDED', () => {
         audit: {
           created: '2018-12-27T11:48:19.5302129+00:00',
           createdBy: 'SystemUser',
-          lastModified: undefined,
-          lastModifiedBy: undefined,
-          version: undefined,
+          lastModified: '2018-12-27T12:01:20.7401734+00:00',
+          lastModifiedBy: 'AnonymousUser',
+          version: 2,
         },
       },
-      audit: undefined,
+      audit: {
+        generated: '2018-12-31T16:36:12.5757663+00:00',
+        streamPosition: 13,
+      },
     },
     isLoading: false,
   };
@@ -404,6 +546,77 @@ it('should handle PROJECT_DELETE_SUCCEEDED', () => {
         },
       },
       audit: undefined,
+    },
+    isLoading: false,
+  };
+
+  expect(account.reducer(currentState, action)).toEqual(expectedNewState);
+});
+
+it('should handle PROJECT_DELETE_FAILED', () => {
+  const currentState = {
+    projection: {
+      account: {
+        projects: [
+          {
+            id: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
+            name: 'My First Project',
+          },
+          {
+            id: '8960F481-E25C-442A-AA8B-67A772658D37',
+            name: 'Another project',
+            isDeleting: true,
+          },
+        ],
+        accountId: 'e70fd009-22c4-44e0-ab13-2b6edaf0bbdb',
+        audit: {
+          created: '2018-12-27T11:48:19.5302129+00:00',
+          createdBy: 'SystemUser',
+          lastModified: '2018-12-27T12:01:20.7401734+00:00',
+          lastModifiedBy: 'AnonymousUser',
+          version: 2,
+        },
+      },
+      audit: {
+        generated: '2018-12-31T16:36:12.5757663+00:00',
+        streamPosition: 13,
+      },
+    },
+    isLoading: false,
+  };
+
+  const action = actions.projectDeleteFailed(
+    '8960F481-E25C-442A-AA8B-67A772658D37',
+    'error'
+  );
+
+  const expectedNewState = {
+    projection: {
+      account: {
+        projects: [
+          {
+            id: '8f73d020-96c4-407e-8602-74fd4e2ed08b',
+            name: 'My First Project',
+          },
+          {
+            id: '8960F481-E25C-442A-AA8B-67A772658D37',
+            name: 'Another project',
+            isDeleting: false,
+          },
+        ],
+        accountId: 'e70fd009-22c4-44e0-ab13-2b6edaf0bbdb',
+        audit: {
+          created: '2018-12-27T11:48:19.5302129+00:00',
+          createdBy: 'SystemUser',
+          lastModified: '2018-12-27T12:01:20.7401734+00:00',
+          lastModifiedBy: 'AnonymousUser',
+          version: 2,
+        },
+      },
+      audit: {
+        generated: '2018-12-31T16:36:12.5757663+00:00',
+        streamPosition: 13,
+      },
     },
     isLoading: false,
   };
