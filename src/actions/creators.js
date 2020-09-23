@@ -316,7 +316,9 @@ const deleteClientAccessStrategyX509 = (projectId, strategyId) => async (
   dispatch
 ) => {
   try {
-    dispatch(actions.clientAccessStrategyX509DeleteRequested());
+    dispatch(
+      actions.clientAccessStrategyX509DeleteRequested(projectId, strategyId)
+    );
     await Api.deleteClientAccessStrategyX509(projectId, strategyId);
     dispatch(
       actions.clientAccessStrategyX509DeleteSucceeded(projectId, strategyId)

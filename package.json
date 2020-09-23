@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@aws-amplify/ui-react": "^0.2.15",
-    "aws-amplify": "^3.0.24",
-    "aws-amplify-react": "^4.1.23",
+    "@aws-amplify/ui-react": "0.2.21",
+    "aws-amplify": "3.3.1",
+    "aws-amplify-react": "4.2.5",
     "bootstrap": "^4.5.0",
     "connected-react-router": "^6.8.0",
     "framer-motion": "^1.11.1",

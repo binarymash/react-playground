@@ -8,13 +8,11 @@ import { BsExclamationCircle, BsX, BsCheck } from 'react-icons/bs';
 
 class DeleteAccessStrategyModal extends Component {
   handleOkClick = async () => {
-    Promise.all([
-      this.props.hideModal(),
-      this.props.deleteClientAccessStrategyX509(
-        this.props.projectId,
-        this.props.strategyId
-      ),
-    ]);
+    this.props.hideModal();
+    await this.props.deleteClientAccessStrategyX509(
+      this.props.projectId,
+      this.props.strategyId
+    );
   };
 
   render() {

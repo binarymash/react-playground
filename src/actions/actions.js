@@ -472,9 +472,14 @@ export const clientAccessStrategyX509AddFailed = (
 
 export const CLIENT_ACCESS_STRATEGY_X509_DELETE_REQUESTED =
   'CLIENT_ACCESS_STRATEGY_X509_DELETE_REQUESTED';
-export const clientAccessStrategyX509DeleteRequested = () => {
+export const clientAccessStrategyX509DeleteRequested = (
+  projectId,
+  strategyId
+) => {
   return {
     type: CLIENT_ACCESS_STRATEGY_X509_DELETE_REQUESTED,
+    projectId,
+    strategyId,
   };
 };
 

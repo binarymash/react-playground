@@ -137,18 +137,18 @@ class App extends Component {
               type: 'password',
               required: true,
             },
-            // {
-            //   type: "given_name",
-            //   label: "Given Name *",
-            //   placeholder: "Enter your given name",
-            //   required: true,
-            // },
-            // {
-            //   type: "family_name",
-            //   label: "Family Name *",
-            //   placeholder: "Enter your family name",
-            //   required: true,
-            // },
+            {
+              type: 'given_name',
+              label: 'Given Name *',
+              placeholder: 'Enter your given name',
+              required: true,
+            },
+            {
+              type: 'family_name',
+              label: 'Family Name *',
+              placeholder: 'Enter your family name',
+              required: true,
+            },
           ]}
         />
         <AmplifySignIn

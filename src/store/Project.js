@@ -158,6 +158,7 @@ const getStrategy = (projectId, strategy) => {
     id: strategy.id,
     key: strategy.key,
     value: strategy.value,
+    isUpdating: strategy.isCreating || strategy.isDeleting,
   };
 };
 
@@ -289,6 +290,12 @@ export const reducer = produce((draft, action) => {
       draft.projects[action.projectId] = undefined;
       break;
 
+    case actions.CLIENT_ACCESS_STRATEGY_X509_DELETE_REQUESTED:
+      projection.project.clientAccessStrategies
+        .filter((strategy) => strategy.id === action.strategyId)
+        .forEach((s) => (s.isDeleting = true));
+      break;
+
     case actions.CLIENT_ACCESS_STRATEGY_X509_DELETE_SUCCEEDED:
       projection.project.clientAccessStrategies.splice(
         projection.project.clientAccessStrategies.findIndex(
@@ -298,6 +305,12 @@ export const reducer = produce((draft, action) => {
       );
 
       updateAudit(projection);
+      break;
+
+    case actions.CLIENT_ACCESS_STRATEGY_X509_DELETE_FAILED:
+      projection.project.clientAccessStrategies
+        .filter((strategy) => strategy.id === action.strategyId)
+        .forEach((s) => (s.isDeleting = false));
       break;
 
     default:
